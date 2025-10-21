@@ -1,0 +1,242 @@
+
+import React, { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, MapPin, Briefcase, GraduationCap, Building, TrendingUp, Users, Star, ChevronsRight, ChevronsLeft } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
+import FlagGridDisplay from './FlagGridDisplay'; // Assuming FlagGridDisplay is now in its own file
+import DetailedTimeline from './DetailedTimeline'; // Import the new DetailedTimeline component
+
+const sportsImages = [
+  {
+    id: 1,
+    title: 'Wildwasser Rafting',
+    url: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/3dcc5eb12_SAVE_20220418_140433.jpg'
+  },
+  {
+    id: 2,
+    title: 'Deloitte Team Marathon',
+    url: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/df4439e82_1685432342706.jpg'
+  },
+  {
+    id: 3,
+    title: 'Marathon Running',
+    url: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/64e1eb2b1_9431_20231001_144044_318986871_original.jpg'
+  },
+];
+
+const compactMilestones = [
+  { icon: GraduationCap, year: '2015-18', title: 'Banker'},
+  { icon: Briefcase, year: '2018-21', title: 'Jr. Consultant'},
+  { icon: Building, year: '2022', title: 'Consultant'},
+  { icon: Users, year: '2022-23', title: 'Sr. Consultant'},
+  { icon: TrendingUp, year: '2023-25', title: 'PMO Leader'},
+  { icon: Star, year: '2025', title: 'Project Lead'},
+];
+
+export default function WhoSection() {
+  const [fullscreenImage, setFullscreenImage] = useState(null);
+  const [visitedCount, setVisitedCount] = useState(0);
+  const [isJourneyExpanded, setIsJourneyExpanded] = useState(false);
+
+  const fetchVisitedCount = async () => {
+      try {
+          const countries = await base44.entities.VisitedCountry.list();
+          // Count unique country codes to avoid duplicates
+          const uniqueCountryCodes = new Set(countries.map(c => c.country_code.toLowerCase()));
+          setVisitedCount(uniqueCountryCodes.size);
+      } catch (error) {
+          console.error("Error fetching visited countries count:", error);
+      }
+  };
+
+  useEffect(() => {
+    fetchVisitedCount();
+  }, []); // Empty dependency array means this runs once on mount
+
+  return (
+    <section id="who" className="h-screen w-full bg-gradient-to-br from-white to-gray-100 flex flex-col px-20 py-12 overflow-hidden">
+      <motion.h1
+        className="text-4xl font-normal text-black text-left mb-2"
+        style={{ fontFamily: 'Aptos, Open Sans, Segoe UI, sans-serif' }}
+        initial={{ opacity: 0, y: -30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        Breaking complexity starts with me
+      </motion.h1>
+
+      <motion.h2
+        className="text-2xl text-gray-600 text-left mb-6"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.2 }}
+      >
+        Curious mind. Driven by impact. Defined by exploration.
+      </motion.h2>
+
+      <div className="flex-grow grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 gap-4" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+
+        <AnimatePresence initial={false}>
+          {isJourneyExpanded ? (
+            <motion.div
+              key="journey-expanded"
+              className="lg:col-span-2 lg:row-span-2 bg-white rounded-xl shadow-lg p-6 flex flex-col"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-2xl font-bold text-[#003b6e]">My Professional Journey</h2>
+                    <button
+                        onClick={() => setIsJourneyExpanded(false)}
+                        className="flex items-center gap-1 text-sm text-[#003b6e] hover:text-[#86BC25] transition-colors"
+                    >
+                        <ChevronsLeft className="w-4 h-4" />
+                        Collapse
+                    </button>
+                </div>
+                <div className="flex-grow overflow-hidden">
+                    <DetailedTimeline /> {/* The DetailedTimeline component is placed here */}
+                </div>
+            </motion.div>
+          ) : (
+            <>
+              {/* Globetrotter with Flag Grid */}
+              <motion.div
+                key="globetrotter"
+                className="bg-white rounded-xl shadow-lg p-3 flex flex-col"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <h3 className="text-lg font-bold text-[#003b6e] flex items-center gap-2">
+                    <MapPin className="w-4 h-4" />
+                    Globetrotter
+                  </h3>
+                </div>
+                <div className="flex-grow bg-gray-100 rounded-lg overflow-hidden relative">
+                  <FlagGridDisplay onCountryToggled={fetchVisitedCount} visitedCount={visitedCount} />
+                </div>
+              </motion.div>
+
+              {/* Sport Enthusiast */}
+              <motion.div
+                key="sport"
+                className="bg-white rounded-xl shadow-lg p-3 flex flex-col"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <h3 className="text-lg font-bold text-[#003b6e] mb-2">🏃 Sport Enthusiast</h3>
+                <div className="flex-grow flex gap-2 overflow-hidden rounded-lg">
+                  {sportsImages.map((image) => (
+                    <div
+                      key={image.id}
+                      className="w-1/3 h-full rounded-lg overflow-hidden cursor-pointer group relative"
+                      onClick={() => setFullscreenImage(image)}
+                    >
+                      <img
+                        src={image.url}
+                        alt={image.title}
+                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Tech Explorer */}
+              <motion.div
+                key="tech-explorer"
+                className="bg-white rounded-xl shadow-lg p-3 flex flex-col"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <h3 className="text-lg font-bold text-[#003b6e] mb-2">💻 Tech Explorer</h3>
+                <div className="flex-grow bg-gray-900 rounded-lg overflow-hidden">
+                  <iframe
+                    src="https://mein-inventar-9e0d6fc0.base44.app/"
+                    className="w-full h-full border-0"
+                    title="MeinInventar App"
+                    style={{ transform: 'scale(0.7)', transformOrigin: '0 0', width: '142.857%', height: '142.857%' }}
+                  />
+                </div>
+              </motion.div>
+
+              {/* My Journey (Compact) */}
+              <motion.div
+                key="journey-compact"
+                className="bg-white rounded-xl shadow-lg p-3 flex flex-col"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-lg font-bold text-[#003b6e]">My Journey</h3>
+                    <button
+                        onClick={() => setIsJourneyExpanded(true)}
+                        className="flex items-center gap-1 text-sm text-[#003b6e] hover:text-[#86BC25] transition-colors"
+                        aria-label="Expand Journey"
+                    >
+                        Expand <ChevronsRight className="w-3 h-3" />
+                    </button>
+                </div>
+
+                <div className="flex-grow flex items-center justify-between gap-3">
+                  {compactMilestones.map((milestone, index) => {
+                    const Icon = milestone.icon;
+                    return(
+                      <React.Fragment key={index}>
+                        <div className="flex flex-col items-center text-center">
+                          <div className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center mb-1">
+                            <Icon className="w-3.5 h-3.5 text-[#86BC25]" />
+                          </div>
+                          <p className="text-sm font-bold text-[#003b6e] leading-tight">{milestone.title}</p>
+                          <p className="text-xs text-gray-500">{milestone.year}</p>
+                        </div>
+                        {index < compactMilestones.length - 1 && <div className="flex-grow h-px bg-gray-200"></div>}
+                      </React.Fragment>
+                    )
+                  })}
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
+      </div>
+
+      {/* Fullscreen Image Modal */}
+      {fullscreenImage && (
+        <motion.div
+          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={() => setFullscreenImage(null)}
+        >
+          <button
+            className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
+            onClick={() => setFullscreenImage(null)}
+          >
+            <X className="w-10 h-10" />
+          </button>
+          <motion.img
+            layoutId={`sport-image-${fullscreenImage.id}`}
+            src={fullscreenImage.url}
+            alt={fullscreenImage.title}
+            className="max-w-full max-h-full object-contain rounded-lg"
+          />
+        </motion.div>
+      )}
+    </section>
+  );
+}
