@@ -142,13 +142,13 @@ BCM Transformation`;
       </div>
 
       {/* Footer */}
-      <motion.div 
+      <motion.div
         className="absolute bottom-8 left-12 text-lg text-gray-500"
         initial={{ opacity: 0 }}
         animate={{ opacity: animationPhase === 'text' ? 1 : 0 }}
         transition={{ delay: 0.8 }}
       >
-        Deloitte 2025
+        Deloitte 2025 (v1.0)
       </motion.div>
 
       {/* Page indicator */}

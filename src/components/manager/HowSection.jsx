@@ -271,11 +271,7 @@ export default function HowSection() {
                                   setExpandedPreview(true);
                                 }}
                               >
-                                {loadingPrototype ? (
-                                  <div className="flex items-center justify-center h-full text-gray-500 text-sm">Prototyp wird geladen...</div>
-                                ) : (
-                                  <iframe srcDoc={htmlPrototype} className="w-full h-full border-0" title="Prototype" style={{ height: '600px' }} />
-                                )}
+                                <iframe src="https://brenneisen-e.github.io/VSTEike/" className="w-full h-full border-0" title="Prototype" style={{ height: '600px' }} />
                               </div>
                             </div>
                           ) : step.content?.type === 'text' ? (
@@ -523,20 +519,11 @@ export default function HowSection() {
               className="flex-1 flex bg-white"
               onClick={(e) => e.stopPropagation()}
             >
-              {loadingPrototype ? (
-                <div className="flex items-center justify-center flex-1">
-                  <div className="text-center">
-                    <div className="inline-block w-12 h-12 border-4 border-[#046A38] border-t-transparent rounded-full animate-spin mb-4"></div>
-                    <p className="text-xl text-gray-600">Prototyp wird geladen...</p>
-                  </div>
-                </div>
-              ) : (
-                <iframe
-                  srcDoc={htmlPrototype}
-                  className="w-full h-full border-0 flex-1" // iframe takes up available space
-                  title="Expanded Prototype"
-                />
-              )}
+              <iframe
+                src="https://brenneisen-e.github.io/VSTEike/"
+                className="w-full h-full border-0 flex-1"
+                title="Expanded Prototype"
+              />
 
               {/* Claude AI Assistant - nur im Fullscreen-Modus */}
               <ClaudeAIAssistant dashboardData={cockpitData} /> {/* Passed cockpitData to AI Assistant */}
