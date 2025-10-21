@@ -31,33 +31,43 @@ src/
 
 ## ⚡ SCHNELLSTART - Lokale Nutzung
 
-**⚠️ WICHTIG:** Die App kann NICHT durch Doppelklick auf index.html geöffnet werden (Browser-Sicherheit)!
+### 🖱️ **WINDOWS: EIN-KLICK-START**
 
-### 🚀 Einfachste Methoden:
+**Einfach Doppelklick auf:** `APP_STARTEN.bat`
 
-**1. Mit Python (empfohlen):**
+✅ Server startet automatisch
+✅ Browser öffnet automatisch
+✅ Fertig!
+
+📖 **Windows-Anleitung:** [README_WINDOWS.md](README_WINDOWS.md)
+
+**Voraussetzung:** Python muss installiert sein → [Python Download](https://www.python.org/downloads/)
+
+---
+
+### 🐧 **LINUX/MAC:**
+
 ```bash
-# Windows: Doppelklick auf:
-START_SERVER.bat
-
-# Linux/Mac:
 ./START_SERVER.sh
-
-# Dann Browser öffnen: http://localhost:8000
+# Browser öffnen: http://localhost:8000
 ```
 
-**2. Mit VS Code Live Server:**
+---
+
+### 🔧 **ALTERNATIVE METHODEN:**
+
+**Mit VS Code Live Server:**
 - Extension "Live Server" installieren
 - Rechtsklick auf `dist/index.html` → "Open with Live Server"
 
-**3. Mit npm (für Entwickler):**
+**Mit npm (für Entwickler):**
 ```bash
 npm install
 npm run dev
 # Browser: http://localhost:5173
 ```
 
-📖 **Ausführliche Anleitung:** Siehe [ANLEITUNG_LOKAL.md](ANLEITUNG_LOKAL.md)
+📖 **Ausführliche Anleitung:** [ANLEITUNG_LOKAL.md](ANLEITUNG_LOKAL.md)
 
 ## Entwicklung (für Entwickler)
 
