@@ -2,6 +2,12 @@
 
 Dieses Projekt ist eine eigenständige React-Anwendung, die ursprünglich von base44 stammte und nun vollständig unabhängig läuft.
 
+## 🌐 Live Demo
+
+**➡️ https://brenneisen-e.github.io/EikeCase/**
+
+Die App ist automatisch auf GitHub Pages deployed und kann direkt im Browser genutzt werden!
+
 ## Änderungen von base44
 
 Das Projekt wurde von der base44-Plattform entkoppelt und nutzt nun:

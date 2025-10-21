@@ -5,7 +5,7 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './', // Use relative paths for standalone HTML
+  base: process.env.GITHUB_PAGES ? '/EikeCase/' : './', // GitHub Pages uses /repo-name/
   plugins: [
     react(),
     legacy({
