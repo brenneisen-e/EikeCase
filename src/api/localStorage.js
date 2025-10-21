@@ -9,7 +9,7 @@ class LocalStorageDB {
     if (!localStorage.getItem(this.storageKey)) {
       localStorage.setItem(this.storageKey, JSON.stringify({
         countries: this.getDefaultCountries(),
-        visitedCountries: [],
+        visitedCountries: this.getDefaultVisitedCountries(),
         companyLogos: [],
         systemConnections: [],
         diagramNodes: [],
@@ -223,6 +223,64 @@ class LocalStorageDB {
       ...c,
       flag_url: `https://flagcdn.com/w320/${c.country_code.toLowerCase()}.png`,
       id: this.generateId()
+    }));
+  }
+
+  getDefaultVisitedCountries() {
+    // Pre-visited countries for Eike Brenneisen
+    const visitedCountries = [
+      { country_code: 'BE', country_name: 'Belgium', visited_date: '2025-10-09' },
+      { country_code: 'AR', country_name: 'Argentina', visited_date: '2025-10-09' },
+      { country_code: 'AT', country_name: 'Austria', visited_date: '2025-10-09' },
+      { country_code: 'BR', country_name: 'Brazil', visited_date: '2025-10-09' },
+      { country_code: 'CL', country_name: 'Chile', visited_date: '2025-10-09' },
+      { country_code: 'AU', country_name: 'Australia', visited_date: '2025-10-09' },
+      { country_code: 'FR', country_name: 'France', visited_date: '2025-10-09' },
+      { country_code: 'IT', country_name: 'Italy', visited_date: '2025-10-09' },
+      { country_code: 'IE', country_name: 'Ireland', visited_date: '2025-10-09' },
+      { country_code: 'HR', country_name: 'Croatia', visited_date: '2025-10-09' },
+      { country_code: 'PE', country_name: 'Peru', visited_date: '2025-10-09' },
+      { country_code: 'NL', country_name: 'Netherlands', visited_date: '2025-10-09' },
+      { country_code: 'NZ', country_name: 'New Zealand', visited_date: '2025-10-09' },
+      { country_code: 'BG', country_name: 'Bulgaria', visited_date: '2025-10-09' },
+      { country_code: 'CN', country_name: 'China', visited_date: '2025-10-09' },
+      { country_code: 'CO', country_name: 'Colombia', visited_date: '2025-10-09' },
+      { country_code: 'CZ', country_name: 'Czech Republic', visited_date: '2025-10-09' },
+      { country_code: 'DK', country_name: 'Denmark', visited_date: '2025-10-09' },
+      { country_code: 'EG', country_name: 'Egypt', visited_date: '2025-10-09' },
+      { country_code: 'DE', country_name: 'Germany', visited_date: '2025-10-09' },
+      { country_code: 'ID', country_name: 'Indonesia', visited_date: '2025-10-09' },
+      { country_code: 'VN', country_name: 'Vietnam', visited_date: '2025-10-09' },
+      { country_code: 'VA', country_name: 'Vatican City', visited_date: '2025-10-09' },
+      { country_code: 'GB', country_name: 'United Kingdom', visited_date: '2025-10-09' },
+      { country_code: 'CH', country_name: 'Switzerland', visited_date: '2025-10-09' },
+      { country_code: 'NP', country_name: 'Nepal', visited_date: '2025-10-09' },
+      { country_code: 'SI', country_name: 'Slovenia', visited_date: '2025-10-09' },
+      { country_code: 'PA', country_name: 'Panama', visited_date: '2025-10-09' },
+      { country_code: 'NO', country_name: 'Norway', visited_date: '2025-10-09' },
+      { country_code: 'MK', country_name: 'North Macedonia', visited_date: '2025-10-09' },
+      { country_code: 'PH', country_name: 'Philippines', visited_date: '2025-10-09' },
+      { country_code: 'PL', country_name: 'Poland', visited_date: '2025-10-09' },
+      { country_code: 'PT', country_name: 'Portugal', visited_date: '2025-10-09' },
+      { country_code: 'TR', country_name: 'Turkey', visited_date: '2025-10-09' },
+      { country_code: 'ES', country_name: 'Spain', visited_date: '2025-10-09' },
+      { country_code: 'TH', country_name: 'Thailand', visited_date: '2025-10-09' },
+      { country_code: 'SE', country_name: 'Sweden', visited_date: '2025-10-09' },
+      { country_code: 'LK', country_name: 'Sri Lanka', visited_date: '2025-10-09' },
+      { country_code: 'MC', country_name: 'Monaco', visited_date: '2025-10-09' },
+      { country_code: 'LU', country_name: 'Luxembourg', visited_date: '2025-10-09' },
+      { country_code: 'MY', country_name: 'Malaysia', visited_date: '2025-10-09' },
+      { country_code: 'LI', country_name: 'Liechtenstein', visited_date: '2025-10-09' },
+      { country_code: 'SM', country_name: 'San Marino', visited_date: '2025-10-09' },
+      { country_code: 'MX', country_name: 'Mexico', visited_date: '2025-10-09' },
+      { country_code: 'IN', country_name: 'India', visited_date: '2025-10-09' }
+    ];
+
+    return visitedCountries.map(c => ({
+      ...c,
+      id: this.generateId(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     }));
   }
 
