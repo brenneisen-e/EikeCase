@@ -29,16 +29,35 @@ src/
 └── lib/                    # Utility-Funktionen
 ```
 
-## Standalone Nutzung (ohne npm/Node.js)
+## ⚡ SCHNELLSTART - Lokale Nutzung
 
-Die einfachste Art, die App zu nutzen:
+**⚠️ WICHTIG:** Die App kann NICHT durch Doppelklick auf index.html geöffnet werden (Browser-Sicherheit)!
 
-1. **Öffne einfach die fertige App:**
-   - Gehe in den `dist/` Ordner
-   - Öffne `index.html` direkt im Browser
-   - Fertig! Keine Installation nötig
+### 🚀 Einfachste Methoden:
 
-Der `dist/` Ordner enthält alles Notwendige und kann kopiert/verschickt werden.
+**1. Mit Python (empfohlen):**
+```bash
+# Windows: Doppelklick auf:
+START_SERVER.bat
+
+# Linux/Mac:
+./START_SERVER.sh
+
+# Dann Browser öffnen: http://localhost:8000
+```
+
+**2. Mit VS Code Live Server:**
+- Extension "Live Server" installieren
+- Rechtsklick auf `dist/index.html` → "Open with Live Server"
+
+**3. Mit npm (für Entwickler):**
+```bash
+npm install
+npm run dev
+# Browser: http://localhost:5173
+```
+
+📖 **Ausführliche Anleitung:** Siehe [ANLEITUNG_LOKAL.md](ANLEITUNG_LOKAL.md)
 
 ## Entwicklung (für Entwickler)
 
