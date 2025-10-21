@@ -50,7 +50,7 @@ function PagesContent() {
 
 export default function Pages() {
     return (
-        <Router>
+        <Router basename="/EikeCase">
             <PagesContent />
         </Router>
     );
