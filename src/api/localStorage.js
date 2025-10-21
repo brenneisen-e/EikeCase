@@ -6,7 +6,10 @@ class LocalStorageDB {
   }
 
   initDB() {
-    if (!localStorage.getItem(this.storageKey)) {
+    const existing = localStorage.getItem(this.storageKey);
+
+    if (!existing) {
+      // First time - create everything with pre-visited countries
       localStorage.setItem(this.storageKey, JSON.stringify({
         countries: this.getDefaultCountries(),
         visitedCountries: this.getDefaultVisitedCountries(),
@@ -18,8 +21,25 @@ class LocalStorageDB {
         htmlPrototypes: [],
         claudeApiKeys: [],
         cockpitData: [],
-        users: []
+        users: [],
+        _version: '1.2.0' // Track data version
       }));
+    } else {
+      // Check if we need to migrate/add pre-visited countries
+      const db = JSON.parse(existing);
+
+      // If visitedCountries is empty or doesn't have the pre-visited ones, add them
+      if (!db.visitedCountries || db.visitedCountries.length === 0) {
+        db.visitedCountries = this.getDefaultVisitedCountries();
+        db._version = '1.2.0';
+        localStorage.setItem(this.storageKey, JSON.stringify(db));
+      }
+      // Migration for existing data without version
+      else if (!db._version) {
+        // Don't overwrite existing data, just add version
+        db._version = '1.2.0';
+        localStorage.setItem(this.storageKey, JSON.stringify(db));
+      }
     }
   }
 
