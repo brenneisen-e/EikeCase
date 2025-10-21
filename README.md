@@ -29,13 +29,26 @@ src/
 └── lib/                    # Utility-Funktionen
 ```
 
-## Installation
+## Standalone Nutzung (ohne npm/Node.js)
+
+Die einfachste Art, die App zu nutzen:
+
+1. **Öffne einfach die fertige App:**
+   - Gehe in den `dist/` Ordner
+   - Öffne `index.html` direkt im Browser
+   - Fertig! Keine Installation nötig
+
+Der `dist/` Ordner enthält alles Notwendige und kann kopiert/verschickt werden.
+
+## Entwicklung (für Entwickler)
+
+### Installation
 
 ```bash
 npm install
 ```
 
-## Entwicklung
+### Development Server
 
 ```bash
 npm run dev
@@ -43,11 +56,13 @@ npm run dev
 
 Die Anwendung läuft dann auf `http://localhost:5173`
 
-## Build
+### Production Build erstellen
 
 ```bash
 npm run build
 ```
+
+Dies erstellt einen `dist/` Ordner mit allen optimierten Dateien.
 
 ## Features
 
