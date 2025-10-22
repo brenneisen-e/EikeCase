@@ -124,8 +124,8 @@ export default function DataSilosVisualization() {
       <div className="relative" style={{ width: '380px', height: '380px' }}>
         <motion.div
           className="absolute inset-2 border-2 border-dashed border-[#046A38] rounded-xl"
-          animate={{ opacity: [0.3, 0.6, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity }}
+          animate={{ opacity: [0.3, 0.6, 0.3, 0.6, 0.3] }}
+          transition={{ duration: 4 }}
         />
 
         <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>

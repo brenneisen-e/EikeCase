@@ -186,25 +186,21 @@ export default function FinancialsSection() {
                       <span className="text-xs opacity-90">NSR:</span>
                       <span className="text-lg font-bold">€300K</span>
                     </motion.div>
+                    <motion.img
+                      src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/8d826aa3b_BarmeniaGothaer_Logo_zweizeilig_CMYK-White-on-DarkBlue.png"
+                      alt="Barmenia Gothaer"
+                      className="h-6 opacity-85 ml-auto"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
+                    />
                   </div>
-                  <p className="text-lg text-gray-600 mb-2">Contract migration tool from prototype to enterprise roll-out</p>
+                  <p className="text-lg text-gray-600 mb-1">Contract migration tool from prototype to enterprise roll-out</p>
+                  <ul className="space-y-1 mb-2 text-base text-gray-700">
+                    <li>• Built contract migration tool: prototype → full production roll-out</li>
+                    <li>• Actively used to support contract conversion for 1,000+ agencies</li>
+                  </ul>
                 </div>
-
-                <div className="flex justify-end mb-2">
-                  <motion.img
-                    src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/8d826aa3b_BarmeniaGothaer_Logo_zweizeilig_CMYK-White-on-DarkBlue.png"
-                    alt="Barmenia Gothaer"
-                    className="h-12 opacity-85"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
-                  />
-                </div>
-
-                <ul className="space-y-2 mb-4 text-lg text-gray-700">
-                  <li>• Built contract migration tool: prototype → full production roll-out</li>
-                  <li>• Actively used to support contract conversion for 1,000+ agencies</li>
-                </ul>
                 
                 {/* Two Showcase Boxes */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
@@ -244,7 +240,7 @@ export default function FinancialsSection() {
               <div className="h-2 bg-[#046A38]"></div>
               <div className="p-6">
                 <div className="mb-2">
-                  <div className="flex items-center gap-3 mb-1">
+                  <div className="flex items-center gap-2 mb-1">
                     <h3 className="text-2xl font-bold text-[#046A38]">Proof of Value</h3>
                     <motion.div
                       className="bg-[#046A38] text-white rounded-lg px-3 py-1.5 text-center flex items-center gap-2"
@@ -255,42 +251,38 @@ export default function FinancialsSection() {
                       <span className="text-xs opacity-90">NSR (each):</span>
                       <span className="text-lg font-bold">€50K</span>
                     </motion.div>
+                    <motion.img
+                      src="https://upload.wikimedia.org/wikipedia/de/1/11/Ergo_Group_logo.svg"
+                      alt="ERGO"
+                      className="h-5 opacity-85 bg-white px-1 rounded ml-auto"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
+                    />
+                    <motion.img
+                      src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Hansainvest-Logo.png"
+                      alt="Hansainvest"
+                      className="h-5 opacity-85 bg-white px-1 rounded"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
+                    />
+                    <motion.img
+                      src="https://upload.wikimedia.org/wikipedia/commons/5/53/Union_Investment.png"
+                      alt="Union Investment"
+                      className="h-5 opacity-85 bg-white px-1 rounded"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.9, type: 'spring', stiffness: 200 }}
+                    />
                   </div>
-                  <p className="text-lg text-gray-600 mb-2">AI-driven prototype for steering transparency</p>
+                  <p className="text-lg text-gray-600 mb-1">AI-driven prototype for steering transparency</p>
+                  <ul className="space-y-1 mb-2 text-base text-gray-700">
+                    <li>• 4-week prototype based on fragmented data</li>
+                    <li>• Delivered tangible simulation use case without system rebuild</li>
+                    <li>• Validated business value and ready for scale-up phase</li>
+                  </ul>
                 </div>
-
-                <div className="flex justify-end gap-2 mb-2">
-                  <motion.img
-                    src="https://upload.wikimedia.org/wikipedia/de/1/11/Ergo_Group_logo.svg"
-                    alt="ERGO"
-                    className="h-10 opacity-85 bg-white px-2 rounded"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
-                  />
-                  <motion.img
-                    src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Hansainvest-Logo.png"
-                    alt="Hansainvest"
-                    className="h-10 opacity-85 bg-white px-2 rounded"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
-                  />
-                  <motion.img
-                    src="https://upload.wikimedia.org/wikipedia/commons/5/53/Union_Investment.png"
-                    alt="Union Investment"
-                    className="h-10 opacity-85 bg-white px-2 rounded"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.9, type: 'spring', stiffness: 200 }}
-                  />
-                </div>
-
-                <ul className="space-y-2 mb-4 text-lg text-gray-700">
-                  <li>• 4-week prototype based on fragmented data</li>
-                  <li>• Delivered tangible simulation use case without system rebuild</li>
-                  <li>• Validated business value and ready for scale-up phase</li>
-                </ul>
 
                 {/* Two Showcase Boxes for ERGO */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
