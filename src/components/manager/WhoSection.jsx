@@ -217,9 +217,21 @@ export default function WhoSection() {
                 </div>
 
                 <div className="flex-grow flex items-center justify-between gap-2 relative">
-                  {/* Deloitte Logo Overlay - spans from Jr. Consultant to Project Lead */}
-                  <div className="absolute top-0 left-[20%] right-0 h-6 flex items-center justify-center pointer-events-none z-10">
-                    <img src={deloitteLogo} alt="Deloitte" className="h-full object-contain opacity-20" />
+                  {/* Deloitte Logo Overlay with bracket - spans from Jr. Consultant to Project Lead */}
+                  <div className="absolute -top-10 left-[20%] right-[5%] flex flex-col items-center pointer-events-none z-10">
+                    <img src={deloitteLogo} alt="Deloitte" className="h-8 object-contain opacity-60 mb-1" />
+                    {/* Bracket indicator */}
+                    <div className="w-full relative h-6">
+                      <svg className="w-full h-full" viewBox="0 0 100 20" preserveAspectRatio="none">
+                        <path
+                          d="M 0,0 L 0,10 L 5,15 L 95,15 L 100,10 L 100,0"
+                          fill="none"
+                          stroke="#046A38"
+                          strokeWidth="1.5"
+                          opacity="0.5"
+                        />
+                      </svg>
+                    </div>
                   </div>
 
                   {compactMilestones.map((milestone, index) => {

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Cpu, Server, CheckCircle, TrendingUp, Calendar, Users, X, Maximize2, ChevronRight } from 'lucide-react';
+import { Search, Cpu, Server, CheckCircle, TrendingUp, Calendar, Users, X, Maximize2, ChevronRight, BarChart3, Calculator, Shield } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import ClaudeAIAssistant from './ClaudeAIAssistant';
 
@@ -363,53 +363,42 @@ export default function HowSection() {
         <AnimatePresence mode="wait">
           {!showGantt ? (
             <motion.div
-              key="timeline"
+              key="application-fields"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="h-full p-6"
+              className="h-full p-8 flex flex-col items-center justify-center"
             >
-              <div className="flex items-center justify-between h-full">
-                {timelinePhases.map((phase, index) => {
-                  const isOptional = phase.optional;
-                  
+              <h3 className="text-2xl font-bold text-white mb-8 text-center">Application Fields</h3>
+
+              <div className="flex items-center justify-center gap-12 w-full">
+                {[
+                  { icon: BarChart3, title: 'Vertriebssteuerung', description: 'Sales steering & performance tracking' },
+                  { icon: Calculator, title: 'Simulation & Forecasting', description: 'Commission logic & scenario planning' },
+                  { icon: Shield, title: 'FIDA Datendashboard', description: 'EU regulation compliance dashboard' }
+                ].map((field, index) => {
+                  const Icon = field.icon;
                   return (
-                    <React.Fragment key={phase.id}>
-                      <motion.div
-                        className="flex flex-col items-center justify-center px-3 flex-1"
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 1 + index * 0.15, duration: 0.4 }}
-                      >
-                        <div className="text-center mb-2">
-                          <div className={`font-semibold text-sm mb-1 ${isOptional ? 'text-green-200' : 'text-white'}`}>
-                            {phase.title}
-                          </div>
-                          <div className={`text-xs ${isOptional ? 'text-green-300' : 'text-white/90'}`}>
-                            {phase.duration}
-                          </div>
-                        </div>
-                        
-                        <div className="flex items-center gap-2 bg-white/20 rounded-full px-3 py-1 text-xs font-semibold">
-                          <Users className="w-3 h-3" />
-                          <span>Team: {phase.team}</span>
-                        </div>
-                      </motion.div>
-                      
-                      {index < timelinePhases.length - 1 && (
-                        <div className="text-white/30">
-                          <ChevronRight className="w-5 h-5" />
-                        </div>
-                      )}
-                    </React.Fragment>
+                    <motion.div
+                      key={index}
+                      className="flex flex-col items-center text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + index * 0.15, duration: 0.4 }}
+                    >
+                      <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4 hover:bg-white/30 transition-colors">
+                        <Icon className="w-10 h-10 text-white" strokeWidth={1.5} />
+                      </div>
+                      <h4 className="text-lg font-semibold text-white mb-2">{field.title}</h4>
+                      <p className="text-sm text-white/80">{field.description}</p>
+                    </motion.div>
                   );
                 })}
               </div>
 
-              <div className="text-center text-xs text-white/80 mt-4">
-                <strong>Part 1:</strong> Rapid Proof of Value – 4–6 weeks | <strong>Part 2:</strong> Scaling Phase (optional)
+              <div className="text-center text-sm text-white/70 mt-8">
+                Click to expand full project timeline
               </div>
             </motion.div>
           ) : (
@@ -532,21 +521,6 @@ export default function HowSection() {
         )}
       </AnimatePresence>
 
-      <motion.div
-        className="text-center mt-4"
-        style={{ fontFamily: 'Aptos, Open Sans, Segoe UI, sans-serif' }}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 1.2 }}
-      >
-        <div className="bg-white border-t-2 border-[#046A38] inline-block px-8 py-3 rounded-lg shadow-md">
-          <strong className="text-[#046A38] text-lg">Take-away:</strong>
-          <span className="text-gray-700 text-lg ml-2">
-            Within <strong>4–6 weeks</strong>, the AI-driven prototype and ICC-based pilot deliver a validated Proof of Value. This approach demonstrates real impact fast – and creates the foundation for scalable transformation.
-          </span>
-        </div>
-      </motion.div>
     </section>
   );
 }

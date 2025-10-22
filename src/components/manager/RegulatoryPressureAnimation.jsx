@@ -25,8 +25,6 @@ export default function RegulatoryPressureVisualization() {
                 transition={{
                   delay: stream.delay,
                   duration: 2,
-                  repeat: Infinity,
-                  repeatDelay: 1.5,
                 }}
               />
               <span className="absolute -left-1 -top-5 text-[10px] text-gray-600">{stream.label}</span>
@@ -45,7 +43,7 @@ export default function RegulatoryPressureVisualization() {
               '0 4px 6px -1px rgba(4, 106, 56, 0.1)',
             ],
           }}
-          transition={{ duration: 2.5, repeat: Infinity }}
+          transition={{ duration: 2.5 }}
         >
           <div className="flex flex-col items-center justify-center h-full gap-3">
             <ShieldCheck size={36} className="text-[#046A38]" />
@@ -81,8 +79,6 @@ export default function RegulatoryPressureVisualization() {
                     delay: 2,
                     duration: 1.5,
                     times: [0, 0.4, 1],
-                    repeat: Infinity,
-                    repeatDelay: 2,
                   }}
                 />
               ) : (
@@ -90,7 +86,7 @@ export default function RegulatoryPressureVisualization() {
                   className="absolute left-0 h-full bg-gray-300 rounded opacity-30"
                   style={{ width: '25%' }}
                   animate={{ opacity: [0.2, 0.4, 0.2] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
+                  transition={{ duration: 1.5 }}
                 />
               )}
             </div>
