@@ -165,7 +165,7 @@ export default function WhoSection() {
                     <p className="text-xs font-semibold text-gray-600 mb-1">Private</p>
                     <div className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all">
                       <img
-                        src="/images/sports/sport-1.jpg"
+                        src="/EikeCase/images/sports/sport-1.jpg"
                         alt="Private Tech"
                         className="w-full h-full object-cover"
                       />
@@ -176,7 +176,7 @@ export default function WhoSection() {
                     <p className="text-xs font-semibold text-gray-600 mb-1">Business</p>
                     <div className="flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all">
                       <img
-                        src="/images/sports/sport-1.jpg"
+                        src="/EikeCase/images/sports/sport-1.jpg"
                         alt="Business Tech"
                         className="w-full h-full object-cover"
                       />
