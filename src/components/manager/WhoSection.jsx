@@ -215,7 +215,10 @@ export default function WhoSection() {
                 transition={{ duration: 0.3 }}
               >
                 <div className="flex justify-between items-center mb-2">
-                    <h3 className="text-lg font-bold text-[#003b6e]">My Journey</h3>
+                    <h3 className="text-lg font-bold text-[#003b6e] flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5" />
+                      My Journey
+                    </h3>
                     <button
                         onClick={() => setIsJourneyExpanded(true)}
                         className="flex items-center gap-1 text-sm text-[#003b6e] hover:text-[#86BC25] transition-colors"

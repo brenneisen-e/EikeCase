@@ -199,6 +199,7 @@ export default function FinancialsSection() {
                   <ul className="space-y-1 mb-2 text-base text-gray-700">
                     <li>• Built contract migration tool: prototype → full production roll-out</li>
                     <li>• Actively used to support contract conversion for 1,000+ agencies</li>
+                    <li>• Production implementation built in SAP SAC after prototype phase</li>
                   </ul>
                 </div>
                 
@@ -323,12 +324,12 @@ export default function FinancialsSection() {
           {showProofBoxes ? (
             <>
               <ChevronUp className="w-5 h-5" />
-              <span>Collapse PoCs</span>
+              <span>Scalable Growth</span>
             </>
           ) : (
             <>
               <ChevronDown className="w-5 h-5" />
-              <span>Expand PoCs</span>
+              <span>Show PoCs</span>
             </>
           )}
         </button>
