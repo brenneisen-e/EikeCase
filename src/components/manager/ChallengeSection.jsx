@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Database, Network, ShieldCheck, RefreshCw, TrendingUp, Clock, Brain } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Database, Network, ShieldCheck, RefreshCw, TrendingUp, Clock, Brain, BarChart3, Calculator, Shield } from 'lucide-react';
 import DataSilosVisualization from './DataSilosAnimation';
 import FunctionalComplexityVisualization from './FunctionalComplexityAnimation';
 import RegulatoryPressureVisualization from './RegulatoryPressureAnimation';
@@ -10,6 +10,7 @@ import EvolvingBusinessNeedsVisualization from './EvolvingNeedsAnimation';
 export default function ChallengeSection() {
   const [hoveredPillar, setHoveredPillar] = useState(null);
   const [viewedAnimations, setViewedAnimations] = useState([]);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const pillars = [
     {
@@ -93,9 +94,9 @@ export default function ChallengeSection() {
         Fragmented data and manual processes limit transparency, speed, and fact-based decisions.
       </motion.h2>
 
-      <div className="flex-grow flex flex-col gap-6">
+      <div className="flex-grow flex flex-col">
         {/* 4 Pillars in one row */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-4 mb-4">
           {pillars.map((pillar, index) => {
             const Icon = pillar.icon;
             return (
@@ -123,18 +124,18 @@ export default function ChallengeSection() {
           })}
         </div>
 
-        {/* 4 Animation Boxes */}
-        <div className="grid grid-cols-4 gap-4 flex-grow">
-          {pillars.map((pillar, index) => {
+        {/* 4 Animation Boxes - hide when Application Fields expanded */}
+        {!isCollapsed && (
+          <div className="grid grid-cols-4 gap-4 flex-grow" style={{ maxHeight: '200px', minHeight: '200px' }}>
+            {pillars.map((pillar, index) => {
             const AnimationComponent = pillar.animationComponent;
             const isHovered = hoveredPillar === pillar.highlightType;
             const wasViewed = viewedAnimations.includes(pillar.highlightType);
-            
+
             return (
               <motion.div
                 key={index}
                 className="rounded-lg shadow-md overflow-hidden relative"
-                style={{ minHeight: '200px' }}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -154,39 +155,129 @@ export default function ChallengeSection() {
               </motion.div>
             );
           })}
-        </div>
+          </div>
+        )}
 
-        {/* Business Impact Takeaway Box */}
+        {/* Business Impact Takeaway Box / Application Fields */}
         <motion.div
-          className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] rounded-xl p-6 shadow-lg text-white"
+          className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] rounded-xl shadow-lg text-white cursor-pointer"
+          style={{
+            minHeight: isCollapsed ? '400px' : '140px',
+            padding: isCollapsed ? '32px' : '24px'
+          }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.8 }}
+          onClick={() => setIsCollapsed(!isCollapsed)}
         >
-          <div className="grid grid-cols-3 gap-6">
-            {impacts.map((impact, index) => {
-              const Icon = impact.icon;
-              return (
-                <motion.div
-                  key={index}
-                  className="flex items-start gap-3"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.9 + index * 0.1 }}
-                >
-                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Icon className="w-4 h-4" strokeWidth={2.5} />
+          <AnimatePresence mode="wait">
+            {isCollapsed ? (
+              <motion.div
+                key="application-fields"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col h-full"
+              >
+                <h3 className="text-3xl font-bold text-white mb-6 text-center">Application Fields</h3>
+
+                {/* Target Groups */}
+                <div className="mb-8">
+                  <h4 className="text-lg font-semibold text-white/90 mb-4 text-center">Target Groups</h4>
+                  <div className="flex items-center justify-center gap-8">
+                    {[
+                      { icon: BarChart3, title: 'Banks' },
+                      { icon: Shield, title: 'Insurers' },
+                      { icon: TrendingUp, title: 'Asset Managers' }
+                    ].map((group, index) => {
+                      const Icon = group.icon;
+                      return (
+                        <motion.div
+                          key={index}
+                          className="flex flex-col items-center text-center"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.1 + index * 0.1, duration: 0.4 }}
+                        >
+                          <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-3 hover:bg-white/30 transition-colors">
+                            <Icon className="w-8 h-8 text-white" strokeWidth={1.5} />
+                          </div>
+                          <h5 className="text-base font-semibold text-white">{group.title}</h5>
+                        </motion.div>
+                      );
+                    })}
                   </div>
-                  <div>
-                    <h4 className="text-2xl font-bold mb-1">{impact.title}</h4>
-                    <p className="text-xl leading-relaxed opacity-90">{impact.description}</p>
+                </div>
+
+                {/* Topics */}
+                <div className="flex-1">
+                  <h4 className="text-lg font-semibold text-white/90 mb-4 text-center">Topics</h4>
+                  <div className="grid grid-cols-4 gap-6">
+                    {[
+                      { icon: BarChart3, title: 'Sales Steering', description: 'Performance tracking & steering' },
+                      { icon: Calculator, title: 'Simulation & Forecasting', description: 'Commission logic & scenario planning' },
+                      { icon: Shield, title: 'Compliance Dashboards', description: 'FIDA & regulatory reporting' },
+                      { icon: RefreshCw, title: 'Contract Migration', description: 'Automated contract conversion tools' }
+                    ].map((topic, index) => {
+                      const Icon = topic.icon;
+                      return (
+                        <motion.div
+                          key={index}
+                          className="flex flex-col items-center text-center p-4 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
+                        >
+                          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
+                            <Icon className="w-6 h-6 text-white" strokeWidth={1.5} />
+                          </div>
+                          <h5 className="text-base font-semibold text-white mb-1">{topic.title}</h5>
+                          <p className="text-sm text-white/70">{topic.description}</p>
+                        </motion.div>
+                      );
+                    })}
                   </div>
-                </motion.div>
-              );
-            })}
-          </div>
+                </div>
+
+                <div className="text-center text-sm text-white/70 mt-6">
+                  Click to show business impacts
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="impacts"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="grid grid-cols-3 gap-6">
+                  {impacts.map((impact, index) => {
+                    const Icon = impact.icon;
+                    return (
+                      <motion.div
+                        key={index}
+                        className="flex items-start gap-3"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 + index * 0.1 }}
+                      >
+                        <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                          <Icon className="w-4 h-4" strokeWidth={2.5} />
+                        </div>
+                        <div>
+                          <h4 className="text-2xl font-bold mb-1">{impact.title}</h4>
+                          <p className="text-xl leading-relaxed opacity-90">{impact.description}</p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

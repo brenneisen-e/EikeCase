@@ -30,9 +30,6 @@ const compactMilestones = [
   { icon: Star, year: '2025', title: 'Project Lead', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/60d27e529_Barmenia-removebg-preview.png', hasDeloitte: true},
 ];
 
-// Deloitte logo from landing page
-const deloitteLogo = 'https://cdn.freebiesupply.com/logos/large/2x/deloitte-logo-png-transparent.png';
-
 export default function WhoSection() {
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const [visitedCount, setVisitedCount] = useState(0);
@@ -73,7 +70,7 @@ export default function WhoSection() {
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
       >
-        Curious mind. Driven by impact. Defined by exploration.
+        Curious Mind. Dynamic Leader. Defined by Efficiency.
       </motion.h2>
 
       <div className="flex-grow grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 gap-4" style={{ maxHeight: 'calc(100vh - 200px)' }}>
@@ -217,10 +214,17 @@ export default function WhoSection() {
                 </div>
 
                 <div className="flex-grow flex items-center justify-between gap-2 relative">
-                  {/* Deloitte Logo Overlay - spans from Jr. Consultant to Project Lead */}
-                  <div className="absolute top-0 left-[20%] right-0 h-6 flex items-center justify-center pointer-events-none z-10">
-                    <img src={deloitteLogo} alt="Deloitte" className="h-full object-contain opacity-20" />
+                  {/* Deloitte Logo above boxes */}
+                  <div className="absolute -top-14 left-[20%] right-[5%] flex items-center justify-center pointer-events-none z-10">
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_Deloitte.svg"
+                      alt="Deloitte"
+                      className="h-12 object-contain opacity-70"
+                    />
                   </div>
+
+                  {/* Green Deloitte Box - behind the 4 boxes */}
+                  <div className="absolute top-0 bottom-0 left-[20%] right-0 bg-gradient-to-r from-[#046A38]/10 to-[#86BC25]/10 rounded-lg pointer-events-none z-0 border-2 border-[#046A38]/20"></div>
 
                   {compactMilestones.map((milestone, index) => {
                     const Icon = milestone.icon;

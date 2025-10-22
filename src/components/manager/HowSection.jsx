@@ -348,11 +348,23 @@ export default function HowSection() {
         })}
       </div>
 
+      {/* Timeline Overview Text */}
+      {!showGantt && (
+        <motion.div
+          className="text-center text-lg text-gray-700 mb-3 font-medium"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+        >
+          <strong>Part 1:</strong> Rapid Proof of Value – 4–6 weeks | <strong>Part 2:</strong> Scaling Phase (optional)
+        </motion.div>
+      )}
+
       <motion.div
         className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] text-white rounded-xl shadow-lg overflow-visible cursor-pointer"
-        style={{ 
-          minHeight: showGantt ? '500px' : '140px',
-          maxHeight: showGantt ? 'none' : '140px'
+        style={{
+          minHeight: showGantt ? '500px' : '180px',
+          maxHeight: showGantt ? 'none' : '180px'
         }}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -373,31 +385,31 @@ export default function HowSection() {
               <div className="flex items-center justify-between h-full">
                 {timelinePhases.map((phase, index) => {
                   const isOptional = phase.optional;
-                  
+
                   return (
                     <React.Fragment key={phase.id}>
                       <motion.div
-                        className="flex flex-col items-center justify-center px-3 flex-1"
+                        className={`flex flex-col items-center justify-center px-3 flex-1 rounded-lg ${isOptional ? 'bg-gray-400/30 py-3' : ''}`}
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
                         viewport={{ once: true }}
                         transition={{ delay: 1 + index * 0.15, duration: 0.4 }}
                       >
                         <div className="text-center mb-2">
-                          <div className={`font-semibold text-sm mb-1 ${isOptional ? 'text-green-200' : 'text-white'}`}>
+                          <div className={`font-semibold text-sm mb-1 ${isOptional ? 'text-gray-200' : 'text-white'}`}>
                             {phase.title}
                           </div>
-                          <div className={`text-xs ${isOptional ? 'text-green-300' : 'text-white/90'}`}>
+                          <div className={`text-xs ${isOptional ? 'text-gray-300' : 'text-white/90'}`}>
                             {phase.duration}
                           </div>
                         </div>
-                        
-                        <div className="flex items-center gap-2 bg-white/20 rounded-full px-3 py-1 text-xs font-semibold">
+
+                        <div className={`flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${isOptional ? 'bg-gray-500/30' : 'bg-white/20'}`}>
                           <Users className="w-3 h-3" />
                           <span>Team: {phase.team}</span>
                         </div>
                       </motion.div>
-                      
+
                       {index < timelinePhases.length - 1 && (
                         <div className="text-white/30">
                           <ChevronRight className="w-5 h-5" />
@@ -406,10 +418,6 @@ export default function HowSection() {
                     </React.Fragment>
                   );
                 })}
-              </div>
-
-              <div className="text-center text-xs text-white/80 mt-4">
-                <strong>Part 1:</strong> Rapid Proof of Value – 4–6 weeks | <strong>Part 2:</strong> Scaling Phase (optional)
               </div>
             </motion.div>
           ) : (
@@ -532,21 +540,6 @@ export default function HowSection() {
         )}
       </AnimatePresence>
 
-      <motion.div
-        className="text-center mt-4"
-        style={{ fontFamily: 'Aptos, Open Sans, Segoe UI, sans-serif' }}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 1.2 }}
-      >
-        <div className="bg-white border-t-2 border-[#046A38] inline-block px-8 py-3 rounded-lg shadow-md">
-          <strong className="text-[#046A38] text-lg">Take-away:</strong>
-          <span className="text-gray-700 text-lg ml-2">
-            Within <strong>4–6 weeks</strong>, the AI-driven prototype and ICC-based pilot deliver a validated Proof of Value. This approach demonstrates real impact fast – and creates the foundation for scalable transformation.
-          </span>
-        </div>
-      </motion.div>
     </section>
   );
 }
