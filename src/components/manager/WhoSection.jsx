@@ -34,6 +34,8 @@ export default function WhoSection() {
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const [visitedCount, setVisitedCount] = useState(0);
   const [isJourneyExpanded, setIsJourneyExpanded] = useState(false);
+  const [privateVideoError, setPrivateVideoError] = useState(false);
+  const [businessVideoError, setBusinessVideoError] = useState(false);
   const sportsImages = defaultSportsImages; // Use static images from public folder
 
   const fetchVisitedCount = async () => {
@@ -170,15 +172,19 @@ export default function WhoSection() {
                         loop
                         muted
                         playsInline
-                        preload="auto"
+                        preload="metadata"
                         onMouseEnter={(e) => e.target.play().catch(() => {})}
                         onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }}
+                        onError={() => setPrivateVideoError(true)}
+                        onLoadedData={() => setPrivateVideoError(false)}
                       >
                         <source src="/EikeCase/videos/tech/private.mp4" type="video/mp4" />
                       </video>
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <p className="text-xs text-gray-400 text-center px-2">Private Tech Video</p>
-                      </div>
+                      {privateVideoError && (
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <p className="text-xs text-gray-400 text-center px-2">Private Tech<br/>Video placeholder</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                   {/* Right - Business Video */}
@@ -191,15 +197,19 @@ export default function WhoSection() {
                         loop
                         muted
                         playsInline
-                        preload="auto"
+                        preload="metadata"
                         onMouseEnter={(e) => e.target.play().catch(() => {})}
                         onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }}
+                        onError={() => setBusinessVideoError(true)}
+                        onLoadedData={() => setBusinessVideoError(false)}
                       >
                         <source src="/EikeCase/videos/tech/business.mp4" type="video/mp4" />
                       </video>
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <p className="text-xs text-gray-400 text-center px-2">Business Tech Video</p>
-                      </div>
+                      {businessVideoError && (
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <p className="text-xs text-gray-400 text-center px-2">Business Tech<br/>Video placeholder</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
