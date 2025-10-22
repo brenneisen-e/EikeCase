@@ -6,6 +6,28 @@ import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simp
 // World map GeoJSON URL
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
+// Mapping to handle country name variations between localStorage and world-atlas
+const COUNTRY_NAME_MAPPING = {
+    // localStorage name → world-atlas name
+    'Czech Republic': 'Czechia',
+    'United Kingdom': 'United Kingdom',
+    'United States': 'United States of America',
+    'South Korea': 'South Korea',
+    'North Korea': 'North Korea',
+    'Democratic Republic of the Congo': 'Dem. Rep. Congo',
+    'Republic of the Congo': 'Congo',
+    'Central African Republic': 'Central African Rep.',
+    'Ivory Coast': "Côte d'Ivoire",
+    'Bosnia and Herzegovina': 'Bosnia and Herz.',
+    'Dominican Republic': 'Dominican Rep.',
+    'Equatorial Guinea': 'Eq. Guinea',
+    'South Sudan': 'S. Sudan',
+    'Vatican City': null, // Not in world-atlas
+    'Monaco': null, // Not in world-atlas
+    'Liechtenstein': null, // Not in world-atlas
+    'San Marino': null, // Not in world-atlas
+};
+
 export default function InteractiveWorldMap({ onCountryToggled, visitedCount }) {
     const [allCountries, setAllCountries] = useState([]);
     const [visitedCountries, setVisitedCountries] = useState([]);
@@ -34,16 +56,28 @@ export default function InteractiveWorldMap({ onCountryToggled, visitedCount }) 
 
     const handleCountryClick = async (geo) => {
         try {
-            const countryCode = geo.id; // ISO 3166-1 alpha-3 code
-            const countryName = geo.properties.name;
+            const geoCountryName = geo.properties.name;
 
-            // Convert alpha-3 to alpha-2 (we'll need to find the matching country in our list)
-            const matchingCountry = allCountries.find(c =>
-                c.country_name.toLowerCase() === countryName.toLowerCase() ||
-                c.country_code.toLowerCase() === countryCode.toLowerCase().substring(0, 2)
+            // Find the matching country in our allCountries list
+            // We need to reverse the mapping: world-atlas name → localStorage name
+            const reverseMappingMatch = Object.entries(COUNTRY_NAME_MAPPING).find(
+                ([localName, atlasName]) => atlasName === geoCountryName
             );
 
-            if (!matchingCountry) return;
+            // Try to match by mapped name or direct name
+            const matchingCountry = allCountries.find(c => {
+                if (reverseMappingMatch) {
+                    // Use the reversed mapping (localStorage name)
+                    return c.country_name.toLowerCase() === reverseMappingMatch[0].toLowerCase();
+                }
+                // Direct name comparison
+                return c.country_name.toLowerCase() === geoCountryName.toLowerCase();
+            });
+
+            if (!matchingCountry) {
+                console.log('No matching country found for:', geoCountryName);
+                return;
+            }
 
             const existingVisit = visitedCountries.find(v =>
                 v.country_code.toLowerCase() === matchingCountry.country_code.toLowerCase()
@@ -68,10 +102,22 @@ export default function InteractiveWorldMap({ onCountryToggled, visitedCount }) 
     };
 
     const isCountryVisited = (geo) => {
-        const countryName = geo.properties.name;
-        return visitedCountries.some(v =>
-            v.country_name.toLowerCase() === countryName.toLowerCase()
-        );
+        const geoCountryName = geo.properties.name;
+
+        return visitedCountries.some(v => {
+            // Get the mapped name for this visited country, or use the original if no mapping exists
+            const mappedName = COUNTRY_NAME_MAPPING[v.country_name] !== undefined
+                ? COUNTRY_NAME_MAPPING[v.country_name]
+                : v.country_name;
+
+            // If mapping returns null, this country is not in world-atlas (micro-states)
+            if (mappedName === null) {
+                return false;
+            }
+
+            // Compare the geo country name with the mapped name
+            return geoCountryName.toLowerCase() === mappedName.toLowerCase();
+        });
     };
 
     if (loading) {
