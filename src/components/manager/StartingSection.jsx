@@ -148,7 +148,7 @@ BCM Transformation`;
         animate={{ opacity: animationPhase === 'text' ? 1 : 0 }}
         transition={{ delay: 0.8 }}
       >
-        Deloitte 2025 (v1.3.2)
+        Deloitte 2025 (v1.4.0)
       </motion.div>
 
       {/* Page indicator */}

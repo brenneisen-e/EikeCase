@@ -28,12 +28,22 @@ const COUNTRY_NAME_MAPPING = {
     'San Marino': null, // Not in world-atlas - will be shown as marker
 };
 
-// Coordinates for micro-states that are too small to appear in world-atlas
+// Coordinates for micro-states and small islands that are too small or missing in world-atlas
 const MICRO_STATE_MARKERS = {
     'VA': { name: 'Vatican City', coordinates: [12.4534, 41.9029] }, // In Rome
     'MC': { name: 'Monaco', coordinates: [7.4167, 43.7333] },
     'LI': { name: 'Liechtenstein', coordinates: [9.5215, 47.1410] },
-    'SM': { name: 'San Marino', coordinates: [12.4578, 43.9424] }
+    'SM': { name: 'San Marino', coordinates: [12.4578, 43.9424] },
+    'SG': { name: 'Singapore', coordinates: [103.8198, 1.3521] },
+    'MV': { name: 'Maldives', coordinates: [73.5093, 4.1755] },
+    'MT': { name: 'Malta', coordinates: [14.5146, 35.8989] },
+    'BB': { name: 'Barbados', coordinates: [-59.5432, 13.1939] },
+    'BS': { name: 'Bahamas', coordinates: [-77.3963, 25.0343] },
+    'TT': { name: 'Trinidad and Tobago', coordinates: [-61.2225, 10.6918] },
+    'MU': { name: 'Mauritius', coordinates: [57.5522, -20.1609] },
+    'SC': { name: 'Seychelles', coordinates: [55.4920, -4.6796] },
+    'KM': { name: 'Comoros', coordinates: [43.8722, -11.6455] },
+    'CV': { name: 'Cape Verde', coordinates: [-24.0133, 16.5388] },
 };
 
 export default function InteractiveWorldMap({ onCountryToggled, visitedCount }) {
@@ -230,18 +240,21 @@ export default function InteractiveWorldMap({ onCountryToggled, visitedCount }) 
                                 <Marker
                                     key={code}
                                     coordinates={data.coordinates}
-                                    onMouseEnter={() => setHoveredCountry(data.name)}
-                                    onMouseLeave={() => setHoveredCountry(null)}
-                                    onClick={() => handleMicroStateClick(code)}
-                                    style={{ cursor: 'pointer' }}
                                 >
                                     <circle
-                                        r={isHovered ? 6 : 4}
+                                        r={isHovered ? 8 : 5}
                                         fill={isVisited ? '#86BC25' : '#E5E7EB'}
                                         stroke="#046A38"
                                         strokeWidth={isHovered ? 2 : 1.5}
                                         style={{
-                                            transition: 'all 0.2s ease-in-out'
+                                            transition: 'all 0.2s ease-in-out',
+                                            cursor: 'pointer'
+                                        }}
+                                        onMouseEnter={() => setHoveredCountry(data.name)}
+                                        onMouseLeave={() => setHoveredCountry(null)}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleMicroStateClick(code);
                                         }}
                                     />
                                 </Marker>

@@ -1,18 +1,59 @@
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { X, MapPin } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, MapPin, Upload, Trash2 } from 'lucide-react';
 import InteractiveWorldMap from './InteractiveWorldMap';
 import Timeline from './Timeline';
 
-const sportsImages = [
-  { id: 1, title: 'Badminton', url: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800' },
-  { id: 2, title: 'Marathon', url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800' },
-  { id: 3, title: 'Football', url: 'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=800' }
+const defaultSportsImages = [
+  { id: 1, title: 'Badminton', url: 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=800', isDefault: true },
+  { id: 2, title: 'Marathon', url: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800', isDefault: true },
+  { id: 3, title: 'Football', url: 'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=800', isDefault: true }
 ];
 
 export default function WhoSlide({ onNext, onPrev }) {
   const [fullscreenImage, setFullscreenImage] = useState(null);
+  const [sportsImages, setSportsImages] = useState([]);
+  const [hoveredImageId, setHoveredImageId] = useState(null);
+  const fileInputRef = useRef(null);
+
+  // Load images from localStorage on mount
+  useEffect(() => {
+    const savedImages = localStorage.getItem('sports_images');
+    if (savedImages) {
+      setSportsImages(JSON.parse(savedImages));
+    } else {
+      setSportsImages(defaultSportsImages);
+      localStorage.setItem('sports_images', JSON.stringify(defaultSportsImages));
+    }
+  }, []);
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const newImage = {
+        id: Date.now(),
+        title: file.name.split('.')[0],
+        url: reader.result,
+        isDefault: false
+      };
+
+      const updatedImages = [...sportsImages, newImage];
+      setSportsImages(updatedImages);
+      localStorage.setItem('sports_images', JSON.stringify(updatedImages));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleDeleteImage = (imageId, event) => {
+    event.stopPropagation();
+    const updatedImages = sportsImages.filter(img => img.id !== imageId);
+    setSportsImages(updatedImages);
+    localStorage.setItem('sports_images', JSON.stringify(updatedImages));
+  };
 
   return (
     <div className="h-full w-full bg-gradient-to-br from-white to-gray-100 p-8 relative">
@@ -60,25 +101,51 @@ export default function WhoSlide({ onNext, onPrev }) {
         {/* Right Side - Three Interactive Areas */}
         <div className="space-y-4">
           {/* Area 1 - Sport Enthusiast */}
-          <motion.div 
+          <motion.div
             className="bg-white rounded-xl shadow-lg p-6 h-1/3"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <h3 className="text-lg font-bold text-[#003b6e] mb-4">🏃 Sport Enthusiast</h3>
-            <div className="flex gap-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-[#003b6e]">🏃 Sport Enthusiast</h3>
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="flex items-center gap-1 px-3 py-1 bg-[#86BC25] text-white rounded-lg hover:bg-[#7BA622] transition-colors text-sm"
+              >
+                <Upload className="w-4 h-4" />
+                Upload
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+            </div>
+            <div className="flex gap-2 overflow-x-auto">
               {sportsImages.map((image) => (
-                <div 
+                <div
                   key={image.id}
-                  className="flex-1 h-20 rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+                  className="relative flex-shrink-0 w-24 h-20 rounded-lg overflow-hidden cursor-pointer hover:scale-105 transition-transform"
                   onClick={() => setFullscreenImage(image)}
+                  onMouseEnter={() => setHoveredImageId(image.id)}
+                  onMouseLeave={() => setHoveredImageId(null)}
                 >
-                  <img 
-                    src={image.url} 
+                  <img
+                    src={image.url}
                     alt={image.title}
                     className="w-full h-full object-cover"
                   />
+                  {hoveredImageId === image.id && (
+                    <button
+                      onClick={(e) => handleDeleteImage(image.id, e)}
+                      className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
@@ -101,19 +168,36 @@ export default function WhoSlide({ onNext, onPrev }) {
           </motion.div>
 
           {/* Area 3 - Tech Explorer */}
-          <motion.div 
+          <motion.div
             className="bg-white rounded-xl shadow-lg p-6 h-1/3"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 }}
           >
             <h3 className="text-lg font-bold text-[#003b6e] mb-4">💻 Tech Explorer</h3>
-            <div className="h-24 bg-gray-900 rounded-lg overflow-hidden">
-              <iframe
-                src="https://app.base44.com/apps/68c6dca4763e822e9e0d6fc0/editor/preview"
-                className="w-full h-full border-0"
-                title="Base44 App Demo"
-              />
+            <div className="flex gap-4 h-24">
+              {/* Left Side - Private */}
+              <div className="flex-1 flex flex-col">
+                <p className="text-xs font-semibold text-gray-600 mb-1">Private</p>
+                <div className="flex-1 bg-gray-100 rounded-lg overflow-hidden">
+                  <iframe
+                    src="https://mein-inventar-9e0d6fc0.base44.app/"
+                    className="w-full h-full border-0"
+                    title="Private Inventory"
+                  />
+                </div>
+              </div>
+              {/* Right Side - Business */}
+              <div className="flex-1 flex flex-col">
+                <p className="text-xs font-semibold text-gray-600 mb-1">Business</p>
+                <div className="flex-1 bg-gray-100 rounded-lg overflow-hidden">
+                  <iframe
+                    src="https://deudeloitte.sharepoint.com/sites/DOL-c-DE-EventExperiencePlatform/SitePages/Deloitte-Event-Experience.aspx?env=WebView"
+                    className="w-full h-full border-0"
+                    title="Business Platform"
+                  />
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
