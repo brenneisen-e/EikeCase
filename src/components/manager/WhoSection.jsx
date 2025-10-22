@@ -168,7 +168,7 @@ export default function WhoSection() {
                     <div className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all relative">
                       <video
                         className="w-full h-full object-cover"
-                        src="/EikeCase/videos/tech/private.mp4"
+                        src="/videos/tech/private.mp4"
                         loop
                         muted
                         playsInline
@@ -178,7 +178,7 @@ export default function WhoSection() {
                         onError={() => setPrivateVideoError(true)}
                         onLoadedData={() => setPrivateVideoError(false)}
                       >
-                        <source src="/EikeCase/videos/tech/private.mp4" type="video/mp4" />
+                        <source src="/videos/tech/private.mp4" type="video/mp4" />
                       </video>
                       {privateVideoError && (
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -193,7 +193,7 @@ export default function WhoSection() {
                     <div className="flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all relative">
                       <video
                         className="w-full h-full object-cover"
-                        src="/EikeCase/videos/tech/business.mp4"
+                        src="/videos/tech/business.mp4"
                         loop
                         muted
                         playsInline
@@ -203,7 +203,7 @@ export default function WhoSection() {
                         onError={() => setBusinessVideoError(true)}
                         onLoadedData={() => setBusinessVideoError(false)}
                       >
-                        <source src="/EikeCase/videos/tech/business.mp4" type="video/mp4" />
+                        <source src="/videos/tech/business.mp4" type="video/mp4" />
                       </video>
                       {businessVideoError && (
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
