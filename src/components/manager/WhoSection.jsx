@@ -9,9 +9,9 @@ import DetailedTimeline from './DetailedTimeline'; // Import the new DetailedTim
 // Sport images - Add your own images to public/images/sports/
 // Supported formats: sport-1.jpg, sport-2.jpg, sport-3.jpg, etc.
 const sportsImagesList = [
-  { id: 1, filename: 'rafting.jpg', title: 'Wildwasser Rafting' },
-  { id: 2, filename: 'marathon-team.jpg', title: 'Deloitte Team Marathon' },
-  { id: 3, filename: 'marathon.jpg', title: 'Marathon Running' },
+  { id: 1, filename: 'sport-1.jpg', title: 'Sport 1' },
+  { id: 2, filename: 'sport-2.jpg', title: 'Sport 2' },
+  { id: 3, filename: 'sport-3.jpg', title: 'Sport 3' },
   // Add more images here as needed
 ];
 
