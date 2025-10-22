@@ -29,11 +29,14 @@ const defaultSportsImages = [
 
 const compactMilestones = [
   { icon: GraduationCap, year: '2015-18', title: 'Banker', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/2340d7224_OLB.png'},
-  { icon: Briefcase, year: '2018-21', title: 'Jr. Consultant', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/260011748_ERGO.png'},
-  { icon: Building, year: '2022', title: 'Consultant', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/eaebdd7ca_Commerzpng.png'},
-  { icon: Users, year: '2022-24', title: 'Sr. Consultant', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/260011748_ERGO.png'},
-  { icon: Star, year: '2025', title: 'Project Lead', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/60d27e529_Barmenia-removebg-preview.png'},
+  { icon: Briefcase, year: '2018-21', title: 'Jr. Consultant', logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/CEMS_logo.svg', hasDeloitte: true},
+  { icon: Building, year: '2022', title: 'Consultant', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/eaebdd7ca_Commerzpng.png', hasDeloitte: true},
+  { icon: Users, year: '2022-24', title: 'Sr. Consultant', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/260011748_ERGO.png', hasDeloitte: true},
+  { icon: Star, year: '2025', title: 'Project Lead', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/60d27e529_Barmenia-removebg-preview.png', hasDeloitte: true},
 ];
+
+// Deloitte logo from landing page
+const deloitteLogo = 'https://cdn.freebiesupply.com/logos/large/2x/deloitte-logo-png-transparent.png';
 
 export default function WhoSection() {
   const [fullscreenImage, setFullscreenImage] = useState(null);
@@ -45,12 +48,21 @@ export default function WhoSection() {
 
   // Load sports images from localStorage
   useEffect(() => {
-    const savedImages = localStorage.getItem('sports_images_who');
-    if (savedImages) {
-      setSportsImages(JSON.parse(savedImages));
-    } else {
+    try {
+      const savedImages = localStorage.getItem('sports_images_who');
+      console.log('Loading images from localStorage:', savedImages ? 'found' : 'not found');
+      if (savedImages) {
+        const parsed = JSON.parse(savedImages);
+        console.log('Loaded images count:', parsed.length);
+        setSportsImages(parsed);
+      } else {
+        console.log('No saved images, using defaults');
+        setSportsImages(defaultSportsImages);
+        localStorage.setItem('sports_images_who', JSON.stringify(defaultSportsImages));
+      }
+    } catch (error) {
+      console.error('Error loading images from localStorage:', error);
       setSportsImages(defaultSportsImages);
-      localStorage.setItem('sports_images_who', JSON.stringify(defaultSportsImages));
     }
   }, []);
 
@@ -60,25 +72,38 @@ export default function WhoSection() {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      const newImage = {
-        id: Date.now(),
-        title: file.name.split('.')[0],
-        url: reader.result,
-        isDefault: false
-      };
+      try {
+        const newImage = {
+          id: Date.now(),
+          title: file.name.split('.')[0],
+          url: reader.result,
+          isDefault: false
+        };
 
-      const updatedImages = [...sportsImages, newImage];
-      setSportsImages(updatedImages);
-      localStorage.setItem('sports_images_who', JSON.stringify(updatedImages));
+        const updatedImages = [...sportsImages, newImage];
+        console.log('Saving images to localStorage, count:', updatedImages.length);
+        setSportsImages(updatedImages);
+        localStorage.setItem('sports_images_who', JSON.stringify(updatedImages));
+        console.log('Images saved successfully');
+      } catch (error) {
+        console.error('Error saving image:', error);
+        alert('Fehler beim Speichern des Bildes. Das Bild könnte zu groß sein.');
+      }
     };
     reader.readAsDataURL(file);
   };
 
   const handleDeleteImage = (imageId, event) => {
     event.stopPropagation();
-    const updatedImages = sportsImages.filter(img => img.id !== imageId);
-    setSportsImages(updatedImages);
-    localStorage.setItem('sports_images_who', JSON.stringify(updatedImages));
+    try {
+      const updatedImages = sportsImages.filter(img => img.id !== imageId);
+      console.log('Deleting image, new count:', updatedImages.length);
+      setSportsImages(updatedImages);
+      localStorage.setItem('sports_images_who', JSON.stringify(updatedImages));
+      console.log('Images updated successfully');
+    } catch (error) {
+      console.error('Error deleting image:', error);
+    }
   };
 
   const fetchVisitedCount = async () => {
@@ -192,11 +217,11 @@ export default function WhoSection() {
                     className="hidden"
                   />
                 </div>
-                <div className="flex-grow flex gap-2 overflow-x-auto rounded-lg">
+                <div className="flex-grow flex gap-2 overflow-x-auto rounded-lg" style={{ scrollbarWidth: 'thin', scrollbarColor: '#9CA3AF #E5E7EB' }}>
                   {sportsImages.map((image) => (
                     <div
                       key={image.id}
-                      className="flex-shrink-0 w-1/3 h-full rounded-lg overflow-hidden cursor-pointer group relative"
+                      className="flex-shrink-0 w-1/3 min-w-[100px] h-full rounded-lg overflow-hidden cursor-pointer group relative"
                       onClick={() => setFullscreenImage(image)}
                       onMouseEnter={() => setHoveredImageId(image.id)}
                       onMouseLeave={() => setHoveredImageId(null)}
@@ -232,29 +257,33 @@ export default function WhoSection() {
                 <h3 className="text-lg font-bold text-[#003b6e] mb-2">💻 Tech Explorer</h3>
                 <div className="flex-grow flex gap-2">
                   {/* Left - Private */}
-                  <div className="flex-1 flex flex-col">
+                  <a
+                    href="https://mein-inventar-9e0d6fc0.base44.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex flex-col group"
+                  >
                     <p className="text-xs font-semibold text-gray-600 mb-1">Private</p>
-                    <div className="flex-1 bg-gray-100 rounded-lg overflow-hidden">
-                      <iframe
-                        src="https://mein-inventar-9e0d6fc0.base44.app/"
-                        className="w-full h-full border-0"
-                        title="Private Inventory"
-                        style={{ transform: 'scale(0.7)', transformOrigin: '0 0', width: '142.857%', height: '142.857%' }}
-                      />
+                    <div className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 flex flex-col items-center justify-center border-2 border-blue-200 group-hover:border-blue-400 transition-all cursor-pointer group-hover:shadow-lg">
+                      <div className="text-4xl mb-2">🏠</div>
+                      <p className="text-sm font-semibold text-[#003b6e] text-center">Mein Inventar</p>
+                      <p className="text-xs text-gray-500 text-center mt-1">Klicken zum Öffnen</p>
                     </div>
-                  </div>
+                  </a>
                   {/* Right - Business */}
-                  <div className="flex-1 flex flex-col">
+                  <a
+                    href="https://deudeloitte.sharepoint.com/sites/DOL-c-DE-EventExperiencePlatform/SitePages/Deloitte-Event-Experience.aspx?env=WebView"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex flex-col group"
+                  >
                     <p className="text-xs font-semibold text-gray-600 mb-1">Business</p>
-                    <div className="flex-1 bg-gray-100 rounded-lg overflow-hidden">
-                      <iframe
-                        src="https://deudeloitte.sharepoint.com/sites/DOL-c-DE-EventExperiencePlatform/SitePages/Deloitte-Event-Experience.aspx?env=WebView"
-                        className="w-full h-full border-0"
-                        title="Business Platform"
-                        style={{ transform: 'scale(0.7)', transformOrigin: '0 0', width: '142.857%', height: '142.857%' }}
-                      />
+                    <div className="flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 flex flex-col items-center justify-center border-2 border-green-200 group-hover:border-green-400 transition-all cursor-pointer group-hover:shadow-lg">
+                      <div className="text-4xl mb-2">🏢</div>
+                      <p className="text-sm font-semibold text-[#003b6e] text-center">Deloitte Platform</p>
+                      <p className="text-xs text-gray-500 text-center mt-1">Klicken zum Öffnen</p>
                     </div>
-                  </div>
+                  </a>
                 </div>
               </motion.div>
 
@@ -278,13 +307,18 @@ export default function WhoSection() {
                     </button>
                 </div>
 
-                <div className="flex-grow flex items-center justify-between gap-2">
+                <div className="flex-grow flex items-center justify-between gap-2 relative">
+                  {/* Deloitte Logo Overlay - spans from Jr. Consultant to Project Lead */}
+                  <div className="absolute top-0 left-[20%] right-0 h-6 flex items-center justify-center pointer-events-none z-10">
+                    <img src={deloitteLogo} alt="Deloitte" className="h-full object-contain opacity-20" />
+                  </div>
+
                   {compactMilestones.map((milestone, index) => {
                     const Icon = milestone.icon;
                     return(
                       <React.Fragment key={index}>
                         <div
-                          className="flex-1 flex flex-col items-center text-center p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+                          className="flex-1 flex flex-col items-center text-center p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer relative z-20"
                           onClick={() => setIsJourneyExpanded(true)}
                         >
                           {/* Logo */}
@@ -296,7 +330,7 @@ export default function WhoSection() {
                           {/* Year */}
                           <p className="text-[10px] text-gray-500">{milestone.year}</p>
                         </div>
-                        {index < compactMilestones.length - 1 && <div className="w-px h-12 bg-gray-200"></div>}
+                        {index < compactMilestones.length - 1 && <div className="w-px h-12 bg-gray-200 z-20"></div>}
                       </React.Fragment>
                     )
                   })}
