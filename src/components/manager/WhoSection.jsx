@@ -1,31 +1,26 @@
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MapPin, Briefcase, GraduationCap, Building, TrendingUp, Users, Star, ChevronsRight, ChevronsLeft, Upload, Trash2 } from 'lucide-react';
+import { X, MapPin, Briefcase, GraduationCap, Building, TrendingUp, Users, Star, ChevronsRight, ChevronsLeft } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import InteractiveWorldMapNew from './InteractiveWorldMapNew'; // New world map component
 import DetailedTimeline from './DetailedTimeline'; // Import the new DetailedTimeline component
 
-const defaultSportsImages = [
-  {
-    id: 1,
-    title: 'Wildwasser Rafting',
-    url: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/3dcc5eb12_SAVE_20220418_140433.jpg',
-    isDefault: true
-  },
-  {
-    id: 2,
-    title: 'Deloitte Team Marathon',
-    url: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/df4439e82_1685432342706.jpg',
-    isDefault: true
-  },
-  {
-    id: 3,
-    title: 'Marathon Running',
-    url: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/64e1eb2b1_9431_20231001_144044_318986871_original.jpg',
-    isDefault: true
-  },
+// Sport images - Add your own images to public/images/sports/
+// Supported formats: sport-1.jpg, sport-2.jpg, sport-3.jpg, etc.
+const sportsImagesList = [
+  { id: 1, filename: 'rafting.jpg', title: 'Wildwasser Rafting' },
+  { id: 2, filename: 'marathon-team.jpg', title: 'Deloitte Team Marathon' },
+  { id: 3, filename: 'marathon.jpg', title: 'Marathon Running' },
+  // Add more images here as needed
 ];
+
+const defaultSportsImages = sportsImagesList.map(img => ({
+  id: img.id,
+  title: img.title,
+  url: `/EikeCase/images/sports/${img.filename}`,
+  isLocal: true
+}));
 
 const compactMilestones = [
   { icon: GraduationCap, year: '2015-18', title: 'Banker', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/2340d7224_OLB.png'},
@@ -42,69 +37,7 @@ export default function WhoSection() {
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const [visitedCount, setVisitedCount] = useState(0);
   const [isJourneyExpanded, setIsJourneyExpanded] = useState(false);
-  const [sportsImages, setSportsImages] = useState([]);
-  const [hoveredImageId, setHoveredImageId] = useState(null);
-  const fileInputRef = useRef(null);
-
-  // Load sports images from localStorage
-  useEffect(() => {
-    try {
-      const savedImages = localStorage.getItem('sports_images_who');
-      console.log('Loading images from localStorage:', savedImages ? 'found' : 'not found');
-      if (savedImages) {
-        const parsed = JSON.parse(savedImages);
-        console.log('Loaded images count:', parsed.length);
-        setSportsImages(parsed);
-      } else {
-        console.log('No saved images, using defaults');
-        setSportsImages(defaultSportsImages);
-        localStorage.setItem('sports_images_who', JSON.stringify(defaultSportsImages));
-      }
-    } catch (error) {
-      console.error('Error loading images from localStorage:', error);
-      setSportsImages(defaultSportsImages);
-    }
-  }, []);
-
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      try {
-        const newImage = {
-          id: Date.now(),
-          title: file.name.split('.')[0],
-          url: reader.result,
-          isDefault: false
-        };
-
-        const updatedImages = [...sportsImages, newImage];
-        console.log('Saving images to localStorage, count:', updatedImages.length);
-        setSportsImages(updatedImages);
-        localStorage.setItem('sports_images_who', JSON.stringify(updatedImages));
-        console.log('Images saved successfully');
-      } catch (error) {
-        console.error('Error saving image:', error);
-        alert('Fehler beim Speichern des Bildes. Das Bild könnte zu groß sein.');
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleDeleteImage = (imageId, event) => {
-    event.stopPropagation();
-    try {
-      const updatedImages = sportsImages.filter(img => img.id !== imageId);
-      console.log('Deleting image, new count:', updatedImages.length);
-      setSportsImages(updatedImages);
-      localStorage.setItem('sports_images_who', JSON.stringify(updatedImages));
-      console.log('Images updated successfully');
-    } catch (error) {
-      console.error('Error deleting image:', error);
-    }
-  };
+  const sportsImages = defaultSportsImages; // Use static images from public folder
 
   const fetchVisitedCount = async () => {
       try {
@@ -200,31 +133,13 @@ export default function WhoSection() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-lg font-bold text-[#003b6e]">🏃 Sport Enthusiast</h3>
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="flex items-center gap-1 px-2 py-1 bg-[#86BC25] text-white rounded-lg hover:bg-[#7BA622] transition-colors text-xs"
-                  >
-                    <Upload className="w-3 h-3" />
-                    Upload
-                  </button>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                  />
-                </div>
+                <h3 className="text-lg font-bold text-[#003b6e] mb-2">🏃 Sport Enthusiast</h3>
                 <div className="flex-grow flex gap-2 overflow-x-auto rounded-lg" style={{ scrollbarWidth: 'thin', scrollbarColor: '#9CA3AF #E5E7EB' }}>
                   {sportsImages.map((image) => (
                     <div
                       key={image.id}
                       className="flex-shrink-0 w-1/3 min-w-[100px] h-full rounded-lg overflow-hidden cursor-pointer group relative"
                       onClick={() => setFullscreenImage(image)}
-                      onMouseEnter={() => setHoveredImageId(image.id)}
-                      onMouseLeave={() => setHoveredImageId(null)}
                     >
                       <img
                         src={image.url}
@@ -232,14 +147,6 @@ export default function WhoSection() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-all duration-300"
                       />
                       <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      {hoveredImageId === image.id && (
-                        <button
-                          onClick={(e) => handleDeleteImage(image.id, e)}
-                          className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors z-10"
-                        >
-                          <Trash2 className="w-3 h-3" />
-                        </button>
-                      )}
                     </div>
                   ))}
                 </div>
