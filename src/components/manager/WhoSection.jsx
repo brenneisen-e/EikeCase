@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MapPin, Briefcase, GraduationCap, Building, TrendingUp, Users, Star, ChevronsRight, ChevronsLeft } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import FlagGridDisplay from './FlagGridDisplay'; // Assuming FlagGridDisplay is now in its own file
+import InteractiveWorldMapNew from './InteractiveWorldMapNew'; // New world map component
 import DetailedTimeline from './DetailedTimeline'; // Import the new DetailedTimeline component
 
 const sportsImages = [
@@ -118,8 +118,8 @@ export default function WhoSection() {
                     Globetrotter
                   </h3>
                 </div>
-                <div className="flex-grow bg-gray-100 rounded-lg overflow-hidden relative">
-                  <FlagGridDisplay onCountryToggled={fetchVisitedCount} visitedCount={visitedCount} />
+                <div className="flex-grow bg-gray-50 rounded-lg overflow-hidden relative">
+                  <InteractiveWorldMapNew onCountryToggled={fetchVisitedCount} visitedCount={visitedCount} />
                 </div>
               </motion.div>
 
