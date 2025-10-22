@@ -185,9 +185,14 @@ export default function WhoSection() {
                         loop
                         muted
                         playsInline
-                        onMouseEnter={(e) => e.target.play()}
+                        preload="metadata"
+                        onMouseEnter={(e) => e.target.play().catch(err => console.error('Video play failed:', err))}
                         onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }}
-                      />
+                        onError={(e) => console.error('Video loading error:', e)}
+                      >
+                        <source src="/EikeCase/videos/tech/business.mp4" type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
                     </div>
                   </div>
                 </div>
@@ -213,13 +218,13 @@ export default function WhoSection() {
                     </button>
                 </div>
 
-                <div className="flex-grow flex items-center justify-between gap-2 relative">
-                  {/* Deloitte Logo above boxes */}
-                  <div className="absolute -top-14 left-[20%] right-[5%] flex items-center justify-center pointer-events-none z-10">
+                <div className="flex-grow flex items-center justify-between gap-2 relative" style={{ maxHeight: '80%' }}>
+                  {/* Deloitte Logo above boxes - 30% smaller */}
+                  <div className="absolute -top-10 left-[20%] right-[5%] flex items-center justify-center pointer-events-none z-10">
                     <img
                       src="https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_Deloitte.svg"
                       alt="Deloitte"
-                      className="h-12 object-contain opacity-70"
+                      className="h-8 object-contain opacity-70"
                     />
                   </div>
 
@@ -232,10 +237,11 @@ export default function WhoSection() {
                       <React.Fragment key={index}>
                         <div
                           className="flex-1 flex flex-col items-center text-center p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer relative z-20"
+                          style={{ maxHeight: '80%' }}
                           onClick={() => setIsJourneyExpanded(true)}
                         >
                           {/* Logo */}
-                          <div className="h-8 mb-2 flex items-center justify-center">
+                          <div className="h-6 mb-1 flex items-center justify-center">
                             <img src={milestone.logo} alt={milestone.title} className="h-full object-contain" />
                           </div>
                           {/* Title */}
@@ -243,7 +249,7 @@ export default function WhoSection() {
                           {/* Year */}
                           <p className="text-[10px] text-gray-500">{milestone.year}</p>
                         </div>
-                        {index < compactMilestones.length - 1 && <div className="w-px h-12 bg-gray-200 z-20"></div>}
+                        {index < compactMilestones.length - 1 && <div className="w-px h-10 bg-gray-200 z-20"></div>}
                       </React.Fragment>
                     )
                   })}
