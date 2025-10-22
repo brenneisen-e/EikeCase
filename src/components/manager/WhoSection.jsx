@@ -34,8 +34,6 @@ export default function WhoSection() {
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const [visitedCount, setVisitedCount] = useState(0);
   const [isJourneyExpanded, setIsJourneyExpanded] = useState(false);
-  const [privateVideoError, setPrivateVideoError] = useState(false);
-  const [businessVideoError, setBusinessVideoError] = useState(false);
   const sportsImages = defaultSportsImages; // Use static images from public folder
 
   const fetchVisitedCount = async () => {
@@ -162,64 +160,26 @@ export default function WhoSection() {
               >
                 <h3 className="text-lg font-bold text-[#003b6e] mb-2">💻 Tech Explorer</h3>
                 <div className="flex-grow flex gap-2">
-                  {/* Left - Private Video */}
+                  {/* Left - Private Placeholder */}
                   <div className="flex-1 flex flex-col">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Private</p>
-                    <div className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all relative">
-                      <video
+                    <div className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all">
+                      <img
+                        src="/images/sports/sport-1.jpg"
+                        alt="Private Tech"
                         className="w-full h-full object-cover"
-                        src="/videos/tech/private.mp4"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="auto"
-                        onError={(e) => {
-                          console.error('Private video error:', e.target.error);
-                          setPrivateVideoError(true);
-                        }}
-                        onLoadedData={() => {
-                          console.log('Private video loaded successfully');
-                          setPrivateVideoError(false);
-                        }}
-                      >
-                        <source src="/videos/tech/private.mp4" type="video/mp4" />
-                      </video>
-                      {privateVideoError && (
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <p className="text-xs text-gray-400 text-center px-2">Private Tech<br/>Video placeholder</p>
-                        </div>
-                      )}
+                      />
                     </div>
                   </div>
-                  {/* Right - Business Video */}
+                  {/* Right - Business Placeholder */}
                   <div className="flex-1 flex flex-col">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Business</p>
-                    <div className="flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all relative">
-                      <video
+                    <div className="flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all">
+                      <img
+                        src="/images/sports/sport-1.jpg"
+                        alt="Business Tech"
                         className="w-full h-full object-cover"
-                        src="/videos/tech/business.mp4"
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        preload="auto"
-                        onError={(e) => {
-                          console.error('Business video error:', e.target.error);
-                          setBusinessVideoError(true);
-                        }}
-                        onLoadedData={() => {
-                          console.log('Business video loaded successfully');
-                          setBusinessVideoError(false);
-                        }}
-                      >
-                        <source src="/videos/tech/business.mp4" type="video/mp4" />
-                      </video>
-                      {businessVideoError && (
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <p className="text-xs text-gray-400 text-center px-2">Business Tech<br/>Video placeholder</p>
-                        </div>
-                      )}
+                      />
                     </div>
                   </div>
                 </div>
