@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Database, Network, ShieldCheck, RefreshCw, TrendingUp, Clock, Brain } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Database, Network, ShieldCheck, RefreshCw, TrendingUp, Clock, Brain, BarChart3, Calculator, Shield } from 'lucide-react';
 import DataSilosVisualization from './DataSilosAnimation';
 import FunctionalComplexityVisualization from './FunctionalComplexityAnimation';
 import RegulatoryPressureVisualization from './RegulatoryPressureAnimation';
@@ -10,6 +10,7 @@ import EvolvingBusinessNeedsVisualization from './EvolvingNeedsAnimation';
 export default function ChallengeSection() {
   const [hoveredPillar, setHoveredPillar] = useState(null);
   const [viewedAnimations, setViewedAnimations] = useState([]);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const pillars = [
     {
@@ -156,37 +157,89 @@ export default function ChallengeSection() {
           })}
         </div>
 
-        {/* Business Impact Takeaway Box */}
+        {/* Business Impact Takeaway Box / Application Fields */}
         <motion.div
-          className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] rounded-xl p-6 shadow-lg text-white"
+          className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] rounded-xl p-6 shadow-lg text-white cursor-pointer"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.8 }}
+          onClick={() => setIsCollapsed(!isCollapsed)}
         >
-          <div className="grid grid-cols-3 gap-6">
-            {impacts.map((impact, index) => {
-              const Icon = impact.icon;
-              return (
-                <motion.div
-                  key={index}
-                  className="flex items-start gap-3"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.9 + index * 0.1 }}
-                >
-                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Icon className="w-4 h-4" strokeWidth={2.5} />
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-bold mb-1">{impact.title}</h4>
-                    <p className="text-xl leading-relaxed opacity-90">{impact.description}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </div>
+          <AnimatePresence mode="wait">
+            {isCollapsed ? (
+              <motion.div
+                key="application-fields"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col items-center justify-center py-8"
+              >
+                <h3 className="text-2xl font-bold text-white mb-8 text-center">Application Fields</h3>
+
+                <div className="flex items-center justify-center gap-12 w-full">
+                  {[
+                    { icon: BarChart3, title: 'Vertriebssteuerung', description: 'Sales steering & performance tracking' },
+                    { icon: Calculator, title: 'Simulation & Forecasting', description: 'Commission logic & scenario planning' },
+                    { icon: Shield, title: 'FIDA Datendashboard', description: 'EU regulation compliance dashboard' }
+                  ].map((field, index) => {
+                    const Icon = field.icon;
+                    return (
+                      <motion.div
+                        key={index}
+                        className="flex flex-col items-center text-center"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 + index * 0.15, duration: 0.4 }}
+                      >
+                        <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4 hover:bg-white/30 transition-colors">
+                          <Icon className="w-10 h-10 text-white" strokeWidth={1.5} />
+                        </div>
+                        <h4 className="text-lg font-semibold text-white mb-2">{field.title}</h4>
+                        <p className="text-sm text-white/80">{field.description}</p>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+
+                <div className="text-center text-sm text-white/70 mt-8">
+                  Click to expand business impacts
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="impacts"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="grid grid-cols-3 gap-6">
+                  {impacts.map((impact, index) => {
+                    const Icon = impact.icon;
+                    return (
+                      <motion.div
+                        key={index}
+                        className="flex items-start gap-3"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 + index * 0.1 }}
+                      >
+                        <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                          <Icon className="w-4 h-4" strokeWidth={2.5} />
+                        </div>
+                        <div>
+                          <h4 className="text-2xl font-bold mb-1">{impact.title}</h4>
+                          <p className="text-xl leading-relaxed opacity-90">{impact.description}</p>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

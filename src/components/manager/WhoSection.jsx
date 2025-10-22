@@ -218,17 +218,20 @@ export default function WhoSection() {
 
                 <div className="flex-grow flex items-center justify-between gap-2 relative">
                   {/* Deloitte Logo Overlay with bracket - spans from Jr. Consultant to Project Lead */}
-                  <div className="absolute -top-10 left-[20%] right-[5%] flex flex-col items-center pointer-events-none z-10">
-                    <img src={deloitteLogo} alt="Deloitte" className="h-8 object-contain opacity-60 mb-1" />
+                  <div className="absolute -top-16 left-[20%] right-[5%] flex flex-col items-center pointer-events-none z-10">
+                    {/* Large Deloitte Logo matching company logos size */}
+                    <div className="h-14 mb-2 flex items-center justify-center">
+                      <img src={deloitteLogo} alt="Deloitte" className="h-full object-contain opacity-70" />
+                    </div>
                     {/* Bracket indicator */}
-                    <div className="w-full relative h-6">
-                      <svg className="w-full h-full" viewBox="0 0 100 20" preserveAspectRatio="none">
+                    <div className="w-full relative h-8">
+                      <svg className="w-full h-full" viewBox="0 0 100 24" preserveAspectRatio="none">
                         <path
-                          d="M 0,0 L 0,10 L 5,15 L 95,15 L 100,10 L 100,0"
+                          d="M 0,0 L 0,12 L 5,18 L 95,18 L 100,12 L 100,0"
                           fill="none"
                           stroke="#046A38"
-                          strokeWidth="1.5"
-                          opacity="0.5"
+                          strokeWidth="2"
+                          opacity="0.6"
                         />
                       </svg>
                     </div>
