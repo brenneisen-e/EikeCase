@@ -171,15 +171,21 @@ export default function WhoSection() {
                       />
                     </div>
                   </div>
-                  {/* Right - Business Placeholder */}
+                  {/* Right - Business Video */}
                   <div className="flex-1 flex flex-col">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Business</p>
                     <div className="flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all">
-                      <img
-                        src="/EikeCase/images/sports/sport-1.jpg"
-                        alt="Business Tech"
+                      <video
                         className="w-full h-full object-cover"
-                      />
+                        src="/EikeCase/videos/tech/business.mp4"
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
+                      >
+                        <source src="/EikeCase/videos/tech/business.mp4" type="video/mp4" />
+                      </video>
                     </div>
                   </div>
                 </div>
