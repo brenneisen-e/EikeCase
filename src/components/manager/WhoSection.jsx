@@ -7,12 +7,12 @@ import InteractiveWorldMapNew from './InteractiveWorldMapNew'; // New world map 
 import DetailedTimeline from './DetailedTimeline'; // Import the new DetailedTimeline component
 
 // Sport images - Add your own images to public/images/sports/
-// Supported formats: sport-1.jpg, sport-2.jpg, sport-3.jpg, etc.
+// Supported formats: sport-1.jpg, sport-2.jpeg, sport-3.jpg, sport-4.jpg
 const sportsImagesList = [
   { id: 1, filename: 'sport-1.jpg', title: 'Sport 1' },
-  { id: 2, filename: 'sport-2.jpg', title: 'Sport 2' },
+  { id: 2, filename: 'sport-2.jpeg', title: 'Sport 2' },
   { id: 3, filename: 'sport-3.jpg', title: 'Sport 3' },
-  // Add more images here as needed
+  { id: 4, filename: 'sport-4.jpg', title: 'Sport 4' },
 ];
 
 const defaultSportsImages = sportsImagesList.map(img => ({
