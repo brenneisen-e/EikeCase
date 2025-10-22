@@ -22,7 +22,7 @@ class LocalStorageDB {
         claudeApiKeys: [],
         cockpitData: [],
         users: [],
-        _version: '1.3.1' // Track data version
+        _version: '1.3.2' // Track data version
       }));
     } else {
       // Migration logic for existing data

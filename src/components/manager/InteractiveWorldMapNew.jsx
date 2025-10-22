@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
-import { ComposableMap, Geographies, Geography, ZoomableGroup } from 'react-simple-maps';
+import { ComposableMap, Geographies, Geography, ZoomableGroup, Marker } from 'react-simple-maps';
 
 // World map GeoJSON URL
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
@@ -22,10 +22,18 @@ const COUNTRY_NAME_MAPPING = {
     'Dominican Republic': 'Dominican Rep.',
     'Equatorial Guinea': 'Eq. Guinea',
     'South Sudan': 'S. Sudan',
-    'Vatican City': null, // Not in world-atlas
-    'Monaco': null, // Not in world-atlas
-    'Liechtenstein': null, // Not in world-atlas
-    'San Marino': null, // Not in world-atlas
+    'Vatican City': null, // Not in world-atlas - will be shown as marker
+    'Monaco': null, // Not in world-atlas - will be shown as marker
+    'Liechtenstein': null, // Not in world-atlas - will be shown as marker
+    'San Marino': null, // Not in world-atlas - will be shown as marker
+};
+
+// Coordinates for micro-states that are too small to appear in world-atlas
+const MICRO_STATE_MARKERS = {
+    'VA': { name: 'Vatican City', coordinates: [12.4534, 41.9029] }, // In Rome
+    'MC': { name: 'Monaco', coordinates: [7.4167, 43.7333] },
+    'LI': { name: 'Liechtenstein', coordinates: [9.5215, 47.1410] },
+    'SM': { name: 'San Marino', coordinates: [12.4578, 43.9424] }
 };
 
 export default function InteractiveWorldMap({ onCountryToggled, visitedCount }) {
@@ -120,6 +128,35 @@ export default function InteractiveWorldMap({ onCountryToggled, visitedCount }) 
         });
     };
 
+    const isMicroStateVisited = (countryCode) => {
+        return visitedCountries.some(v => v.country_code === countryCode);
+    };
+
+    const handleMicroStateClick = async (countryCode) => {
+        try {
+            const matchingCountry = allCountries.find(c => c.country_code === countryCode);
+            if (!matchingCountry) return;
+
+            const existingVisit = visitedCountries.find(v => v.country_code === countryCode);
+
+            if (existingVisit) {
+                await base44.entities.VisitedCountry.delete(existingVisit.id);
+                setVisitedCountries(prev => prev.filter(v => v.id !== existingVisit.id));
+            } else {
+                const newVisit = await base44.entities.VisitedCountry.create({
+                    country_code: matchingCountry.country_code,
+                    country_name: matchingCountry.country_name,
+                    visited_date: new Date().toISOString().split('T')[0]
+                });
+                setVisitedCountries(prev => [...prev, newVisit]);
+            }
+
+            if (onCountryToggled) onCountryToggled();
+        } catch (error) {
+            console.error('Error toggling micro-state:', error);
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center h-full">
@@ -183,6 +220,33 @@ export default function InteractiveWorldMap({ onCountryToggled, visitedCount }) 
                                 })
                             }
                         </Geographies>
+
+                        {/* Render micro-state markers */}
+                        {Object.entries(MICRO_STATE_MARKERS).map(([code, data]) => {
+                            const isVisited = isMicroStateVisited(code);
+                            const isHovered = hoveredCountry === data.name;
+
+                            return (
+                                <Marker
+                                    key={code}
+                                    coordinates={data.coordinates}
+                                    onMouseEnter={() => setHoveredCountry(data.name)}
+                                    onMouseLeave={() => setHoveredCountry(null)}
+                                    onClick={() => handleMicroStateClick(code)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <circle
+                                        r={isHovered ? 6 : 4}
+                                        fill={isVisited ? '#86BC25' : '#E5E7EB'}
+                                        stroke="#046A38"
+                                        strokeWidth={isHovered ? 2 : 1.5}
+                                        style={{
+                                            transition: 'all 0.2s ease-in-out'
+                                        }}
+                                    />
+                                </Marker>
+                            );
+                        })}
                     </ZoomableGroup>
                 </ComposableMap>
             </div>
@@ -235,6 +299,12 @@ export default function InteractiveWorldMap({ onCountryToggled, visitedCount }) 
                     <div className="flex items-center gap-2">
                         <div className="w-6 h-6 rounded border-2 border-[#046A38]" style={{ backgroundColor: '#E5E7EB' }}></div>
                         <span className="text-sm text-gray-700">Not Visited</span>
+                    </div>
+                    <div className="flex items-center gap-2 pt-2 border-t border-gray-200">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="4" fill="#86BC25" stroke="#046A38" strokeWidth="1.5" />
+                        </svg>
+                        <span className="text-xs text-gray-600">Micro-states</span>
                     </div>
                 </div>
             </div>
