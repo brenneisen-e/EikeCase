@@ -23,7 +23,7 @@ export default function FinancialsSection() {
       value: 500,
       projects: 1,
       label: '#ProofOfValue',
-      description: 'Barmenia Gothaer',
+      description: 'Full Scale Roll-Out',
       displayValue: '€0.5M',
       logos: ['barmenia']
     },
@@ -33,38 +33,38 @@ export default function FinancialsSection() {
       value: 1000,
       projects: 2,
       label: '#ValidateAtScale',
-      description: 'ERGO PoC',
-      displayValue: '€x.xM',
+      description: 'Proof of Value',
+      displayValue: '€1.0M',
       logos: ['ergo']
     },
     {
       name: '2026/27',
       year: '2026/27',
-      value: 2000,
+      value: 1500,
       projects: 3,
       label: '#ReplicateAcrossClients',
       description: 'Banking expansion',
-      displayValue: '€x.xM',
+      displayValue: '€1.5M',
       logos: ['commerzbank', 'ubs']
     },
     {
       name: '2027/28',
       year: '2027/28',
-      value: 3500,
+      value: 2500,
       projects: 5,
       label: '#ScaleHorizontally',
       description: 'Cross-industry',
-      displayValue: '€x.xM',
+      displayValue: '€2.5M',
       logos: ['weitere']
     },
     {
       name: '2028/29',
       year: '2028/29',
-      value: 6000,
+      value: 4500,
       projects: 7,
       label: '#AccelerateWithAI',
       description: 'AI integration',
-      displayValue: '€x.xM',
+      displayValue: '€4.5M',
       logos: ['weitere']
     }
   ];
@@ -176,10 +176,11 @@ export default function FinancialsSection() {
               <div className="p-6">
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-[#046A38] mb-1">Barmenia Gothaer – Full Scale Roll-Out</h3>
+                    <h3 className="text-2xl font-bold text-[#046A38] mb-1">Full Scale Roll-Out</h3>
                     <p className="text-lg text-gray-600 mb-4">Contract migration tool from prototype to enterprise roll-out</p>
                   </div>
                   <motion.div
+                    className="flex flex-col gap-3"
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
@@ -189,13 +190,16 @@ export default function FinancialsSection() {
                       alt="Barmenia Gothaer"
                       className="h-16 opacity-85"
                     />
+                    <div className="bg-[#046A38] text-white rounded-lg px-3 py-2 text-center">
+                      <div className="text-xs opacity-90">NSR</div>
+                      <div className="text-lg font-bold">€300K</div>
+                    </div>
                   </motion.div>
                 </div>
 
                 <ul className="space-y-2 mb-4 text-lg text-gray-700">
                   <li>• Built contract migration tool: prototype → full production roll-out</li>
                   <li>• Actively used to support contract conversion for 1,000+ agencies</li>
-                  <li>• <strong>NSR: €300K</strong></li>
                 </ul>
                 
                 {/* Two Showcase Boxes */}
@@ -237,7 +241,7 @@ export default function FinancialsSection() {
               <div className="p-6">
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-[#046A38] mb-1">ERGO – Proof of Value</h3>
+                    <h3 className="text-2xl font-bold text-[#046A38] mb-1">Proof of Value</h3>
                     <p className="text-lg text-gray-600 mb-4">AI-driven prototype for steering transparency</p>
                   </div>
                   <motion.div
@@ -247,20 +251,24 @@ export default function FinancialsSection() {
                     transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
                   >
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/ERGO_Versicherungsgruppe_logo.svg/320px-ERGO_Versicherungsgruppe_logo.svg.png"
-                      alt="ERGO Deutschland"
-                      className="h-10 opacity-85"
+                      src="https://upload.wikimedia.org/wikipedia/de/1/11/Ergo_Group_logo.svg"
+                      alt="ERGO"
+                      className="h-10 opacity-85 bg-white px-2 rounded"
                     />
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Hansa_Invest_logo.svg/320px-Hansa_Invest_logo.svg.png"
-                      alt="Hansa Invest"
-                      className="h-8 opacity-85"
+                      src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Hansainvest-Logo.png"
+                      alt="Hansainvest"
+                      className="h-8 opacity-85 bg-white px-2 rounded"
                     />
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Union_Investment_logo.svg/320px-Union_Investment_logo.svg.png"
+                      src="https://upload.wikimedia.org/wikipedia/commons/5/53/Union_Investment.png"
                       alt="Union Investment"
-                      className="h-8 opacity-85"
+                      className="h-8 opacity-85 bg-white px-2 rounded"
                     />
+                    <div className="bg-[#046A38] text-white rounded-lg px-3 py-2 text-center">
+                      <div className="text-xs opacity-90">NSR (each)</div>
+                      <div className="text-lg font-bold">€50K</div>
+                    </div>
                   </motion.div>
                 </div>
 
@@ -268,7 +276,6 @@ export default function FinancialsSection() {
                   <li>• 4-week prototype based on fragmented data</li>
                   <li>• Delivered tangible simulation use case without system rebuild</li>
                   <li>• Validated business value and ready for scale-up phase</li>
-                  <li>• <strong>NSR: €50K each</strong> (ERGO Deutschland, Hansa Invest, Union Investment)</li>
                 </ul>
                 
                 {/* Two Showcase Boxes for ERGO */}
@@ -444,34 +451,6 @@ export default function FinancialsSection() {
                       <div className="flex justify-between">
                         <span>Duration:</span>
                         <span className="font-semibold">from 3 months</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="h-px bg-white/30"></div>
-
-                  {/* Growth Targets */}
-                  <div>
-                    <div className="text-lg font-semibold opacity-90 mb-3 flex items-center gap-2">
-                      <TrendingUp className="w-5 h-5" />
-                      <span>Growth Targets</span>
-                    </div>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between items-center">
-                        <span>2025/2026:</span>
-                        <span className="text-lg font-bold">€1.0M</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>2026/2027:</span>
-                        <span className="text-lg font-bold">€1.5M</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>2027/2028:</span>
-                        <span className="text-lg font-bold">€2.5M</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span>2028/2029:</span>
-                        <span className="text-lg font-bold">€4.5M</span>
                       </div>
                     </div>
                   </div>

@@ -94,9 +94,9 @@ export default function ChallengeSection() {
         Fragmented data and manual processes limit transparency, speed, and fact-based decisions.
       </motion.h2>
 
-      <div className="flex-grow flex flex-col gap-6">
+      <div className="flex-grow flex flex-col">
         {/* 4 Pillars in one row */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-4 mb-4">
           {pillars.map((pillar, index) => {
             const Icon = pillar.icon;
             return (
@@ -125,7 +125,7 @@ export default function ChallengeSection() {
         </div>
 
         {/* 4 Animation Boxes */}
-        <div className="grid grid-cols-4 gap-4" style={{ height: '200px' }}>
+        <div className="grid grid-cols-4 gap-4 flex-grow" style={{ maxHeight: '200px', minHeight: '200px' }}>
           {pillars.map((pillar, index) => {
             const AnimationComponent = pillar.animationComponent;
             const isHovered = hoveredPillar === pillar.highlightType;
@@ -228,8 +228,8 @@ export default function ChallengeSection() {
                           <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
                             <Icon className="w-6 h-6 text-white" strokeWidth={1.5} />
                           </div>
-                          <h5 className="text-sm font-semibold text-white mb-1">{topic.title}</h5>
-                          <p className="text-xs text-white/70">{topic.description}</p>
+                          <h5 className="text-base font-semibold text-white mb-1">{topic.title}</h5>
+                          <p className="text-sm text-white/70">{topic.description}</p>
                         </motion.div>
                       );
                     })}

@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import StartingSection from '@/components/manager/StartingSection';
 import WhoSection from '@/components/manager/WhoSection';
 import ChallengeSection from '@/components/manager/ChallengeSection';
-import WhySection from '@/components/manager/WhySection';
-import WhatSection from '@/components/manager/WhatSection';
 import HowSection from '@/components/manager/HowSection';
 import FinancialsSection from '@/components/manager/FinancialsSection';
 import SummarySection from '@/components/manager/SummarySection';
@@ -15,7 +13,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const handleScroll = (e) => {
-      const sections = ['start', 'who', 'challenge', 'how', 'financials', 'summary', 'why', 'what'];
+      const sections = ['start', 'who', 'challenge', 'how', 'financials', 'summary'];
       const scrollPosition = e.target.scrollTop + e.target.clientHeight / 2;
 
       for (const sectionId of sections) {
@@ -63,12 +61,6 @@ export default function HomePage() {
       </div>
       <div className="snap-slide">
         <SummarySection />
-      </div>
-      <div className="snap-slide">
-        <WhySection />
-      </div>
-      <div className="snap-slide">
-        <WhatSection />
       </div>
 
       <ScrollNavigation activeSection={activeSection} />

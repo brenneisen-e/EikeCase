@@ -30,9 +30,6 @@ const compactMilestones = [
   { icon: Star, year: '2025', title: 'Project Lead', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/60d27e529_Barmenia-removebg-preview.png', hasDeloitte: true},
 ];
 
-// Deloitte logo from landing page
-const deloitteLogo = 'https://cdn.freebiesupply.com/logos/large/2x/deloitte-logo-png-transparent.png';
-
 export default function WhoSection() {
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const [visitedCount, setVisitedCount] = useState(0);
@@ -73,7 +70,7 @@ export default function WhoSection() {
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
       >
-        Curious mind. Driven by impact. Defined by exploration.
+        Curious Mind. Dynamic Leader. Defined by Efficiency.
       </motion.h2>
 
       <div className="flex-grow grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 gap-4" style={{ maxHeight: 'calc(100vh - 200px)' }}>
@@ -217,24 +214,13 @@ export default function WhoSection() {
                 </div>
 
                 <div className="flex-grow flex items-center justify-between gap-2 relative">
-                  {/* Deloitte Logo Overlay with bracket - spans from Jr. Consultant to Project Lead */}
-                  <div className="absolute -top-16 left-[20%] right-[5%] flex flex-col items-center pointer-events-none z-10">
-                    {/* Large Deloitte Logo matching company logos size */}
-                    <div className="h-14 mb-2 flex items-center justify-center">
-                      <img src={deloitteLogo} alt="Deloitte" className="h-full object-contain opacity-70" />
-                    </div>
-                    {/* Bracket indicator */}
-                    <div className="w-full relative h-8">
-                      <svg className="w-full h-full" viewBox="0 0 100 24" preserveAspectRatio="none">
-                        <path
-                          d="M 0,0 L 0,12 L 5,18 L 95,18 L 100,12 L 100,0"
-                          fill="none"
-                          stroke="#046A38"
-                          strokeWidth="2"
-                          opacity="0.6"
-                        />
-                      </svg>
-                    </div>
+                  {/* Green Deloitte Box - starts from Jr. Consultant position */}
+                  <div className="absolute inset-0 left-[20%] bg-gradient-to-r from-[#046A38]/10 to-[#86BC25]/10 rounded-lg flex items-center justify-center pointer-events-none z-10 border-2 border-[#046A38]/20">
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_Deloitte.svg"
+                      alt="Deloitte"
+                      className="h-16 object-contain opacity-80"
+                    />
                   </div>
 
                   {compactMilestones.map((milestone, index) => {

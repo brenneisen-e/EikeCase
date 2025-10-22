@@ -348,6 +348,18 @@ export default function HowSection() {
         })}
       </div>
 
+      {/* Timeline Overview Text */}
+      {!showGantt && (
+        <motion.div
+          className="text-center text-lg text-gray-700 mb-3 font-medium"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+        >
+          <strong>Part 1:</strong> Rapid Proof of Value – 4–6 weeks | <strong>Part 2:</strong> Scaling Phase (optional)
+        </motion.div>
+      )}
+
       <motion.div
         className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] text-white rounded-xl shadow-lg overflow-visible cursor-pointer"
         style={{
@@ -377,22 +389,22 @@ export default function HowSection() {
                   return (
                     <React.Fragment key={phase.id}>
                       <motion.div
-                        className="flex flex-col items-center justify-center px-3 flex-1"
+                        className={`flex flex-col items-center justify-center px-3 flex-1 rounded-lg ${isOptional ? 'bg-gray-400/30' : ''}`}
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
                         viewport={{ once: true }}
                         transition={{ delay: 1 + index * 0.15, duration: 0.4 }}
                       >
                         <div className="text-center mb-2">
-                          <div className={`font-semibold text-sm mb-1 ${isOptional ? 'text-green-200' : 'text-white'}`}>
+                          <div className={`font-semibold text-sm mb-1 ${isOptional ? 'text-gray-200' : 'text-white'}`}>
                             {phase.title}
                           </div>
-                          <div className={`text-xs ${isOptional ? 'text-green-300' : 'text-white/90'}`}>
+                          <div className={`text-xs ${isOptional ? 'text-gray-300' : 'text-white/90'}`}>
                             {phase.duration}
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2 bg-white/20 rounded-full px-3 py-1 text-xs font-semibold">
+                        <div className={`flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${isOptional ? 'bg-gray-500/30' : 'bg-white/20'}`}>
                           <Users className="w-3 h-3" />
                           <span>Team: {phase.team}</span>
                         </div>
@@ -406,10 +418,6 @@ export default function HowSection() {
                     </React.Fragment>
                   );
                 })}
-              </div>
-
-              <div className="text-center text-xs text-white/80 mt-4">
-                <strong>Part 1:</strong> Rapid Proof of Value – 4–6 weeks | <strong>Part 2:</strong> Scaling Phase (optional)
               </div>
             </motion.div>
           ) : (
