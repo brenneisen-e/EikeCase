@@ -22,25 +22,52 @@ class LocalStorageDB {
         claudeApiKeys: [],
         cockpitData: [],
         users: [],
-        _version: '1.2.0' // Track data version
+        _version: '1.3.1' // Track data version
       }));
     } else {
-      // Check if we need to migrate/add pre-visited countries
+      // Migration logic for existing data
       const db = JSON.parse(existing);
+      let needsSave = false;
 
-      // If visitedCountries is empty or doesn't have the pre-visited ones, add them
-      if (!db.visitedCountries || db.visitedCountries.length === 0) {
-        db.visitedCountries = this.getDefaultVisitedCountries();
-        db._version = '1.2.0';
-        localStorage.setItem(this.storageKey, JSON.stringify(db));
+      // Ensure visitedCountries array exists
+      if (!db.visitedCountries) {
+        db.visitedCountries = [];
       }
-      // Migration for existing data without version
-      else if (!db._version) {
-        // Don't overwrite existing data, just add version
-        db._version = '1.2.0';
+
+      // Migration to v1.3.1: Add 45 pre-visited countries if not already migrated
+      if (!db._version || this.compareVersions(db._version, '1.3.1') < 0) {
+        const defaultVisited = this.getDefaultVisitedCountries();
+
+        // Add each default country if it's not already in visitedCountries
+        defaultVisited.forEach(defaultCountry => {
+          const exists = db.visitedCountries.some(v =>
+            v.country_code === defaultCountry.country_code
+          );
+          if (!exists) {
+            db.visitedCountries.push(defaultCountry);
+          }
+        });
+
+        db._version = '1.3.1';
+        needsSave = true;
+      }
+
+      if (needsSave) {
         localStorage.setItem(this.storageKey, JSON.stringify(db));
       }
     }
+  }
+
+  // Helper to compare semantic versions (e.g., "1.2.0" vs "1.3.1")
+  compareVersions(v1, v2) {
+    const parts1 = v1.split('.').map(Number);
+    const parts2 = v2.split('.').map(Number);
+
+    for (let i = 0; i < 3; i++) {
+      if (parts1[i] > parts2[i]) return 1;
+      if (parts1[i] < parts2[i]) return -1;
+    }
+    return 0;
   }
 
   getDB() {
