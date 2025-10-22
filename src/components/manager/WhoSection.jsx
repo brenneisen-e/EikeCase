@@ -169,14 +169,19 @@ export default function WhoSection() {
                       <video
                         className="w-full h-full object-cover"
                         src="/videos/tech/private.mp4"
+                        autoPlay
                         loop
                         muted
                         playsInline
-                        preload="metadata"
-                        onMouseEnter={(e) => e.target.play().catch(() => {})}
-                        onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }}
-                        onError={() => setPrivateVideoError(true)}
-                        onLoadedData={() => setPrivateVideoError(false)}
+                        preload="auto"
+                        onError={(e) => {
+                          console.error('Private video error:', e.target.error);
+                          setPrivateVideoError(true);
+                        }}
+                        onLoadedData={() => {
+                          console.log('Private video loaded successfully');
+                          setPrivateVideoError(false);
+                        }}
                       >
                         <source src="/videos/tech/private.mp4" type="video/mp4" />
                       </video>
@@ -194,14 +199,19 @@ export default function WhoSection() {
                       <video
                         className="w-full h-full object-cover"
                         src="/videos/tech/business.mp4"
+                        autoPlay
                         loop
                         muted
                         playsInline
-                        preload="metadata"
-                        onMouseEnter={(e) => e.target.play().catch(() => {})}
-                        onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }}
-                        onError={() => setBusinessVideoError(true)}
-                        onLoadedData={() => setBusinessVideoError(false)}
+                        preload="auto"
+                        onError={(e) => {
+                          console.error('Business video error:', e.target.error);
+                          setBusinessVideoError(true);
+                        }}
+                        onLoadedData={() => {
+                          console.log('Business video loaded successfully');
+                          setBusinessVideoError(false);
+                        }}
                       >
                         <source src="/videos/tech/business.mp4" type="video/mp4" />
                       </video>
