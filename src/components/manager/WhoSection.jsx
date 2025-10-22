@@ -163,34 +163,36 @@ export default function WhoSection() {
               >
                 <h3 className="text-lg font-bold text-[#003b6e] mb-2">💻 Tech Explorer</h3>
                 <div className="flex-grow flex gap-2">
-                  {/* Left - Private */}
-                  <a
-                    href="https://mein-inventar-9e0d6fc0.base44.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 flex flex-col group"
-                  >
+                  {/* Left - Private Video */}
+                  <div className="flex-1 flex flex-col">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Private</p>
-                    <div className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 flex flex-col items-center justify-center border-2 border-blue-200 group-hover:border-blue-400 transition-all cursor-pointer group-hover:shadow-lg">
-                      <div className="text-4xl mb-2">🏠</div>
-                      <p className="text-sm font-semibold text-[#003b6e] text-center">Mein Inventar</p>
-                      <p className="text-xs text-gray-500 text-center mt-1">Klicken zum Öffnen</p>
+                    <div className="flex-1 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all">
+                      <video
+                        className="w-full h-full object-cover"
+                        src="/EikeCase/videos/tech/private.mp4"
+                        loop
+                        muted
+                        playsInline
+                        onMouseEnter={(e) => e.target.play()}
+                        onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }}
+                      />
                     </div>
-                  </a>
-                  {/* Right - Business */}
-                  <a
-                    href="https://deudeloitte.sharepoint.com/sites/DOL-c-DE-EventExperiencePlatform/SitePages/Deloitte-Event-Experience.aspx?env=WebView"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 flex flex-col group"
-                  >
+                  </div>
+                  {/* Right - Business Video */}
+                  <div className="flex-1 flex flex-col">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Business</p>
-                    <div className="flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 flex flex-col items-center justify-center border-2 border-green-200 group-hover:border-green-400 transition-all cursor-pointer group-hover:shadow-lg">
-                      <div className="text-4xl mb-2">🏢</div>
-                      <p className="text-sm font-semibold text-[#003b6e] text-center">Deloitte Platform</p>
-                      <p className="text-xs text-gray-500 text-center mt-1">Klicken zum Öffnen</p>
+                    <div className="flex-1 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all">
+                      <video
+                        className="w-full h-full object-cover"
+                        src="/EikeCase/videos/tech/business.mp4"
+                        loop
+                        muted
+                        playsInline
+                        onMouseEnter={(e) => e.target.play()}
+                        onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }}
+                      />
                     </div>
-                  </a>
+                  </div>
                 </div>
               </motion.div>
 
