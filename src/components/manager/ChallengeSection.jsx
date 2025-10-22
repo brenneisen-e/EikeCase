@@ -125,17 +125,16 @@ export default function ChallengeSection() {
         </div>
 
         {/* 4 Animation Boxes */}
-        <div className="grid grid-cols-4 gap-4 flex-grow">
+        <div className="grid grid-cols-4 gap-4" style={{ height: '200px' }}>
           {pillars.map((pillar, index) => {
             const AnimationComponent = pillar.animationComponent;
             const isHovered = hoveredPillar === pillar.highlightType;
             const wasViewed = viewedAnimations.includes(pillar.highlightType);
-            
+
             return (
               <motion.div
                 key={index}
                 className="rounded-lg shadow-md overflow-hidden relative"
-                style={{ minHeight: '200px' }}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -159,7 +158,8 @@ export default function ChallengeSection() {
 
         {/* Business Impact Takeaway Box / Application Fields */}
         <motion.div
-          className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] rounded-xl p-6 shadow-lg text-white cursor-pointer"
+          className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] rounded-xl p-8 shadow-lg text-white cursor-pointer"
+          style={{ minHeight: isCollapsed ? '400px' : '140px' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -174,37 +174,70 @@ export default function ChallengeSection() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="flex flex-col items-center justify-center py-8"
+                className="flex flex-col h-full"
               >
-                <h3 className="text-2xl font-bold text-white mb-8 text-center">Application Fields</h3>
+                <h3 className="text-3xl font-bold text-white mb-6 text-center">Application Fields</h3>
 
-                <div className="flex items-center justify-center gap-12 w-full">
-                  {[
-                    { icon: BarChart3, title: 'Vertriebssteuerung', description: 'Sales steering & performance tracking' },
-                    { icon: Calculator, title: 'Simulation & Forecasting', description: 'Commission logic & scenario planning' },
-                    { icon: Shield, title: 'FIDA Datendashboard', description: 'EU regulation compliance dashboard' }
-                  ].map((field, index) => {
-                    const Icon = field.icon;
-                    return (
-                      <motion.div
-                        key={index}
-                        className="flex flex-col items-center text-center"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 + index * 0.15, duration: 0.4 }}
-                      >
-                        <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4 hover:bg-white/30 transition-colors">
-                          <Icon className="w-10 h-10 text-white" strokeWidth={1.5} />
-                        </div>
-                        <h4 className="text-lg font-semibold text-white mb-2">{field.title}</h4>
-                        <p className="text-sm text-white/80">{field.description}</p>
-                      </motion.div>
-                    );
-                  })}
+                {/* Target Groups */}
+                <div className="mb-8">
+                  <h4 className="text-lg font-semibold text-white/90 mb-4 text-center">Target Groups</h4>
+                  <div className="flex items-center justify-center gap-8">
+                    {[
+                      { icon: BarChart3, title: 'Banks' },
+                      { icon: Shield, title: 'Insurers' },
+                      { icon: TrendingUp, title: 'Asset Managers' }
+                    ].map((group, index) => {
+                      const Icon = group.icon;
+                      return (
+                        <motion.div
+                          key={index}
+                          className="flex flex-col items-center text-center"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.1 + index * 0.1, duration: 0.4 }}
+                        >
+                          <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-3 hover:bg-white/30 transition-colors">
+                            <Icon className="w-8 h-8 text-white" strokeWidth={1.5} />
+                          </div>
+                          <h5 className="text-base font-semibold text-white">{group.title}</h5>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
                 </div>
 
-                <div className="text-center text-sm text-white/70 mt-8">
-                  Click to expand business impacts
+                {/* Topics */}
+                <div className="flex-1">
+                  <h4 className="text-lg font-semibold text-white/90 mb-4 text-center">Topics</h4>
+                  <div className="grid grid-cols-4 gap-6">
+                    {[
+                      { icon: BarChart3, title: 'Sales Steering', description: 'Performance tracking & steering' },
+                      { icon: Calculator, title: 'Simulation & Forecasting', description: 'Commission logic & scenario planning' },
+                      { icon: Shield, title: 'Compliance Dashboards', description: 'FIDA & regulatory reporting' },
+                      { icon: RefreshCw, title: 'Contract Migration', description: 'Automated contract conversion tools' }
+                    ].map((topic, index) => {
+                      const Icon = topic.icon;
+                      return (
+                        <motion.div
+                          key={index}
+                          className="flex flex-col items-center text-center p-4 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.3 + index * 0.1, duration: 0.4 }}
+                        >
+                          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-3">
+                            <Icon className="w-6 h-6 text-white" strokeWidth={1.5} />
+                          </div>
+                          <h5 className="text-sm font-semibold text-white mb-1">{topic.title}</h5>
+                          <p className="text-xs text-white/70">{topic.description}</p>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="text-center text-sm text-white/70 mt-6">
+                  Click to show business impacts
                 </div>
               </motion.div>
             ) : (

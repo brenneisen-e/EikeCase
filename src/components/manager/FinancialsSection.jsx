@@ -176,21 +176,26 @@ export default function FinancialsSection() {
               <div className="p-6">
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-[#046A38] mb-1">Barmenia Gothaer – Proof of Value</h3>
-                    <p className="text-lg text-gray-600 mb-4">From prototype to production and enterprise adoption</p>
+                    <h3 className="text-2xl font-bold text-[#046A38] mb-1">Barmenia Gothaer – Full Scale Roll-Out</h3>
+                    <p className="text-lg text-gray-600 mb-4">Contract migration tool from prototype to enterprise roll-out</p>
                   </div>
                   <motion.div
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
                   >
-                    <CheckCircle2 className="w-12 h-12 text-[#046A38]" strokeWidth={2.5} />
+                    <img
+                      src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/8d826aa3b_BarmeniaGothaer_Logo_zweizeilig_CMYK-White-on-DarkBlue.png"
+                      alt="Barmenia Gothaer"
+                      className="h-16 opacity-85"
+                    />
                   </motion.div>
                 </div>
-                
+
                 <ul className="space-y-2 mb-4 text-lg text-gray-700">
-                  <li>• 6-month transformation from AI prototype to productive system</li>
-                  <li>• Now integrated into daily steering and simulation processes</li>
+                  <li>• Built contract migration tool: prototype → full production roll-out</li>
+                  <li>• Actively used to support contract conversion for 1,000+ agencies</li>
+                  <li>• <strong>NSR: €300K</strong></li>
                 </ul>
                 
                 {/* Two Showcase Boxes */}
@@ -217,14 +222,6 @@ export default function FinancialsSection() {
                     </div>
                   </div>
                 </div>
-                
-                <div className="flex justify-start">
-                  <img
-                    src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/8d826aa3b_BarmeniaGothaer_Logo_zweizeilig_CMYK-White-on-DarkBlue.png"
-                    alt="Barmenia Gothaer"
-                    className="h-12 opacity-85"
-                  />
-                </div>
               </div>
             </motion.div>
 
@@ -240,22 +237,38 @@ export default function FinancialsSection() {
               <div className="p-6">
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-[#046A38] mb-1">ERGO – Proof of Concept Project</h3>
+                    <h3 className="text-2xl font-bold text-[#046A38] mb-1">ERGO – Proof of Value</h3>
                     <p className="text-lg text-gray-600 mb-4">AI-driven prototype for steering transparency</p>
                   </div>
                   <motion.div
+                    className="flex flex-col gap-2"
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
                   >
-                    <CheckCircle2 className="w-12 h-12 text-[#046A38]" strokeWidth={2.5} />
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/ERGO_Versicherungsgruppe_logo.svg/320px-ERGO_Versicherungsgruppe_logo.svg.png"
+                      alt="ERGO Deutschland"
+                      className="h-10 opacity-85"
+                    />
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Hansa_Invest_logo.svg/320px-Hansa_Invest_logo.svg.png"
+                      alt="Hansa Invest"
+                      className="h-8 opacity-85"
+                    />
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Union_Investment_logo.svg/320px-Union_Investment_logo.svg.png"
+                      alt="Union Investment"
+                      className="h-8 opacity-85"
+                    />
                   </motion.div>
                 </div>
-                
+
                 <ul className="space-y-2 mb-4 text-lg text-gray-700">
                   <li>• 4-week prototype based on fragmented data</li>
                   <li>• Delivered tangible simulation use case without system rebuild</li>
                   <li>• Validated business value and ready for scale-up phase</li>
+                  <li>• <strong>NSR: €50K each</strong> (ERGO Deutschland, Hansa Invest, Union Investment)</li>
                 </ul>
                 
                 {/* Two Showcase Boxes for ERGO */}
@@ -279,14 +292,6 @@ export default function FinancialsSection() {
                       <p className="text-xs text-gray-600">Proof of Value established</p>
                     </div>
                   </div>
-                </div>
-                
-                <div className="flex justify-end">
-                  <img
-                    src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/91d3c532b_ergo-logo-700x513.jpg"
-                    alt="ERGO"
-                    className="h-12 opacity-85"
-                  />
                 </div>
               </div>
             </motion.div>
@@ -383,8 +388,8 @@ export default function FinancialsSection() {
         <AnimatePresence>
           {!showProofBoxes && (
             <motion.div
-              className="bg-gradient-to-br from-[#A7E3B2] to-[#046A38] text-white rounded-xl shadow-xl p-6 flex flex-col justify-between"
-              style={{ minWidth: '320px', maxWidth: '320px' }}
+              className="bg-gradient-to-br from-[#A7E3B2] to-[#046A38] text-white rounded-xl shadow-xl p-6 flex flex-col justify-between overflow-y-auto"
+              style={{ minWidth: '380px', maxWidth: '380px' }}
               initial={{ opacity: 0, x: 30, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 30, scale: 0.9 }}
@@ -397,40 +402,78 @@ export default function FinancialsSection() {
                 </div>
 
                 <div className="space-y-4">
-                  <div>
-                    <div className="text-lg font-semibold opacity-90 mb-1">Current Value</div>
-                    <div className="text-3xl font-bold">€400–600K</div>
-                    <div className="text-sm opacity-80">per PoV project</div>
-                  </div>
-
-                  <div className="h-px bg-white/30"></div>
-
-                  <div>
-                    <div className="text-lg font-semibold opacity-90 mb-1">Proof of Value Phase</div>
-                    <div className="text-2xl font-bold">4–6 weeks</div>
-                    <div className="text-sm opacity-80">Prototype + Pilot</div>
-                  </div>
-
-                  <div className="h-px bg-white/30"></div>
-
-                  <div>
-                    <div className="text-lg font-semibold opacity-90 mb-1">Scaling Potential</div>
-                    <div className="flex items-center gap-2">
-                      <TrendingUp className="w-6 h-6" />
-                      <span className="text-2xl font-bold">5–10× revenue</span>
+                  {/* Proof of Value */}
+                  <div className="bg-white/10 rounded-lg p-3">
+                    <div className="text-lg font-bold mb-3">Proof of Value</div>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span>NSR:</span>
+                        <span className="font-semibold">€50K</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Project Days:</span>
+                        <span className="font-semibold">30 PT</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>GPM:</span>
+                        <span className="font-semibold">51%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Duration:</span>
+                        <span className="font-semibold">4-6 weeks</span>
+                      </div>
                     </div>
-                    <div className="text-sm opacity-80">through rollouts and AI expansion</div>
+                  </div>
+
+                  {/* Full Scale Roll-Out */}
+                  <div className="bg-white/10 rounded-lg p-3">
+                    <div className="text-lg font-bold mb-3">Full Scale Roll-Out</div>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span>NSR:</span>
+                        <span className="font-semibold">&gt;€300K</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Project Days:</span>
+                        <span className="font-semibold">&gt;200 PT</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Team Size:</span>
+                        <span className="font-semibold">2+ people</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Duration:</span>
+                        <span className="font-semibold">from 3 months</span>
+                      </div>
+                    </div>
                   </div>
 
                   <div className="h-px bg-white/30"></div>
 
+                  {/* Growth Targets */}
                   <div>
-                    <div className="text-lg font-semibold opacity-90 mb-2">Next Targets</div>
-                    <ul className="text-sm space-y-1 opacity-90">
-                      <li>• 2–3 new insurers</li>
-                      <li>• Banking clients</li>
-                      <li>• AI integration</li>
-                    </ul>
+                    <div className="text-lg font-semibold opacity-90 mb-3 flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5" />
+                      <span>Growth Targets</span>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between items-center">
+                        <span>2025/2026:</span>
+                        <span className="text-lg font-bold">€1.0M</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>2026/2027:</span>
+                        <span className="text-lg font-bold">€1.5M</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>2027/2028:</span>
+                        <span className="text-lg font-bold">€2.5M</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span>2028/2029:</span>
+                        <span className="text-lg font-bold">€4.5M</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -350,9 +350,9 @@ export default function HowSection() {
 
       <motion.div
         className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] text-white rounded-xl shadow-lg overflow-visible cursor-pointer"
-        style={{ 
-          minHeight: showGantt ? '500px' : '140px',
-          maxHeight: showGantt ? 'none' : '140px'
+        style={{
+          minHeight: showGantt ? '500px' : '180px',
+          maxHeight: showGantt ? 'none' : '180px'
         }}
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
