@@ -43,10 +43,10 @@ export default function EvolvingBusinessNeedsVisualization() {
           <motion.div
             className="w-16 h-16 bg-red-100 border-2 border-red-400 rounded-full flex items-center justify-center"
             animate={{
-              scale: [1, 1.1, 1],
-              borderColor: ['#f87171', '#ef4444', '#f87171'],
+              scale: [1, 1.1, 1, 1.1, 1],
+              borderColor: ['#f87171', '#ef4444', '#f87171', '#ef4444', '#f87171'],
             }}
-            transition={{ duration: 2, repeat: Infinity }}
+            transition={{ duration: 4 }}
           >
             <AlertCircle size={32} className="text-red-600" />
           </motion.div>
@@ -70,8 +70,8 @@ export default function EvolvingBusinessNeedsVisualization() {
           <motion.div
             className="w-full bg-gray-100 border-2 border-gray-400 rounded-lg p-4 flex flex-col items-center justify-center gap-3"
             initial={{ opacity: 0.3 }}
-            animate={{ opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 3, repeat: Infinity }}
+            animate={{ opacity: [0.3, 0.6, 0.3, 0.6, 0.3] }}
+            transition={{ duration: 6 }}
           >
             <div className="w-12 h-12 bg-gray-300 rounded flex items-center justify-center">
               <span className="text-2xl">📊</span>
@@ -84,8 +84,8 @@ export default function EvolvingBusinessNeedsVisualization() {
                 <motion.div
                   key={i}
                   className="w-1.5 h-1.5 bg-gray-400 rounded-full"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }}
+                  animate={{ opacity: [0.3, 1, 0.3, 1, 0.3] }}
+                  transition={{ duration: 3, delay: i * 0.3 }}
                 />
               ))}
             </div>

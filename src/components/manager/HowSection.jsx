@@ -389,7 +389,7 @@ export default function HowSection() {
                   return (
                     <React.Fragment key={phase.id}>
                       <motion.div
-                        className={`flex flex-col items-center justify-center px-3 flex-1 rounded-lg ${isOptional ? 'bg-gray-400/30' : ''}`}
+                        className={`flex flex-col items-center justify-center px-3 flex-1 rounded-lg ${isOptional ? 'bg-gray-400/30 py-3' : ''}`}
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
                         viewport={{ once: true }}

@@ -34,6 +34,8 @@ export default function WhoSection() {
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const [visitedCount, setVisitedCount] = useState(0);
   const [isJourneyExpanded, setIsJourneyExpanded] = useState(false);
+  const [privateVideoError, setPrivateVideoError] = useState(false);
+  const [businessVideoError, setBusinessVideoError] = useState(false);
   const sportsImages = defaultSportsImages; // Use static images from public folder
 
   const fetchVisitedCount = async () => {
@@ -163,31 +165,51 @@ export default function WhoSection() {
                   {/* Left - Private Video */}
                   <div className="flex-1 flex flex-col">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Private</p>
-                    <div className="flex-1 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all">
+                    <div className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all relative">
                       <video
                         className="w-full h-full object-cover"
-                        src="/EikeCase/videos/tech/private.mp4"
+                        src="/videos/tech/private.mp4"
                         loop
                         muted
                         playsInline
-                        onMouseEnter={(e) => e.target.play()}
+                        preload="metadata"
+                        onMouseEnter={(e) => e.target.play().catch(() => {})}
                         onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }}
-                      />
+                        onError={() => setPrivateVideoError(true)}
+                        onLoadedData={() => setPrivateVideoError(false)}
+                      >
+                        <source src="/videos/tech/private.mp4" type="video/mp4" />
+                      </video>
+                      {privateVideoError && (
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <p className="text-xs text-gray-400 text-center px-2">Private Tech<br/>Video placeholder</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                   {/* Right - Business Video */}
                   <div className="flex-1 flex flex-col">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Business</p>
-                    <div className="flex-1 bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all">
+                    <div className="flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all relative">
                       <video
                         className="w-full h-full object-cover"
-                        src="/EikeCase/videos/tech/business.mp4"
+                        src="/videos/tech/business.mp4"
                         loop
                         muted
                         playsInline
-                        onMouseEnter={(e) => e.target.play()}
+                        preload="metadata"
+                        onMouseEnter={(e) => e.target.play().catch(() => {})}
                         onMouseLeave={(e) => { e.target.pause(); e.target.currentTime = 0; }}
-                      />
+                        onError={() => setBusinessVideoError(true)}
+                        onLoadedData={() => setBusinessVideoError(false)}
+                      >
+                        <source src="/videos/tech/business.mp4" type="video/mp4" />
+                      </video>
+                      {businessVideoError && (
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <p className="text-xs text-gray-400 text-center px-2">Business Tech<br/>Video placeholder</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -203,7 +225,10 @@ export default function WhoSection() {
                 transition={{ duration: 0.3 }}
               >
                 <div className="flex justify-between items-center mb-2">
-                    <h3 className="text-lg font-bold text-[#003b6e]">My Journey</h3>
+                    <h3 className="text-lg font-bold text-[#003b6e] flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5" />
+                      My Journey
+                    </h3>
                     <button
                         onClick={() => setIsJourneyExpanded(true)}
                         className="flex items-center gap-1 text-sm text-[#003b6e] hover:text-[#86BC25] transition-colors"
@@ -213,14 +238,17 @@ export default function WhoSection() {
                     </button>
                 </div>
 
-                <div className="flex-grow flex items-center justify-between gap-2 relative">
-                  {/* Green Deloitte Box - starts from Jr. Consultant position */}
-                  <div className="absolute inset-0 left-[20%] bg-gradient-to-r from-[#046A38]/10 to-[#86BC25]/10 rounded-lg flex items-center justify-center pointer-events-none z-10 border-2 border-[#046A38]/20">
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_Deloitte.svg"
-                      alt="Deloitte"
-                      className="h-16 object-contain opacity-80"
-                    />
+                <div className="flex-grow flex items-center justify-between gap-2 relative" style={{ maxHeight: '80%' }}>
+                  {/* Green Deloitte Box - behind the 4 boxes, now includes logo */}
+                  <div className="absolute top-0 bottom-0 left-[20%] right-0 bg-gradient-to-r from-[#046A38]/10 to-[#86BC25]/10 rounded-lg pointer-events-none z-0 border-2 border-[#046A38]/20">
+                    {/* Deloitte Logo inside box */}
+                    <div className="absolute top-2 left-0 right-0 flex items-center justify-center">
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_Deloitte.svg"
+                        alt="Deloitte"
+                        className="h-6 object-contain opacity-70"
+                      />
+                    </div>
                   </div>
 
                   {compactMilestones.map((milestone, index) => {
@@ -229,10 +257,11 @@ export default function WhoSection() {
                       <React.Fragment key={index}>
                         <div
                           className="flex-1 flex flex-col items-center text-center p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer relative z-20"
+                          style={{ maxHeight: '80%' }}
                           onClick={() => setIsJourneyExpanded(true)}
                         >
                           {/* Logo */}
-                          <div className="h-8 mb-2 flex items-center justify-center">
+                          <div className="h-6 mb-1 flex items-center justify-center">
                             <img src={milestone.logo} alt={milestone.title} className="h-full object-contain" />
                           </div>
                           {/* Title */}
@@ -240,7 +269,7 @@ export default function WhoSection() {
                           {/* Year */}
                           <p className="text-[10px] text-gray-500">{milestone.year}</p>
                         </div>
-                        {index < compactMilestones.length - 1 && <div className="w-px h-12 bg-gray-200 z-20"></div>}
+                        {index < compactMilestones.length - 1 && <div className="w-px h-10 bg-gray-200 z-20"></div>}
                       </React.Fragment>
                     )
                   })}

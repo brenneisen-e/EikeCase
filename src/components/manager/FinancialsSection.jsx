@@ -174,33 +174,34 @@ export default function FinancialsSection() {
             >
               <div className="h-2 bg-[#046A38]"></div>
               <div className="p-6">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-[#046A38] mb-1">Full Scale Roll-Out</h3>
-                    <p className="text-lg text-gray-600 mb-4">Contract migration tool from prototype to enterprise roll-out</p>
-                  </div>
-                  <motion.div
-                    className="flex flex-col gap-3"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
-                  >
-                    <img
+                <div className="mb-2">
+                  <div className="flex items-center gap-3 mb-1">
+                    <h3 className="text-2xl font-bold text-[#046A38]">Full Scale Roll-Out</h3>
+                    <motion.div
+                      className="bg-[#046A38] text-white rounded-lg px-3 py-1.5 text-center flex items-center gap-2"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
+                    >
+                      <span className="text-xs opacity-90">NSR:</span>
+                      <span className="text-lg font-bold">€300K</span>
+                    </motion.div>
+                    <motion.img
                       src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/8d826aa3b_BarmeniaGothaer_Logo_zweizeilig_CMYK-White-on-DarkBlue.png"
                       alt="Barmenia Gothaer"
-                      className="h-16 opacity-85"
+                      className="h-6 opacity-85 ml-auto"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
                     />
-                    <div className="bg-[#046A38] text-white rounded-lg px-3 py-2 text-center">
-                      <div className="text-xs opacity-90">NSR</div>
-                      <div className="text-lg font-bold">€300K</div>
-                    </div>
-                  </motion.div>
+                  </div>
+                  <p className="text-lg text-gray-600 mb-1">Contract migration tool from prototype to enterprise roll-out</p>
+                  <ul className="space-y-1 mb-2 text-base text-gray-700">
+                    <li>• Built contract migration tool: prototype → full production roll-out</li>
+                    <li>• Actively used to support contract conversion for 1,000+ agencies</li>
+                    <li>• Production implementation built in SAP SAC after prototype phase</li>
+                  </ul>
                 </div>
-
-                <ul className="space-y-2 mb-4 text-lg text-gray-700">
-                  <li>• Built contract migration tool: prototype → full production roll-out</li>
-                  <li>• Actively used to support contract conversion for 1,000+ agencies</li>
-                </ul>
                 
                 {/* Two Showcase Boxes */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
@@ -239,45 +240,51 @@ export default function FinancialsSection() {
             >
               <div className="h-2 bg-[#046A38]"></div>
               <div className="p-6">
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-[#046A38] mb-1">Proof of Value</h3>
-                    <p className="text-lg text-gray-600 mb-4">AI-driven prototype for steering transparency</p>
-                  </div>
-                  <motion.div
-                    className="flex flex-col gap-2"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
-                  >
-                    <img
+                <div className="mb-2">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-2xl font-bold text-[#046A38]">Proof of Value</h3>
+                    <motion.div
+                      className="bg-[#046A38] text-white rounded-lg px-3 py-1.5 text-center flex items-center gap-2"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.6, type: 'spring', stiffness: 200 }}
+                    >
+                      <span className="text-xs opacity-90">NSR (each):</span>
+                      <span className="text-lg font-bold">€50K</span>
+                    </motion.div>
+                    <motion.img
                       src="https://upload.wikimedia.org/wikipedia/de/1/11/Ergo_Group_logo.svg"
                       alt="ERGO"
-                      className="h-10 opacity-85 bg-white px-2 rounded"
+                      className="h-5 opacity-85 bg-white px-1 rounded ml-auto"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
                     />
-                    <img
+                    <motion.img
                       src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Hansainvest-Logo.png"
                       alt="Hansainvest"
-                      className="h-8 opacity-85 bg-white px-2 rounded"
+                      className="h-5 opacity-85 bg-white px-1 rounded"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
                     />
-                    <img
+                    <motion.img
                       src="https://upload.wikimedia.org/wikipedia/commons/5/53/Union_Investment.png"
                       alt="Union Investment"
-                      className="h-8 opacity-85 bg-white px-2 rounded"
+                      className="h-5 opacity-85 bg-white px-1 rounded"
+                      initial={{ scale: 0, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.9, type: 'spring', stiffness: 200 }}
                     />
-                    <div className="bg-[#046A38] text-white rounded-lg px-3 py-2 text-center">
-                      <div className="text-xs opacity-90">NSR (each)</div>
-                      <div className="text-lg font-bold">€50K</div>
-                    </div>
-                  </motion.div>
+                  </div>
+                  <p className="text-lg text-gray-600 mb-1">AI-driven prototype for steering transparency</p>
+                  <ul className="space-y-1 mb-2 text-base text-gray-700">
+                    <li>• 4-week prototype based on fragmented data</li>
+                    <li>• Delivered tangible simulation use case without system rebuild</li>
+                    <li>• Validated business value and ready for scale-up phase</li>
+                  </ul>
                 </div>
 
-                <ul className="space-y-2 mb-4 text-lg text-gray-700">
-                  <li>• 4-week prototype based on fragmented data</li>
-                  <li>• Delivered tangible simulation use case without system rebuild</li>
-                  <li>• Validated business value and ready for scale-up phase</li>
-                </ul>
-                
                 {/* Two Showcase Boxes for ERGO */}
                 <div className="grid grid-cols-2 gap-3 mb-4">
                   {/* Interactive Prototype - 50% zoom */}
@@ -291,12 +298,14 @@ export default function FinancialsSection() {
                   </div>
 
                   {/* Working Model Visual */}
-                  <div className="bg-white/70 rounded-lg p-3 flex items-center justify-center">
-                    <div className="text-center">
-                      <p className="text-sm font-semibold text-[#046A38] mb-3">Delivered Result</p>
-                      <div className="text-4xl mb-2">✅</div>
-                      <p className="text-xs text-gray-700 font-medium">Working simulation model</p>
-                      <p className="text-xs text-gray-600">Proof of Value established</p>
+                  <div className="bg-white/70 rounded-lg p-3">
+                    <p className="text-sm font-semibold text-[#046A38] mb-2 text-center">Delivered Result</p>
+                    <div className="bg-gray-100 rounded overflow-hidden border border-gray-300 aspect-video flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-4xl mb-2">✅</div>
+                        <p className="text-xs text-gray-700 font-medium">Working simulation model</p>
+                        <p className="text-xs text-gray-600">Proof of Value established</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -315,12 +324,12 @@ export default function FinancialsSection() {
           {showProofBoxes ? (
             <>
               <ChevronUp className="w-5 h-5" />
-              <span>Collapse PoCs</span>
+              <span>Scalable Growth</span>
             </>
           ) : (
             <>
               <ChevronDown className="w-5 h-5" />
-              <span>Expand PoCs</span>
+              <span>Show PoCs</span>
             </>
           )}
         </button>
