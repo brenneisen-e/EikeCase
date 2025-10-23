@@ -200,9 +200,9 @@ export default function SummarySection() {
 
       {/* Chat Interface - VSTEike Design with Green Theme */}
       <div className="flex-1 flex items-center justify-center relative z-10">
-        <div className="w-full max-w-3xl">
+        <div className="w-full max-w-4xl">
           {/* Chat Container */}
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden" style={{ maxHeight: '85vh' }}>
             {/* Chat Header */}
             <div
               className="p-6 text-white"
