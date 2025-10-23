@@ -47,6 +47,7 @@ export default function WelcomeScreen() {
         {/* Chat Container */}
         <motion.div
           className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+          style={{ maxHeight: 'calc(100vh - 100px)' }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
