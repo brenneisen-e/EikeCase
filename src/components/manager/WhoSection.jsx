@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, MapPin, Briefcase, GraduationCap, Building, TrendingUp, Users, Star, ChevronsRight, ChevronsLeft } from 'lucide-react';
+import { X, MapPin, Briefcase, GraduationCap, Building, TrendingUp, Users, Star, ChevronsRight, ChevronsLeft, Check } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import InteractiveWorldMapNew from './InteractiveWorldMapNew'; // New world map component
 import DetailedTimeline from './DetailedTimeline'; // Import the new DetailedTimeline component
+import RobotPainter from './RobotPainter'; // Import robot painter
 
 // Sport images - Add your own images to public/images/sports/
 // Supported formats: sport-1.jpg, sport-2.jpeg, sport-3.jpg, sport-4.jpg
@@ -36,6 +37,17 @@ export default function WhoSection() {
   const [isJourneyExpanded, setIsJourneyExpanded] = useState(false);
   const businessVideoRef = React.useRef(null);
   const sportsImages = defaultSportsImages; // Use static images from public folder
+
+  // Robot animation states
+  const [robotPosition, setRobotPosition] = useState({ x: -100, y: -100 });
+  const [isPainting, setIsPainting] = useState(false);
+  const [checkedBoxes, setCheckedBoxes] = useState({
+    globetrotter: false,
+    sport: false,
+    tech: false,
+    journey: false
+  });
+  const [showRobot, setShowRobot] = useState(false);
 
   const fetchVisitedCount = async () => {
       try {
@@ -71,6 +83,60 @@ export default function WhoSection() {
   useEffect(() => {
     fetchVisitedCount();
   }, []); // Empty dependency array means this runs once on mount
+
+  // Robot animation sequence
+  useEffect(() => {
+    if (isJourneyExpanded) return; // Don't run when journey is expanded
+
+    const boxes = [
+      { id: 'globetrotter', selector: '[data-box="globetrotter"]' },
+      { id: 'sport', selector: '[data-box="sport"]' },
+      { id: 'tech', selector: '[data-box="tech"]' },
+      { id: 'journey', selector: '[data-box="journey"]' }
+    ];
+
+    let currentBoxIndex = 0;
+
+    const animateRobot = async () => {
+      // Start after a brief delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setShowRobot(true);
+
+      for (const box of boxes) {
+        const element = document.querySelector(box.selector);
+        if (!element) continue;
+
+        const rect = element.getBoundingClientRect();
+        const containerRect = element.closest('section').getBoundingClientRect();
+
+        // Move robot to box (top-right corner area)
+        setRobotPosition({
+          x: rect.right - containerRect.left - 100,
+          y: rect.top - containerRect.top + 10
+        });
+
+        // Wait for robot to arrive
+        await new Promise(resolve => setTimeout(resolve, 800));
+
+        // Start painting
+        setIsPainting(true);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Show checkmark
+        setCheckedBoxes(prev => ({ ...prev, [box.id]: true }));
+        setIsPainting(false);
+
+        // Brief pause before next box
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+
+      // Hide robot after completion
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setShowRobot(false);
+    };
+
+    animateRobot();
+  }, [isJourneyExpanded]);
 
   return (
     <section id="who" className="h-screen w-full bg-gradient-to-br from-white to-gray-100 flex flex-col px-20 py-12 overflow-hidden">
@@ -133,12 +199,26 @@ export default function WhoSection() {
               {/* Globetrotter with Flag Grid */}
               <motion.div
                 key="globetrotter"
-                className="bg-white rounded-xl shadow-lg p-3 flex flex-col"
+                data-box="globetrotter"
+                className="bg-white rounded-xl shadow-lg p-3 flex flex-col relative"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
+                {/* Checkmark */}
+                <AnimatePresence>
+                  {checkedBoxes.globetrotter && (
+                    <motion.div
+                      className="absolute top-2 right-2 w-8 h-8 bg-[#86BC25] rounded-full flex items-center justify-center shadow-lg z-10"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', stiffness: 200 }}
+                    >
+                      <Check className="w-5 h-5 text-white" strokeWidth={3} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="text-lg font-bold text-[#003b6e] flex items-center gap-2">
                     <MapPin className="w-4 h-4" />
@@ -153,12 +233,26 @@ export default function WhoSection() {
               {/* Sport Enthusiast */}
               <motion.div
                 key="sport"
-                className="bg-white rounded-xl shadow-lg p-3 flex flex-col"
+                data-box="sport"
+                className="bg-white rounded-xl shadow-lg p-3 flex flex-col relative"
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
+                {/* Checkmark */}
+                <AnimatePresence>
+                  {checkedBoxes.sport && (
+                    <motion.div
+                      className="absolute top-2 right-2 w-8 h-8 bg-[#86BC25] rounded-full flex items-center justify-center shadow-lg z-10"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', stiffness: 200 }}
+                    >
+                      <Check className="w-5 h-5 text-white" strokeWidth={3} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 <h3 className="text-lg font-bold text-[#003b6e] mb-2">🏃 Sport Enthusiast</h3>
                 <div className="flex-grow flex gap-2 overflow-x-auto rounded-lg" style={{ scrollbarWidth: 'thin', scrollbarColor: '#9CA3AF #E5E7EB' }}>
                   {sportsImages.map((image) => (
@@ -181,12 +275,26 @@ export default function WhoSection() {
               {/* Tech Explorer */}
               <motion.div
                 key="tech-explorer"
-                className="bg-white rounded-xl shadow-lg p-3 flex flex-col"
+                data-box="tech"
+                className="bg-white rounded-xl shadow-lg p-3 flex flex-col relative"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
+                {/* Checkmark */}
+                <AnimatePresence>
+                  {checkedBoxes.tech && (
+                    <motion.div
+                      className="absolute top-2 right-2 w-8 h-8 bg-[#86BC25] rounded-full flex items-center justify-center shadow-lg z-10"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', stiffness: 200 }}
+                    >
+                      <Check className="w-5 h-5 text-white" strokeWidth={3} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 <h3 className="text-lg font-bold text-[#003b6e] mb-2">💻 Tech Explorer</h3>
                 <div className="flex-grow flex gap-2">
                   {/* Left - Private Image */}
@@ -236,12 +344,26 @@ export default function WhoSection() {
               {/* My Journey (Compact) */}
               <motion.div
                 key="journey-compact"
-                className="bg-white rounded-xl shadow-lg p-3 flex flex-col"
+                data-box="journey"
+                className="bg-white rounded-xl shadow-lg p-3 flex flex-col relative"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
+                {/* Checkmark */}
+                <AnimatePresence>
+                  {checkedBoxes.journey && (
+                    <motion.div
+                      className="absolute top-2 right-2 w-8 h-8 bg-[#86BC25] rounded-full flex items-center justify-center shadow-lg z-10"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: 'spring', stiffness: 200 }}
+                    >
+                      <Check className="w-5 h-5 text-white" strokeWidth={3} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 <div className="flex justify-between items-center mb-2">
                     <h3 className="text-lg font-bold text-[#003b6e] flex items-center gap-2">
                       <TrendingUp className="w-5 h-5" />
@@ -320,6 +442,11 @@ export default function WhoSection() {
             className="max-w-full max-h-full object-contain rounded-lg"
           />
         </motion.div>
+      )}
+
+      {/* Robot Painter */}
+      {showRobot && !isJourneyExpanded && (
+        <RobotPainter position={robotPosition} isPainting={isPainting} />
       )}
     </section>
   );
