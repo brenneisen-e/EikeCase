@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Cpu, Server, CheckCircle, TrendingUp, Calendar, Users, X, Maximize2, ChevronRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { EditableText } from '@/components/editor/EditableText';
 
 const steps = [
   {
@@ -164,25 +165,37 @@ export default function HowSection() {
 
   return (
     <section id="how" className="h-screen w-full bg-gradient-to-br from-gray-50 to-white flex flex-col px-20 py-12 overflow-auto">
-      <motion.h1
-        className="text-4xl font-normal text-black text-left mb-2"
-        style={{ fontFamily: 'Aptos, Open Sans, Segoe UI, sans-serif' }}
+      <motion.div
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        From data complexity to AI-driven results
-      </motion.h1>
-      
-      <motion.h2
-        className="text-2xl text-gray-600 text-left mb-8"
+        <EditableText
+          id="how-title"
+          as="h1"
+          defaultSize="text-4xl"
+          className="font-normal text-black text-left mb-2"
+          style={{ fontFamily: 'Aptos, Open Sans, Segoe UI, sans-serif' }}
+        >
+          From data complexity to AI-driven results
+        </EditableText>
+      </motion.div>
+
+      <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
       >
-        A rapid Proof-of-Value approach (4–6 weeks) followed by an optional scaling phase enables fast validation and measurable outcomes.
-      </motion.h2>
+        <EditableText
+          id="how-subtitle"
+          as="h2"
+          defaultSize="text-2xl"
+          className="text-gray-600 text-left mb-8"
+        >
+          A rapid Proof-of-Value approach (4–6 weeks) followed by an optional scaling phase enables fast validation and measurable outcomes.
+        </EditableText>
+      </motion.div>
 
       <div className={`flex flex-col mb-8 transition-all duration-300 ${showGantt ? 'flex-shrink' : 'flex-grow'}`}>
         <div className="flex justify-between items-stretch gap-6 mb-4">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Loader2 } from 'lucide-react';
+import { EditableText } from '@/components/editor/EditableText';
 
 export default function SummarySection() {
   // Chat states
@@ -153,16 +154,24 @@ export default function SummarySection() {
         transition={{ duration: 0.6 }}
         className="relative z-20"
       >
-        <h1
-          className="text-4xl font-normal text-black text-left mb-2"
+        <EditableText
+          id="summary-title"
+          as="h1"
+          defaultSize="text-4xl"
+          className="font-normal text-black text-left mb-2"
           style={{ fontFamily: 'Aptos, Open Sans, Segoe UI, sans-serif' }}
         >
           Breaking complexity starts with me
-        </h1>
+        </EditableText>
 
-        <h2 className="text-2xl text-gray-600 text-left mb-8">
+        <EditableText
+          id="summary-subtitle"
+          as="h2"
+          defaultSize="text-2xl"
+          className="text-gray-600 text-left mb-8"
+        >
           From PowerPoint to AI-driven prototypes that turn ideas into impact.
-        </h2>
+        </EditableText>
       </motion.div>
 
       {/* Tiles Grid in Background */}
@@ -220,8 +229,12 @@ export default function SummarySection() {
                   🤖
                 </div>
                 <div>
-                  <div className="text-2xl font-semibold">Eike's Assistant</div>
-                  <div className="text-sm opacity-90">Welcome back!</div>
+                  <EditableText id="chat-header-title" defaultSize="text-2xl" className="font-semibold">
+                    Eike's Assistant
+                  </EditableText>
+                  <EditableText id="chat-header-subtitle" defaultSize="text-sm" className="opacity-90">
+                    Welcome back!
+                  </EditableText>
                 </div>
               </div>
             </div>
