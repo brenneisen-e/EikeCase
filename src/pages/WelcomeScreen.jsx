@@ -46,15 +46,15 @@ export default function WelcomeScreen() {
       <div className="w-full max-w-3xl">
         {/* Chat Container */}
         <motion.div
-          className="bg-white rounded-3xl shadow-2xl overflow-hidden"
-          style={{ maxHeight: 'calc(100vh - 100px)' }}
+          className="bg-white rounded-3xl shadow-2xl flex flex-col"
+          style={{ maxHeight: 'calc(100vh - 120px)', height: 'auto' }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           {/* Chat Header */}
           <div
-            className="p-6 text-white"
+            className="p-6 text-white flex-shrink-0"
             style={{
               background: 'linear-gradient(135deg, #046A38 0%, #86BC25 100%)'
             }}
@@ -76,7 +76,7 @@ export default function WelcomeScreen() {
           </div>
 
           {/* Chat Body */}
-          <div className="p-8">
+          <div className="p-8 flex-1 overflow-visible relative">
             {/* Messages */}
             <div className="space-y-4 mb-6">
               {messages.map((msg, idx) => (
@@ -103,7 +103,7 @@ export default function WelcomeScreen() {
             </div>
 
             {/* Chat Input Container */}
-            <div className="mb-4">
+            <div className="mb-4" style={{ paddingBottom: showSuggestion ? '80px' : '0' }}>
               <div className="flex gap-3 relative">
                 <div className="flex-1 relative">
                   <input
@@ -125,7 +125,7 @@ export default function WelcomeScreen() {
                   <AnimatePresence>
                     {showSuggestion && (
                       <motion.div
-                        className="absolute top-full left-0 right-0 mt-2 bg-white border-2 rounded-xl p-3 shadow-xl cursor-pointer z-10"
+                        className="absolute top-full left-0 right-0 mt-2 bg-white border-2 rounded-xl p-3 shadow-xl cursor-pointer z-[100]"
                         style={{ borderColor: '#86BC25' }}
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
