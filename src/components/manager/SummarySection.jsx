@@ -11,9 +11,10 @@ export default function SummarySection() {
   const [visibleTiles, setVisibleTiles] = useState([false, false, false, false]);
 
   const sampleQuestions = [
-    "Wie ist das Wetter in Köln",
-    "Exotische Reiseziele in Afrika",
-    "Nächster Deloitte Derby Termin"
+    "What's the weather in Cologne",
+    "Exotic travel destinations in Africa",
+    "Next Deloitte Derby date",
+    "What's your Deloitte Event App called"
   ];
 
   const tiles = [
@@ -58,7 +59,7 @@ export default function SummarySection() {
 
   // Accept suggestion
   const acceptSuggestion = () => {
-    setInputValue('Fasse den Managercase zusammen');
+    setInputValue('Summarize the manager case');
     setShowSuggestion(false);
   };
 
@@ -81,11 +82,11 @@ export default function SummarySection() {
     // Response sequence
     const responses = [
       {
-        content: 'Na klar. Dein Case heißt "Breaking Complexity\nAI driven prototypes that unlock data & steering"',
+        content: 'Of course! Your case is called "Breaking Complexity\nAI driven prototypes that unlock data & steering"',
         delay: 800
       },
       {
-        content: 'Du hast vier Eigenschaften unter Beweis gestellt:',
+        content: 'You have demonstrated four key competencies:',
         delay: 1000
       },
       {
@@ -95,22 +96,22 @@ export default function SummarySection() {
       },
       {
         content: '2. Technology Mastery: You know how to build it.',
-        delay: 1500,
+        delay: 10000,
         showTile: 1
       },
       {
         content: '3. Sales & Proof of Concept: You know how to sell it.',
-        delay: 1500,
+        delay: 10000,
         showTile: 2
       },
       {
         content: '4. Business Impact & Scaling: You know how to monetise it.',
-        delay: 1500,
+        delay: 10000,
         showTile: 3
       },
       {
         content: '**You are ready to become a Deloitte Manager**',
-        delay: 1500,
+        delay: 10000,
         bold: true
       }
     ];
@@ -172,7 +173,7 @@ export default function SummarySection() {
               <motion.div
                 className="bg-white rounded-xl shadow-lg overflow-hidden"
                 style={{ borderTop: `6px solid ${tile.color}` }}
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 1 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ type: 'spring', stiffness: 200, damping: 20 }}
               >
@@ -220,7 +221,7 @@ export default function SummarySection() {
                 </div>
                 <div>
                   <div className="text-2xl font-semibold">Eike's Assistant</div>
-                  <div className="text-sm opacity-90">Willkommen zurück!</div>
+                  <div className="text-sm opacity-90">Welcome back!</div>
                 </div>
               </div>
             </div>
@@ -239,9 +240,9 @@ export default function SummarySection() {
                     🤖
                   </div>
                   <div className="bg-gray-100 p-5 rounded-2xl flex-1">
-                    <p className="mb-3"><strong>Hallo Eike! 👋</strong></p>
-                    <p className="mb-3 text-gray-700">Ich bin dein KI-Assistent für den Managercase.</p>
-                    <p className="text-gray-700">Was möchtest du tun?</p>
+                    <p className="mb-3"><strong>Hello Eike! 👋</strong></p>
+                    <p className="mb-3 text-gray-700">I'm your AI assistant for the manager case.</p>
+                    <p className="text-gray-700">What would you like to do?</p>
                   </div>
                 </div>
               )}
@@ -316,7 +317,7 @@ export default function SummarySection() {
                       value={inputValue}
                       onChange={handleInputChange}
                       onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
-                      placeholder="Frag mich etwas über den Managercase..."
+                      placeholder="Ask me something about the manager case..."
                       className="w-full px-5 py-4 border-2 rounded-xl text-base focus:outline-none transition-all"
                       style={{
                         borderColor: '#e2e8f0',
@@ -336,8 +337,8 @@ export default function SummarySection() {
                           exit={{ opacity: 0, y: -10 }}
                           onClick={acceptSuggestion}
                         >
-                          <div className="text-gray-600 text-sm mb-1">Vorschlag:</div>
-                          <div className="text-[#046A38] font-semibold">Fasse den Managercase zusammen</div>
+                          <div className="text-gray-600 text-sm mb-1">Suggestion:</div>
+                          <div className="text-[#046A38] font-semibold">Summarize the manager case</div>
                         </motion.div>
                       )}
                     </AnimatePresence>
