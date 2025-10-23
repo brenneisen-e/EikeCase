@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Cpu, Server, CheckCircle, TrendingUp, Calendar, Users, X, Maximize2, ChevronRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import ClaudeAIAssistant from './ClaudeAIAssistant';
 
 const steps = [
   {
@@ -529,12 +528,9 @@ export default function HowSection() {
             >
               <iframe
                 src="https://brenneisen-e.github.io/VSTEike/"
-                className="w-full h-full border-0 flex-1"
+                className="w-full h-full border-0"
                 title="Expanded Prototype"
               />
-
-              {/* Claude AI Assistant - nur im Fullscreen-Modus */}
-              <ClaudeAIAssistant dashboardData={cockpitData} /> {/* Passed cockpitData to AI Assistant */}
             </div>
           </motion.div>
         )}
