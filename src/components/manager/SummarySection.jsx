@@ -130,7 +130,16 @@ export default function SummarySection() {
       </motion.h2>
 
       {/* 4 Competency Pillars in 2x2 Grid */}
-      <div className="grid grid-cols-2 gap-6 mb-8 flex-grow">
+      <div className="grid grid-cols-2 gap-6 mb-8 flex-grow relative">
+        {/* Circle Window in the Center */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-white border-8 border-gray-200 shadow-2xl z-40 flex items-center justify-center"
+          style={{
+            boxShadow: '0 0 60px rgba(0, 0, 0, 0.15), inset 0 0 30px rgba(134, 188, 37, 0.1)'
+          }}
+        >
+          <div className="absolute inset-4 rounded-full border-4 border-[#86BC25] opacity-30"></div>
+        </div>
+
         {coreCompetencies.map((competency, index) => {
           const Icon = competency.icon;
           return (
