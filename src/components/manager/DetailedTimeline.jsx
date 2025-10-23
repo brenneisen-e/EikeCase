@@ -8,9 +8,10 @@ const milestones = [
   years: '2015 – 2018',
   logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/2340d7224_OLB.png',
   description: 'Managed a diverse portfolio of private and corporate clients, focusing on investment strategies and credit financing.',
-  fullDescription: `Managed a portfolio of private and corporate clients.
-Focused on investment strategies, credit financing, and client advisory.
-Laid the foundation for analytical skills and relationship management.`,
+  bulletPoints: [
+    'Managed portfolio of private and corporate clients with focus on investment strategies',
+    'Built foundation for analytical skills and relationship management'
+  ],
   hashtag: '#learning',
   icon: GraduationCap,
   color: 'bg-green-50 border-green-500',
@@ -22,9 +23,10 @@ Laid the foundation for analytical skills and relationship management.`,
   years: '2018 – 2021',
   logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/CEMS_logo.svg',
   description: 'PMO for Business Case and committee tasks. Developed foundational skills in project management and stakeholder management.',
-  fullDescription: `Supported the PMO for business case preparation and committee tasks.
-Built fundamental skills in project management and stakeholder alignment.
-First exposure to compensation and transformation programs.`,
+  bulletPoints: [
+    'Supported PMO for business case preparation and stakeholder alignment',
+    'First exposure to compensation and transformation programs'
+  ],
   hashtag: '#adapting',
   icon: Briefcase,
   color: 'bg-yellow-50 border-yellow-500',
@@ -38,8 +40,10 @@ First exposure to compensation and transformation programs.`,
   secondaryLogo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/260011748_ERGO.png',
   showLogosHorizontal: true,
   description: 'Led complete gap analysis independently – conducted, managed, and reported comprehensive analysis across all business areas.',
-  fullDescription: `Commerz Real – Independently conducted and managed a comprehensive GAP analysis across business areas.
-ERGO – Supported Performance Management: analyzed simulation results of commission logic harmonization on segment level and prepared executive board reporting.`,
+  bulletPoints: [
+    'Conducted comprehensive GAP analysis across business areas (Commerz Real)',
+    'Supported performance management with simulation analysis and executive reporting (ERGO)'
+  ],
   hashtag: '#building',
   icon: Building,
   color: 'bg-blue-50 border-blue-500',
@@ -51,35 +55,34 @@ ERGO – Supported Performance Management: analyzed simulation results of commis
   years: '2022 – 2024',
   logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/260011748_ERGO.png',
   description: 'PMO Lead for Performance Management - sharpened simulation results and reported derivations to the board. Go-Live management of entire ZAV program. Later acting manager.',
-  fullDescription: `Transitioned into the strategic PMO and gradually took over team leadership responsibilities.
-Accompanied and prepared board-level decisions on compensation and performance management.
-Later managed a project independently on-site with a consultant colleague, acting as project lead.`,
+  bulletPoints: [
+    'Transitioned into strategic PMO role with team leadership responsibilities',
+    'Led project independently on-site as project lead with consultant colleague'
+  ],
   hashtag: '#growing',
   icon: Users,
   color: 'bg-red-50 border-red-500',
   textColor: 'text-red-800',
   hashtagColor: 'text-red-600',
-  team: '1 Person',
-  revenue: '€300K* Fees',
-  revenueNote: '*Theoretical managed fees as Senior Consultant role but formally managed'
+  team: '4 Persons',
+  revenue: '€1.8M Fees'
 },
 {
   title: 'Senior Consultant',
   years: '2025 – Present',
   logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/60d27e529_Barmenia-removebg-preview.png',
   description: 'Project Lead Simulation, Calibration and Contract. Leading Deloitte delivery role for Compensation logic harmonization in major insurance merger.',
-  fullDescription: `Sub-project lead for Compensation Logic Harmonization in a major insurance merger.
-End-to-end responsibility for commission simulation, calibration, and contract transition.
-Driving cross-functional alignment between business logic and IT implementation.
-Currently leading the E2E simulation stream.`,
+  bulletPoints: [
+    'Sub-project lead for compensation logic harmonization in major insurance merger',
+    'Currently leading E2E simulation stream with cross-functional business-IT alignment'
+  ],
   hashtag: '#leading',
   icon: Star,
   color: 'bg-indigo-50 border-indigo-500',
   textColor: 'text-indigo-800',
   hashtagColor: 'text-indigo-600',
-  team: '2 Persons',
-  revenue: '€500K* Fees',
-  revenueNote: '*Theoretical managed fees as Senior Consultant role but formally managed'
+  team: '3 Persons',
+  revenue: '€500K Fees'
 }];
 
 
@@ -133,9 +136,11 @@ export default function DetailedTimeline() {
 
               {/* Description */}
               <div className="flex-grow mb-4">
-                <p className="text-green-800 text-lg leading-relaxed whitespace-pre-line">
-                  {milestone.fullDescription}
-                </p>
+                <ul className="text-green-800 text-lg leading-relaxed list-disc list-inside space-y-2">
+                  {milestone.bulletPoints.map((point, idx) => (
+                    <li key={idx}>{point}</li>
+                  ))}
+                </ul>
               </div>
 
               {/* Footer */}
@@ -157,10 +162,7 @@ export default function DetailedTimeline() {
                   }
                   </div>
                 }
-                {milestone.revenueNote &&
-                <p className={`text-xs ${milestone.textColor} opacity-60 italic`}>{milestone.revenueNote}</p>
-                }
-                
+
                 {/* Hashtag */}
                 <div className={`text-lg font-semibold ${milestone.hashtagColor}`}>
                   {milestone.hashtag}

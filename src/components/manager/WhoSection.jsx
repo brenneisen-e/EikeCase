@@ -226,7 +226,7 @@ export default function WhoSection() {
                         </video>
                       </div>
                       <p className="text-lg text-gray-600 leading-relaxed">
-                        Proactively built new event organizing app ("DEX") for Deloitte Germany. Already used &gt;10,000 times in &gt;15 events.
+                        Proactively built new event organizing app ("DEX") for Deloitte DE. Already used &gt;10,000 times in &gt;15 events.
                       </p>
                     </div>
                   </div>
