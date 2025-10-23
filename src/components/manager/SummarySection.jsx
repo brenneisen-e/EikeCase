@@ -9,6 +9,7 @@ export default function SummarySection() {
   const [isPainting, setIsPainting] = useState(false);
   const [checkedBoxes, setCheckedBoxes] = useState([false, false, false, false]);
   const [showRobot, setShowRobot] = useState(false);
+  const [hasStartedAnimation, setHasStartedAnimation] = useState(false);
 
   const coreCompetencies = [
     {
@@ -45,8 +46,10 @@ export default function SummarySection() {
     }
   ];
 
-  // Robot animation sequence
+  // Robot animation sequence - only runs when section comes into view
   useEffect(() => {
+    if (!hasStartedAnimation) return;
+
     const animateRobot = async () => {
       // Start after a brief delay
       await new Promise(resolve => setTimeout(resolve, 2000));
@@ -90,7 +93,14 @@ export default function SummarySection() {
     };
 
     animateRobot();
-  }, []);
+  }, [hasStartedAnimation]);
+
+  // Callback when section comes into viewport
+  const handleViewportEnter = () => {
+    if (!hasStartedAnimation) {
+      setHasStartedAnimation(true);
+    }
+  };
 
   return (
     <section id="summary" className="h-screen w-full bg-gradient-to-br from-white to-gray-100 flex flex-col px-20 py-12 overflow-hidden">
@@ -101,6 +111,7 @@ export default function SummarySection() {
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
+        onViewportEnter={handleViewportEnter}
       >
         Breaking complexity starts with me
       </motion.h1>
