@@ -4,14 +4,18 @@ import Home from "./Home";
 
 import ManagerCase from "./ManagerCase";
 
+import WelcomeScreen from "./WelcomeScreen";
+
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 const PAGES = {
-    
+
+    WelcomeScreen: WelcomeScreen,
+
     Home: Home,
-    
+
     ManagerCase: ManagerCase,
-    
+
 }
 
 function _getCurrentPage(url) {
@@ -34,15 +38,16 @@ function PagesContent() {
     
     return (
         <Layout currentPageName={currentPage}>
-            <Routes>            
-                
-                    <Route path="/" element={<Home />} />
-                
-                
+            <Routes>
+
+                <Route path="/" element={<WelcomeScreen />} />
+
+                <Route path="/WelcomeScreen" element={<WelcomeScreen />} />
+
                 <Route path="/Home" element={<Home />} />
-                
+
                 <Route path="/ManagerCase" element={<ManagerCase />} />
-                
+
             </Routes>
         </Layout>
     );
