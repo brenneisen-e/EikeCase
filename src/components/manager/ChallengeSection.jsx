@@ -6,6 +6,7 @@ import DataSilosVisualization from './DataSilosAnimation';
 import FunctionalComplexityVisualization from './FunctionalComplexityAnimation';
 import RegulatoryPressureVisualization from './RegulatoryPressureAnimation';
 import EvolvingBusinessNeedsVisualization from './EvolvingNeedsAnimation';
+import { EditableText } from '@/components/editor/EditableText';
 
 export default function ChallengeSection() {
   const [hoveredPillar, setHoveredPillar] = useState(null);
@@ -93,25 +94,37 @@ export default function ChallengeSection() {
 
   return (
     <section id="challenge" className="h-screen w-full bg-white flex flex-col px-20 py-12">
-      <motion.h1
-        className="text-4xl font-normal text-black text-left mb-2"
-        style={{ fontFamily: 'Aptos, Open Sans, Segoe UI, sans-serif' }}
+      <motion.div
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        Complexity, silos, and regulation slow down steering
-      </motion.h1>
+        <EditableText
+          id="challenge-title"
+          as="h1"
+          defaultSize="text-4xl"
+          className="font-normal text-black text-left mb-2"
+          style={{ fontFamily: 'Aptos, Open Sans, Segoe UI, sans-serif' }}
+        >
+          Complexity, silos, and regulation slow down steering
+        </EditableText>
+      </motion.div>
 
-      <motion.h2
-        className="text-2xl text-gray-600 text-left mb-8"
+      <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
       >
-        Fragmented data and manual processes limit transparency, speed, and fact-based decisions.
-      </motion.h2>
+        <EditableText
+          id="challenge-subtitle"
+          as="h2"
+          defaultSize="text-2xl"
+          className="text-gray-600 text-left mb-8"
+        >
+          Fragmented data and manual processes limit transparency, speed, and fact-based decisions.
+        </EditableText>
+      </motion.div>
 
       <div className="flex-grow flex flex-col justify-between">
         <div>
