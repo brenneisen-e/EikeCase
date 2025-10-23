@@ -16,6 +16,7 @@ const milestones = [
   icon: GraduationCap,
   color: 'bg-white',
   borderGradient: 'linear-gradient(to right, #dcfce7, #bbf7d0)',
+  hashtagBg: '#dcfce7',
   textColor: 'text-green-700',
   hashtagColor: 'text-green-500'
 },
@@ -32,6 +33,7 @@ const milestones = [
   icon: Briefcase,
   color: 'bg-white',
   borderGradient: 'linear-gradient(to right, #bbf7d0, #86efac)',
+  hashtagBg: '#bbf7d0',
   textColor: 'text-green-800',
   hashtagColor: 'text-green-600'
 },
@@ -41,7 +43,6 @@ const milestones = [
   logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/eaebdd7ca_Commerzpng.png',
   secondaryLogo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/260011748_ERGO.png',
   showLogosHorizontal: true,
-  logoSize: 'h-14',
   description: 'Led complete gap analysis independently – conducted, managed, and reported comprehensive analysis across all business areas.',
   bulletPoints: [
     'Conducted comprehensive GAP analysis across business areas (Commerz Real)',
@@ -51,6 +52,7 @@ const milestones = [
   icon: Building,
   color: 'bg-white',
   borderGradient: 'linear-gradient(to right, #86efac, #4ade80)',
+  hashtagBg: '#86efac',
   textColor: 'text-green-900',
   hashtagColor: 'text-green-700'
 },
@@ -58,7 +60,6 @@ const milestones = [
   title: 'Senior Consultant',
   years: '2022 – 2024',
   logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/260011748_ERGO.png',
-  logoSize: 'h-14',
   description: 'PMO Lead for Performance Management - sharpened simulation results and reported derivations to the board. Go-Live management of entire ZAV program. Later acting manager.',
   bulletPoints: [
     'Transitioned into strategic PMO role with team leadership responsibilities',
@@ -68,6 +69,7 @@ const milestones = [
   icon: Users,
   color: 'bg-white',
   borderGradient: 'linear-gradient(to right, #4ade80, #22c55e)',
+  hashtagBg: '#4ade80',
   textColor: 'text-green-900',
   hashtagColor: 'text-green-800',
   team: '4 Persons',
@@ -77,7 +79,6 @@ const milestones = [
   title: 'Senior Consultant',
   years: '2025 – Present',
   logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/60d27e529_Barmenia-removebg-preview.png',
-  logoSize: 'h-28',
   description: 'Project Lead Simulation, Calibration and Contract. Leading Deloitte delivery role for Compensation logic harmonization in major insurance merger.',
   bulletPoints: [
     'Sub-project lead for compensation logic harmonization in major insurance merger',
@@ -87,6 +88,7 @@ const milestones = [
   icon: Star,
   color: 'bg-white',
   borderGradient: 'linear-gradient(to right, #22c55e, #16a34a)',
+  hashtagBg: '#22c55e',
   textColor: 'text-green-950',
   hashtagColor: 'text-green-900',
   team: '3 Persons',
@@ -121,24 +123,21 @@ export default function DetailedTimeline() {
                 </div>
               </div>
 
-              {/* Company Logos */}
-              <div className="mb-4">
+              {/* Company Logos - Fixed height container for vertical alignment */}
+              <div className="mb-4 h-16 flex items-center">
                 {milestone.showLogosHorizontal ?
                 <div className="flex items-center gap-4">
                     {milestone.logo &&
-                  <img src={milestone.logo} alt="Company Logo" className={`${milestone.logoSize || 'h-14'} object-contain`} />
+                  <img src={milestone.logo} alt="Company Logo" className="h-16 object-contain" />
                   }
                     {milestone.secondaryLogo &&
-                  <img src={milestone.secondaryLogo} alt="Secondary Company Logo" className="h-10 object-contain" />
+                  <img src={milestone.secondaryLogo} alt="Secondary Company Logo" className="h-16 object-contain" />
                   }
                   </div> :
 
-                <div className="flex flex-col gap-2">
+                <div className="flex items-center">
                     {milestone.logo &&
-                  <img src={milestone.logo} alt="Company Logo" className={`${milestone.logoSize || 'h-10'} object-contain object-left`} />
-                  }
-                    {milestone.secondaryLogo &&
-                  <img src={milestone.secondaryLogo} alt="Secondary Company Logo" className="h-8 object-contain object-left" />
+                  <img src={milestone.logo} alt="Company Logo" className="h-16 object-contain object-left" />
                   }
                   </div>
                 }
@@ -174,7 +173,10 @@ export default function DetailedTimeline() {
                 }
 
                 {/* Hashtag */}
-                <div className={`text-lg font-semibold ${milestone.hashtagColor}`}>
+                <div
+                  className="text-lg font-semibold text-white px-3 py-1 rounded-md inline-block"
+                  style={{ backgroundColor: milestone.hashtagBg }}
+                >
                   {milestone.hashtag}
                 </div>
               </div>

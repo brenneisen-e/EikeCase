@@ -224,10 +224,10 @@ export default function HowSection() {
                     <Icon className={showGantt ? 'w-3 h-3' : (isSelected || isHighlighted ? 'w-5 h-5' : 'w-4 h-4')} />
                   </div>
                   <div>
-                    <div className={showGantt ? 'text-[10px] opacity-80' : 'text-xs opacity-80'}>Step {step.id}</div>
-                    <h3 className={`font-bold leading-tight ${showGantt ? 'text-xs' : 'text-xl'}`}>{step.title}</h3>
+                    <div className={showGantt ? 'text-sm opacity-80' : 'text-base opacity-80'}>Step {step.id}</div>
+                    <h3 className={`font-bold leading-tight ${showGantt ? 'text-base' : 'text-2xl'}`}>{step.title}</h3>
                     {step.content?.badge && !isSelected && !showGantt && (
-                      <span className="text-[10px] bg-[#046A38] text-white px-2 py-0.5 rounded-full mt-1 inline-block">
+                      <span className="text-sm bg-[#046A38] text-white px-2 py-0.5 rounded-full mt-1 inline-block">
                         {step.content.badge}
                       </span>
                     )}
@@ -236,7 +236,7 @@ export default function HowSection() {
                 
                 {!showGantt && (
                   <>
-                    <p className={`mb-3 opacity-90 ${isSelected ? 'line-clamp-none' : 'line-clamp-2'} text-sm`}>{step.description}</p>
+                    <p className={`mb-3 opacity-90 ${isSelected ? 'line-clamp-none' : 'line-clamp-2'} text-xl`}>{step.description}</p>
                     
                     <AnimatePresence>
                       {isSelected && (
@@ -249,7 +249,7 @@ export default function HowSection() {
                         >
                           {step.content?.type === 'html' ? (
                             <div className="bg-white rounded-lg p-2 border shadow-inner relative">
-                              <div className="mb-2 text-xs text-gray-600 flex items-center justify-between">
+                              <div className="mb-2 text-base text-gray-600 flex items-center justify-between">
                                 <span>Interactive Prototype Preview:</span>
                                 <button
                                   onClick={(e) => {
@@ -259,7 +259,7 @@ export default function HowSection() {
                                   className="flex items-center gap-1 text-[#046A38] hover:text-[#86BC25] transition-colors font-semibold"
                                 >
                                   <Maximize2 className="w-4 h-4" />
-                                  <span className="text-xs">Expand Fullscreen</span>
+                                  <span className="text-base">Expand Fullscreen</span>
                                 </button>
                               </div>
                               <div 
@@ -275,16 +275,16 @@ export default function HowSection() {
                             </div>
                           ) : step.content?.type === 'text' ? (
                             <div className="bg-white/10 rounded-lg p-3">
-                              <p className="text-sm leading-relaxed font-semibold">{step.content.text}</p>
+                              <p className="text-xl leading-relaxed font-semibold">{step.content.text}</p>
                             </div>
                           ) : null}
                         </motion.div>
                       )}
                     </AnimatePresence>
-                    
+
                     {!isSelected && isExpandable && (
                       <div className="mt-auto pt-3 text-center">
-                        <div className="text-[10px] opacity-70">Click to expand</div>
+                        <div className="text-sm opacity-70">Click to expand</div>
                       </div>
                     )}
                   </>
@@ -302,8 +302,8 @@ export default function HowSection() {
           transition={{ delay: 0.5 }}
         >
           <div className="flex-1 h-px bg-gray-300"></div>
-          <div className="text-sm text-gray-500 italic">
-            <span className="font-semibold text-[#046A38]">Part 1:</span> Rapid Proof of Value (4–6 weeks) | 
+          <div className="text-xl text-gray-500 italic">
+            <span className="font-semibold text-[#046A38]">Part 1:</span> Rapid Proof of Value (4–6 weeks) |
             <span className="font-semibold text-gray-600 ml-2">Part 2:</span> Scaling & Transformation (optional)
           </div>
           <div className="flex-1 h-px bg-gray-300"></div>
@@ -334,14 +334,14 @@ export default function HowSection() {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2">
-                    <div className="text-xs opacity-80">Step {step.id}</div>
-                    <span className="text-[10px] bg-gray-500 text-white px-2 py-0.5 rounded-full">Optional</span>
+                    <div className="text-base opacity-80">Step {step.id}</div>
+                    <span className="text-sm bg-gray-500 text-white px-2 py-0.5 rounded-full">Optional</span>
                   </div>
-                  <h3 className="text-xl font-bold">{step.title}</h3>
+                  <h3 className="text-2xl font-bold">{step.title}</h3>
                 </div>
               </div>
-              
-              <p className="mt-3 text-sm opacity-90">{step.description}</p>
+
+              <p className="mt-3 text-xl opacity-90">{step.description}</p>
             </motion.div>
           );
         })}
@@ -350,7 +350,7 @@ export default function HowSection() {
       {/* Timeline Overview Text */}
       {!showGantt && (
         <motion.div
-          className="text-center text-lg text-gray-700 mb-3 font-medium"
+          className="text-center text-2xl text-gray-700 mb-3 font-medium"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
@@ -395,16 +395,16 @@ export default function HowSection() {
                         transition={{ delay: 1 + index * 0.15, duration: 0.4 }}
                       >
                         <div className="text-center mb-2">
-                          <div className={`font-semibold text-sm mb-1 ${isOptional ? 'text-gray-200' : 'text-white'}`}>
+                          <div className={`font-semibold text-xl mb-1 ${isOptional ? 'text-gray-200' : 'text-white'}`}>
                             {phase.title}
                           </div>
-                          <div className={`text-xs ${isOptional ? 'text-gray-300' : 'text-white/90'}`}>
+                          <div className={`text-base ${isOptional ? 'text-gray-300' : 'text-white/90'}`}>
                             {phase.duration}
                           </div>
                         </div>
 
-                        <div className={`flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${isOptional ? 'bg-gray-500/30' : 'bg-white/20'}`}>
-                          <Users className="w-3 h-3" />
+                        <div className={`flex items-center gap-2 rounded-full px-3 py-1 text-base font-semibold ${isOptional ? 'bg-gray-500/30' : 'bg-white/20'}`}>
+                          <Users className="w-4 h-4" />
                           <span>Team: {phase.team}</span>
                         </div>
                       </motion.div>
@@ -428,14 +428,14 @@ export default function HowSection() {
               transition={{ duration: 0.3 }}
               className="p-8 overflow-visible"
             >
-              <h3 className="text-lg font-semibold mb-6 text-center">Project Timeline - Gantt View</h3>
-              
+              <h3 className="text-2xl font-semibold mb-6 text-center">Project Timeline - Gantt View</h3>
+
               <div className="bg-white/10 rounded-lg p-6">
                 <div className="flex mb-3">
                   <div className="w-64"></div>
                   <div className="flex-1 flex">
                     {[...Array(7)].map((_, i) => (
-                      <div key={i} className="flex-1 text-center text-xs text-white/80 border-l border-white/20">
+                      <div key={i} className="flex-1 text-center text-base text-white/80 border-l border-white/20">
                         Week {i * 2 + 1}-{i * 2 + 2}
                       </div>
                     ))}
@@ -453,20 +453,20 @@ export default function HowSection() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <div className="w-64 text-sm font-medium pr-6">
+                      <div className="w-64 text-xl font-medium pr-6">
                         <div className="flex items-center gap-2">
                           {phase.title}
                           {isOptional && (
-                            <span className="text-[10px] bg-green-300 text-green-900 px-2 py-0.5 rounded-full">Optional</span>
+                            <span className="text-sm bg-green-300 text-green-900 px-2 py-0.5 rounded-full">Optional</span>
                           )}
                         </div>
-                        <div className="text-xs text-white/70 mt-1">{phase.keyOutput}</div>
+                        <div className="text-base text-white/70 mt-1">{phase.keyOutput}</div>
                       </div>
                       <div className="flex-1 relative h-12">
                         <motion.div
-                          className={`absolute h-full rounded flex items-center justify-center text-xs font-semibold shadow-lg ${
-                            isOptional 
-                              ? 'bg-green-200/80 text-green-900 border-2 border-dashed border-green-400' 
+                          className={`absolute h-full rounded flex items-center justify-center text-base font-semibold shadow-lg ${
+                            isOptional
+                              ? 'bg-green-200/80 text-green-900 border-2 border-dashed border-green-400'
                               : 'bg-white/90 text-[#046A38]'
                           }`}
                           style={{
@@ -485,9 +485,9 @@ export default function HowSection() {
                 })}
               </div>
 
-              <div className="text-center text-sm text-white mt-6">
+              <div className="text-center text-xl text-white mt-6">
                 <strong>Part 1:</strong> Rapid Proof of Value – 4–6 weeks | <strong>Part 2:</strong> Scaling Phase (optional)<br/>
-                <span className="text-xs text-white/80">Average team size: 4 consultants · Includes Deloitte ICC India for industrialisation</span>
+                <span className="text-base text-white/80">Average team size: 4 consultants · Includes Deloitte ICC India for industrialisation</span>
               </div>
             </motion.div>
           )}
