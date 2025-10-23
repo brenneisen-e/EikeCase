@@ -158,7 +158,7 @@ export default function ChallengeSection() {
                   <EditableText
                     id={`challenge-pillar-title-${index}`}
                     as="h3"
-                    defaultSize="text-xl"
+                    defaultSize="text-2xl"
                     className={`mb-2 font-semibold transition-colors duration-300 ${
                       isActive ? 'text-white' : 'text-gray-900'
                     }`}
@@ -168,7 +168,7 @@ export default function ChallengeSection() {
                   <EditableText
                     id={`challenge-pillar-desc-${index}`}
                     as="p"
-                    defaultSize="text-2xl"
+                    defaultSize="text-xl"
                     className={`leading-relaxed transition-colors duration-300 ${
                       isActive ? 'text-white' : 'text-gray-700'
                     }`}
