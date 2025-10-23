@@ -238,7 +238,14 @@ export default function HowSection() {
                   </div>
                   <div>
                     <div className={showGantt ? 'text-sm opacity-80' : 'text-base opacity-80'}>Step {step.id}</div>
-                    <h3 className={`font-bold leading-tight ${showGantt ? 'text-base' : 'text-2xl'}`}>{step.title}</h3>
+                    <EditableText
+                      id={`how-step-title-${step.id}`}
+                      as="h3"
+                      defaultSize="text-2xl"
+                      className={`font-bold leading-tight ${showGantt ? 'text-base' : ''}`}
+                    >
+                      {step.title}
+                    </EditableText>
                     {step.content?.badge && !isSelected && !showGantt && (
                       <span className="text-sm bg-[#046A38] text-white px-2 py-0.5 rounded-full mt-1 inline-block">
                         {step.content.badge}
@@ -246,10 +253,17 @@ export default function HowSection() {
                     )}
                   </div>
                 </div>
-                
+
                 {!showGantt && (
                   <>
-                    <p className={`mb-3 opacity-90 ${isSelected ? 'line-clamp-none' : 'line-clamp-2'} text-xl`}>{step.description}</p>
+                    <EditableText
+                      id={`how-step-desc-${step.id}`}
+                      as="p"
+                      defaultSize="text-xl"
+                      className={`mb-3 opacity-90 ${isSelected ? 'line-clamp-none' : 'line-clamp-2'}`}
+                    >
+                      {step.description}
+                    </EditableText>
                     
                     <AnimatePresence>
                       {isSelected && (
