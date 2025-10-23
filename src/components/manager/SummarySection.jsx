@@ -51,29 +51,32 @@ export default function SummarySection() {
     if (!hasStartedAnimation) return;
 
     const animateRobot = async () => {
+      // Calculate center position of the 2x2 grid
+      const grid = document.querySelector('.grid.grid-cols-2');
+      if (!grid) return;
+
+      const gridRect = grid.getBoundingClientRect();
+      const containerRect = grid.closest('section').getBoundingClientRect();
+
+      // Position robot in the center of the grid
+      const centerX = (gridRect.left + gridRect.right) / 2 - containerRect.left;
+      const centerY = (gridRect.top + gridRect.bottom) / 2 - containerRect.top;
+
       // Start after a brief delay
       await new Promise(resolve => setTimeout(resolve, 2000));
+
+      // Position robot in center
+      setRobotPosition({ x: centerX, y: centerY });
       setShowRobot(true);
 
+      // Wait for robot to appear
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Paint each box while staying in the center
       for (let i = 0; i < 4; i++) {
-        const element = document.querySelector(`[data-competency="${i}"]`);
-        if (!element) continue;
-
-        const rect = element.getBoundingClientRect();
-        const containerRect = element.closest('section').getBoundingClientRect();
-
-        // Move robot to box (top-right corner area)
-        setRobotPosition({
-          x: rect.right - containerRect.left - 100,
-          y: rect.top - containerRect.top + 10
-        });
-
-        // Wait for robot to arrive
-        await new Promise(resolve => setTimeout(resolve, 800));
-
         // Start painting
         setIsPainting(true);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 1500));
 
         // Show checkmark
         setCheckedBoxes(prev => {
@@ -84,11 +87,11 @@ export default function SummarySection() {
         setIsPainting(false);
 
         // Brief pause before next box
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 800));
       }
 
       // Hide robot after completion
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 1000));
       setShowRobot(false);
     };
 
