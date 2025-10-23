@@ -131,8 +131,10 @@ export default function WelcomeScreen() {
                         exit={{ opacity: 0, y: -10 }}
                         onClick={acceptSuggestion}
                       >
-                        <div className="text-gray-600 text-sm mb-1">Suggestion:</div>
-                        <div className="text-[#046A38] font-semibold">Present Managercase</div>
+                        <div className="text-gray-800">
+                          <span className="text-gray-600 text-sm">Suggestion:</span>{' '}
+                          <span className="text-[#046A38] font-semibold">Present Managercase</span>
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
