@@ -61,6 +61,13 @@ export default function WhoSection() {
     }
   };
 
+  const navigateToChallenge = () => {
+    const challengeSection = document.getElementById('challenge');
+    if (challengeSection) {
+      challengeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   useEffect(() => {
     fetchVisitedCount();
   }, []); // Empty dependency array means this runs once on mount
@@ -101,13 +108,21 @@ export default function WhoSection() {
             >
                 <div className="flex justify-between items-center mb-4">
                     <h2 className="text-2xl font-bold text-[#003b6e]">My Professional Journey</h2>
-                    <button
-                        onClick={() => setIsJourneyExpanded(false)}
-                        className="flex items-center gap-1 text-sm text-[#003b6e] hover:text-[#86BC25] transition-colors"
-                    >
-                        <ChevronsLeft className="w-4 h-4" />
-                        Collapse
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={navigateToChallenge}
+                            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-[#003b6e] hover:bg-[#86BC25] rounded-lg transition-colors shadow-md"
+                        >
+                            Status Quo
+                        </button>
+                        <button
+                            onClick={() => setIsJourneyExpanded(false)}
+                            className="flex items-center gap-1 text-sm text-[#003b6e] hover:text-[#86BC25] transition-colors"
+                        >
+                            <ChevronsLeft className="w-4 h-4" />
+                            Collapse
+                        </button>
+                    </div>
                 </div>
                 <div className="flex-grow overflow-hidden">
                     <DetailedTimeline /> {/* The DetailedTimeline component is placed here */}
