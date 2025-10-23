@@ -7,9 +7,7 @@ const sections = [
   { id: 'challenge', name: 'Challenge' },
   { id: 'how', name: 'How' },
   { id: 'financials', name: 'Financials' },
-  { id: 'summary', name: 'Summary' },
-  { id: 'why', name: 'Why' },
-  { id: 'what', name: 'What' }
+  { id: 'summary', name: 'Summary' }
 ];
 
 export default function ScrollNavigation({ activeSection }) {
