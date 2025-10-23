@@ -14,9 +14,9 @@ const milestones = [
   ],
   hashtag: '#learning',
   icon: GraduationCap,
-  color: 'bg-green-50 border-green-500',
-  textColor: 'text-green-800',
-  hashtagColor: 'text-green-600'
+  color: 'bg-green-50 border-green-200',
+  textColor: 'text-green-700',
+  hashtagColor: 'text-green-500'
 },
 {
   title: 'Junior Consultant',
@@ -29,9 +29,9 @@ const milestones = [
   ],
   hashtag: '#adapting',
   icon: Briefcase,
-  color: 'bg-yellow-50 border-yellow-500',
-  textColor: 'text-yellow-800',
-  hashtagColor: 'text-yellow-600'
+  color: 'bg-green-100 border-green-300',
+  textColor: 'text-green-800',
+  hashtagColor: 'text-green-600'
 },
 {
   title: 'Consultant',
@@ -39,6 +39,7 @@ const milestones = [
   logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/eaebdd7ca_Commerzpng.png',
   secondaryLogo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/260011748_ERGO.png',
   showLogosHorizontal: true,
+  logoSize: 'h-14',
   description: 'Led complete gap analysis independently – conducted, managed, and reported comprehensive analysis across all business areas.',
   bulletPoints: [
     'Conducted comprehensive GAP analysis across business areas (Commerz Real)',
@@ -46,24 +47,25 @@ const milestones = [
   ],
   hashtag: '#building',
   icon: Building,
-  color: 'bg-blue-50 border-blue-500',
-  textColor: 'text-blue-800',
-  hashtagColor: 'text-blue-600'
+  color: 'bg-green-200 border-green-400',
+  textColor: 'text-green-900',
+  hashtagColor: 'text-green-700'
 },
 {
   title: 'Senior Consultant',
   years: '2022 – 2024',
   logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/260011748_ERGO.png',
+  logoSize: 'h-14',
   description: 'PMO Lead for Performance Management - sharpened simulation results and reported derivations to the board. Go-Live management of entire ZAV program. Later acting manager.',
   bulletPoints: [
     'Transitioned into strategic PMO role with team leadership responsibilities',
-    'Led project independently on-site as project lead with consultant colleague'
+    'Steuerung von mehreren Go-Lives und Migrationen mit Top C Level Exposure'
   ],
   hashtag: '#growing',
   icon: Users,
-  color: 'bg-red-50 border-red-500',
-  textColor: 'text-red-800',
-  hashtagColor: 'text-red-600',
+  color: 'bg-green-300 border-green-500',
+  textColor: 'text-green-900',
+  hashtagColor: 'text-green-800',
   team: '4 Persons',
   revenue: '€1.8M Fees'
 },
@@ -71,6 +73,7 @@ const milestones = [
   title: 'Senior Consultant',
   years: '2025 – Present',
   logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/60d27e529_Barmenia-removebg-preview.png',
+  logoSize: 'h-14',
   description: 'Project Lead Simulation, Calibration and Contract. Leading Deloitte delivery role for Compensation logic harmonization in major insurance merger.',
   bulletPoints: [
     'Sub-project lead for compensation logic harmonization in major insurance merger',
@@ -78,9 +81,9 @@ const milestones = [
   ],
   hashtag: '#leading',
   icon: Star,
-  color: 'bg-indigo-50 border-indigo-500',
-  textColor: 'text-indigo-800',
-  hashtagColor: 'text-indigo-600',
+  color: 'bg-green-400 border-green-600',
+  textColor: 'text-green-950',
+  hashtagColor: 'text-green-900',
   team: '3 Persons',
   revenue: '€500K Fees'
 }];
@@ -116,7 +119,7 @@ export default function DetailedTimeline() {
                 {milestone.showLogosHorizontal ?
                 <div className="flex items-center gap-4">
                     {milestone.logo &&
-                  <img src={milestone.logo} alt="Company Logo" className="h-14 object-contain" />
+                  <img src={milestone.logo} alt="Company Logo" className={`${milestone.logoSize || 'h-14'} object-contain`} />
                   }
                     {milestone.secondaryLogo &&
                   <img src={milestone.secondaryLogo} alt="Secondary Company Logo" className="h-10 object-contain" />
@@ -125,7 +128,7 @@ export default function DetailedTimeline() {
 
                 <div className="flex flex-col gap-2">
                     {milestone.logo &&
-                  <img src={milestone.logo} alt="Company Logo" className="h-10 object-contain object-left" />
+                  <img src={milestone.logo} alt="Company Logo" className={`${milestone.logoSize || 'h-10'} object-contain object-left`} />
                   }
                     {milestone.secondaryLogo &&
                   <img src={milestone.secondaryLogo} alt="Secondary Company Logo" className="h-8 object-contain object-left" />
