@@ -34,6 +34,7 @@ export default function WhoSection() {
   const [fullscreenImage, setFullscreenImage] = useState(null);
   const [visitedCount, setVisitedCount] = useState(0);
   const [isJourneyExpanded, setIsJourneyExpanded] = useState(false);
+  const businessVideoRef = React.useRef(null);
   const sportsImages = defaultSportsImages; // Use static images from public folder
 
   const fetchVisitedCount = async () => {
@@ -45,6 +46,19 @@ export default function WhoSection() {
       } catch (error) {
           console.error("Error fetching visited countries count:", error);
       }
+  };
+
+  const handleVideoHoverEnter = () => {
+    if (businessVideoRef.current) {
+      businessVideoRef.current.play();
+    }
+  };
+
+  const handleVideoHoverLeave = () => {
+    if (businessVideoRef.current) {
+      businessVideoRef.current.pause();
+      businessVideoRef.current.currentTime = 0;
+    }
   };
 
   useEffect(() => {
@@ -164,14 +178,14 @@ export default function WhoSection() {
                   <div className="flex-1 flex flex-col">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Private</p>
                     <div className="flex-1 flex flex-col gap-2">
-                      <div className="flex-1 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all">
+                      <div className="h-32 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all">
                         <img
-                          src="/EikeCase/images/sports/sport-2.jpeg"
+                          src="/EikeCase/images/sports/private.jpg"
                           alt="Private Tech"
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <p className="text-xs text-gray-600 leading-relaxed">
+                      <p className="text-sm text-gray-600 leading-relaxed">
                         Built AI-based inventory app for own apartment to search for items in drawers, cupboards, rooms etc.
                       </p>
                     </div>
@@ -180,12 +194,15 @@ export default function WhoSection() {
                   <div className="flex-1 flex flex-col">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Business</p>
                     <div className="flex-1 flex flex-col gap-2">
-                      <div className="flex-1 bg-gradient-to-br from-green-50 to-green-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all">
+                      <div
+                        className="h-32 bg-gradient-to-br from-green-50 to-green-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all"
+                        onMouseEnter={handleVideoHoverEnter}
+                        onMouseLeave={handleVideoHoverLeave}
+                      >
                         <video
+                          ref={businessVideoRef}
                           className="w-full h-full object-cover"
                           src="/EikeCase/videos/tech/business.mp4"
-                          autoPlay
-                          loop
                           muted
                           playsInline
                           preload="auto"
@@ -193,7 +210,7 @@ export default function WhoSection() {
                           <source src="/EikeCase/videos/tech/business.mp4" type="video/mp4" />
                         </video>
                       </div>
-                      <p className="text-xs text-gray-600 leading-relaxed">
+                      <p className="text-sm text-gray-600 leading-relaxed">
                         Proactively built new event organizing app ("DEX") for Deloitte Germany. Already used &gt;10,000 times in &gt;15 events.
                       </p>
                     </div>

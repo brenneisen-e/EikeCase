@@ -20,7 +20,7 @@ Laid the foundation for analytical skills and relationship management.`,
 {
   title: 'Junior Consultant',
   years: '2018 – 2021',
-  logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/260011748_ERGO.png',
+  logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2e/CEMS_logo.svg',
   description: 'PMO for Business Case and committee tasks. Developed foundational skills in project management and stakeholder management.',
   fullDescription: `Supported the PMO for business case preparation and committee tasks.
 Built fundamental skills in project management and stakeholder alignment.
