@@ -155,16 +155,26 @@ export default function ChallengeSection() {
                       isActive ? 'text-white' : 'text-gray-700'
                     }`} strokeWidth={2} />
                   </div>
-                  <h3 className={`mb-2 text-xl font-semibold transition-colors duration-300 ${
-                    isActive ? 'text-white' : 'text-gray-900'
-                  }`}>
+                  <EditableText
+                    id={`challenge-pillar-title-${index}`}
+                    as="h3"
+                    defaultSize="text-xl"
+                    className={`mb-2 font-semibold transition-colors duration-300 ${
+                      isActive ? 'text-white' : 'text-gray-900'
+                    }`}
+                  >
                     {pillar.title}
-                  </h3>
-                  <p className={`text-2xl leading-relaxed transition-colors duration-300 ${
-                    isActive ? 'text-white' : 'text-gray-700'
-                  }`}>
+                  </EditableText>
+                  <EditableText
+                    id={`challenge-pillar-desc-${index}`}
+                    as="p"
+                    defaultSize="text-2xl"
+                    className={`leading-relaxed transition-colors duration-300 ${
+                      isActive ? 'text-white' : 'text-gray-700'
+                    }`}
+                  >
                     {pillar.description}
-                  </p>
+                  </EditableText>
                 </motion.div>
               );
             })}
@@ -337,8 +347,22 @@ export default function ChallengeSection() {
                           <Icon className="w-4 h-4" strokeWidth={2.5} />
                         </div>
                         <div>
-                          <h4 className="text-2xl font-bold mb-1">{impact.title}</h4>
-                          <p className="text-xl leading-relaxed opacity-90">{impact.description}</p>
+                          <EditableText
+                            id={`challenge-impact-title-${index}`}
+                            as="h4"
+                            defaultSize="text-2xl"
+                            className="font-bold mb-1"
+                          >
+                            {impact.title}
+                          </EditableText>
+                          <EditableText
+                            id={`challenge-impact-desc-${index}`}
+                            as="p"
+                            defaultSize="text-xl"
+                            className="leading-relaxed opacity-90"
+                          >
+                            {impact.description}
+                          </EditableText>
                         </div>
                       </motion.div>
                     );
