@@ -11,6 +11,8 @@ export default function ChallengeSection() {
   const [hoveredPillar, setHoveredPillar] = useState(null);
   const [viewedAnimations, setViewedAnimations] = useState([]);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [greenHoverTimers, setGreenHoverTimers] = useState({});
+  const [showApplicationFields, setShowApplicationFields] = useState(false);
 
   const pillars = [
     {
@@ -44,14 +46,31 @@ export default function ChallengeSection() {
   ];
 
   const handleMouseEnter = (highlightType) => {
+    // Clear any existing timer for this pillar
+    if (greenHoverTimers[highlightType]) {
+      clearTimeout(greenHoverTimers[highlightType]);
+    }
+
     setHoveredPillar(highlightType);
     if (!viewedAnimations.includes(highlightType)) {
       setViewedAnimations(prev => [...prev, highlightType]);
     }
+
+    // Set new timer to remove green after 5 seconds
+    const timer = setTimeout(() => {
+      setHoveredPillar(null);
+      setGreenHoverTimers(prev => {
+        const newTimers = {...prev};
+        delete newTimers[highlightType];
+        return newTimers;
+      });
+    }, 5000);
+
+    setGreenHoverTimers(prev => ({...prev, [highlightType]: timer}));
   };
 
   const handleMouseLeave = () => {
-    setHoveredPillar(null);
+    // Don't immediately remove hover - let timer handle it
   };
 
   const impacts = [
@@ -114,10 +133,10 @@ export default function ChallengeSection() {
                   <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm group-hover:bg-[#86BC25] transition-colors duration-300">
                     <Icon className="w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-300" strokeWidth={2} />
                   </div>
-                  <h3 className="text-gray-900 mb-2 text-lg font-semibold group-hover:text-white transition-colors duration-300">
+                  <h3 className="text-gray-900 mb-2 text-xl font-semibold group-hover:text-white transition-colors duration-300">
                     {pillar.title}
                   </h3>
-                  <p className="text-sm leading-relaxed group-hover:text-white transition-colors duration-300">
+                  <p className="text-2xl leading-relaxed group-hover:text-white transition-colors duration-300">
                     {pillar.description}
                   </p>
                 </motion.div>
@@ -160,20 +179,41 @@ export default function ChallengeSection() {
           )}
         </div>
 
+        {/* Button to show Application Fields / Business Impacts */}
+        {!showApplicationFields && (
+          <motion.div
+            className="flex justify-start"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.8 }}
+          >
+            <button
+              onClick={() => setShowApplicationFields(true)}
+              className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all font-semibold text-lg flex items-center gap-2"
+            >
+              Client Challenges and Application Fields
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </motion.div>
+        )}
+
         {/* Business Impact Takeaway Box / Application Fields - positioned at bottom when collapsed */}
-        <motion.div
-          className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] rounded-xl shadow-lg text-white cursor-pointer"
-          style={{
-            minHeight: isCollapsed ? '400px' : '140px',
-            padding: isCollapsed ? '32px' : '24px',
-            marginTop: isCollapsed ? '0' : 'auto'
-          }}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.8 }}
-          onClick={() => setIsCollapsed(!isCollapsed)}
-        >
+        {showApplicationFields && (
+          <motion.div
+            className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] rounded-xl shadow-lg text-white cursor-pointer"
+            style={{
+              minHeight: isCollapsed ? '400px' : '140px',
+              padding: isCollapsed ? '32px' : '24px',
+              marginTop: isCollapsed ? '0' : 'auto'
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            onClick={() => setIsCollapsed(!isCollapsed)}
+          >
           <AnimatePresence mode="wait">
             {isCollapsed ? (
               <motion.div
@@ -282,6 +322,7 @@ export default function ChallengeSection() {
             )}
           </AnimatePresence>
         </motion.div>
+        )}
       </div>
     </section>
   );
