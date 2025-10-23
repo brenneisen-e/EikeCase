@@ -16,9 +16,10 @@ export const EditableText = ({
   as: Component = 'div',
   className = '',
   style = {},
+  onClick,
   ...props
 }) => {
-  const { editorMode, getTextStyle } = useEditor();
+  const { editorMode, getTextStyle, openPopup, activePopup } = useEditor();
 
   const textStyle = getTextStyle(id);
   const fontSize = textStyle.fontSize || defaultSize;
@@ -26,19 +27,39 @@ export const EditableText = ({
   // Combine className with fontSize
   const finalClassName = `${className} ${fontSize}`.trim();
 
+  const isActive = activePopup?.id === id;
+
   // Add visual indication in editor mode
   const editorStyles = editorMode ? {
-    outline: '1px dashed #86BC25',
+    outline: isActive ? '2px solid #046A38' : '1px dashed #86BC25',
     outlineOffset: '2px',
     position: 'relative',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
     ...style
   } : style;
+
+  const handleClick = (e) => {
+    if (editorMode) {
+      e.stopPropagation();
+      const rect = e.currentTarget.getBoundingClientRect();
+      const position = {
+        x: rect.left,
+        y: rect.bottom + 10
+      };
+      openPopup(id, position, fontSize);
+    }
+    if (onClick) {
+      onClick(e);
+    }
+  };
 
   return (
     <Component
       className={finalClassName}
       style={editorStyles}
       data-editor-id={id}
+      onClick={handleClick}
       {...props}
     >
       {children}

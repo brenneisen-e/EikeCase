@@ -14,6 +14,7 @@ export const EditorProvider = ({ children }) => {
   const [editorMode, setEditorMode] = useState(false);
   const [textStyles, setTextStyles] = useState({});
   const [showExportModal, setShowExportModal] = useState(false);
+  const [activePopup, setActivePopup] = useState(null); // { id, position, currentSize }
 
   // Load saved styles from localStorage on mount
   useEffect(() => {
@@ -34,6 +35,13 @@ export const EditorProvider = ({ children }) => {
     }
   }, [textStyles]);
 
+  // Close popup when clicking outside or pressing Escape
+  useEffect(() => {
+    if (!editorMode) {
+      setActivePopup(null);
+    }
+  }, [editorMode]);
+
   const updateTextStyle = (id, property, value) => {
     setTextStyles(prev => ({
       ...prev,
@@ -46,6 +54,14 @@ export const EditorProvider = ({ children }) => {
 
   const getTextStyle = (id) => {
     return textStyles[id] || {};
+  };
+
+  const openPopup = (id, position, currentSize) => {
+    setActivePopup({ id, position, currentSize });
+  };
+
+  const closePopup = () => {
+    setActivePopup(null);
   };
 
   const exportSettings = () => {
@@ -75,7 +91,10 @@ export const EditorProvider = ({ children }) => {
     exportSettings,
     clearSettings,
     showExportModal,
-    setShowExportModal
+    setShowExportModal,
+    activePopup,
+    openPopup,
+    closePopup
   };
 
   return (
