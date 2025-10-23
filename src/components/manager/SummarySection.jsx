@@ -337,8 +337,10 @@ export default function SummarySection() {
                           exit={{ opacity: 0, y: -10 }}
                           onClick={acceptSuggestion}
                         >
-                          <div className="text-gray-600 text-sm mb-1">Suggestion:</div>
-                          <div className="text-[#046A38] font-semibold">Summarize the manager case</div>
+                          <div className="text-gray-800">
+                            <span className="text-gray-600 text-sm">Suggestion:</span>{' '}
+                            <span className="text-[#046A38] font-semibold">Summarize the manager case</span>
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>

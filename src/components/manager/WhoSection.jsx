@@ -140,8 +140,8 @@ export default function WhoSection() {
                 transition={{ duration: 0.3 }}
               >
                 <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-lg font-bold text-[#003b6e] flex items-center gap-2">
-                    <MapPin className="w-4 h-4" />
+                  <h3 className="text-2xl font-bold text-[#003b6e] flex items-center gap-2">
+                    <MapPin className="w-5 h-5" />
                     Globetrotter
                   </h3>
                 </div>
@@ -159,7 +159,7 @@ export default function WhoSection() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-lg font-bold text-[#003b6e] mb-2">🏃 Sport Enthusiast</h3>
+                <h3 className="text-2xl font-bold text-[#003b6e] mb-2">🏃 Sport Enthusiast</h3>
                 <div className="flex-grow flex gap-2 overflow-x-auto rounded-lg" style={{ scrollbarWidth: 'thin', scrollbarColor: '#9CA3AF #E5E7EB' }}>
                   {sportsImages.map((image) => (
                     <div
@@ -187,11 +187,11 @@ export default function WhoSection() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-lg font-bold text-[#003b6e] mb-2">💻 Tech Explorer</h3>
+                <h3 className="text-2xl font-bold text-[#003b6e] mb-2">💻 Tech Explorer</h3>
                 <div className="flex-grow flex gap-2">
                   {/* Left - Private Image */}
                   <div className="flex-1 flex flex-col">
-                    <p className="text-xs font-semibold text-gray-600 mb-1">Private</p>
+                    <p className="text-lg font-semibold text-gray-600 mb-1">Private</p>
                     <div className="flex-1 flex flex-col gap-2">
                       <div className="h-64 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all">
                         <img
@@ -200,14 +200,14 @@ export default function WhoSection() {
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <p className="text-sm text-gray-600 leading-relaxed">
+                      <p className="text-lg text-gray-600 leading-relaxed">
                         Built AI-based inventory app for own apartment to search for items in drawers, cupboards, rooms etc.
                       </p>
                     </div>
                   </div>
                   {/* Right - Business Video */}
                   <div className="flex-1 flex flex-col">
-                    <p className="text-xs font-semibold text-gray-600 mb-1">Business</p>
+                    <p className="text-lg font-semibold text-gray-600 mb-1">Business</p>
                     <div className="flex-1 flex flex-col gap-2">
                       <div
                         className="h-64 bg-gradient-to-br from-green-50 to-green-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all"
@@ -225,7 +225,7 @@ export default function WhoSection() {
                           <source src="/EikeCase/videos/tech/business.mp4" type="video/mp4" />
                         </video>
                       </div>
-                      <p className="text-sm text-gray-600 leading-relaxed">
+                      <p className="text-lg text-gray-600 leading-relaxed">
                         Proactively built new event organizing app ("DEX") for Deloitte Germany. Already used &gt;10,000 times in &gt;15 events.
                       </p>
                     </div>
@@ -243,8 +243,8 @@ export default function WhoSection() {
                 transition={{ duration: 0.3 }}
               >
                 <div className="flex justify-between items-center mb-2">
-                    <h3 className="text-lg font-bold text-[#003b6e] flex items-center gap-2">
-                      <TrendingUp className="w-5 h-5" />
+                    <h3 className="text-2xl font-bold text-[#003b6e] flex items-center gap-2">
+                      <TrendingUp className="w-6 h-6" />
                       My Journey
                     </h3>
                     <button
