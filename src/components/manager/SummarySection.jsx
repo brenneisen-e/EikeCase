@@ -1,8 +1,15 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Target, Users, TrendingUp, Award, CheckCircle2, ArrowRight, Compass, Code, MessageSquare, DollarSign } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Target, Users, TrendingUp, Award, CheckCircle2, ArrowRight, Compass, Code, MessageSquare, DollarSign, Check } from 'lucide-react';
+import RobotPainter from './RobotPainter';
 
 export default function SummarySection() {
+  // Robot animation states
+  const [robotPosition, setRobotPosition] = useState({ x: -100, y: -100 });
+  const [isPainting, setIsPainting] = useState(false);
+  const [checkedBoxes, setCheckedBoxes] = useState([false, false, false, false]);
+  const [showRobot, setShowRobot] = useState(false);
+
   const coreCompetencies = [
     {
       icon: Compass,
@@ -38,6 +45,53 @@ export default function SummarySection() {
     }
   ];
 
+  // Robot animation sequence
+  useEffect(() => {
+    const animateRobot = async () => {
+      // Start after a brief delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      setShowRobot(true);
+
+      for (let i = 0; i < 4; i++) {
+        const element = document.querySelector(`[data-competency="${i}"]`);
+        if (!element) continue;
+
+        const rect = element.getBoundingClientRect();
+        const containerRect = element.closest('section').getBoundingClientRect();
+
+        // Move robot to box (top-right corner area)
+        setRobotPosition({
+          x: rect.right - containerRect.left - 100,
+          y: rect.top - containerRect.top + 10
+        });
+
+        // Wait for robot to arrive
+        await new Promise(resolve => setTimeout(resolve, 800));
+
+        // Start painting
+        setIsPainting(true);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Show checkmark
+        setCheckedBoxes(prev => {
+          const newChecked = [...prev];
+          newChecked[i] = true;
+          return newChecked;
+        });
+        setIsPainting(false);
+
+        // Brief pause before next box
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+
+      // Hide robot after completion
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setShowRobot(false);
+    };
+
+    animateRobot();
+  }, []);
+
   return (
     <section id="summary" className="h-screen w-full bg-gradient-to-br from-white to-gray-100 flex flex-col px-20 py-12 overflow-hidden">
       {/* Title Section */}
@@ -61,13 +115,14 @@ export default function SummarySection() {
         From PowerPoint to AI-driven prototypes that turn ideas into impact.
       </motion.h2>
 
-      {/* 4 Competency Pillars */}
-      <div className="grid grid-cols-4 gap-6 mb-8 flex-grow">
+      {/* 4 Competency Pillars in 2x2 Grid */}
+      <div className="grid grid-cols-2 gap-6 mb-8 flex-grow">
         {coreCompetencies.map((competency, index) => {
           const Icon = competency.icon;
           return (
             <motion.div
               key={index}
+              data-competency={index}
               className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-start relative"
               style={{ borderTop: `6px solid ${competency.color}` }}
               initial={{ opacity: 0, y: 30 }}
@@ -94,65 +149,28 @@ export default function SummarySection() {
                 {competency.description}
               </p>
 
-              {/* Green Checkmark at bottom center */}
-              <motion.div 
-                className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
-                initial={{ scale: 0, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 + index * 0.15, type: 'spring', stiffness: 200 }}
-              >
-                <div className="w-10 h-10 bg-[#86BC25] rounded-full flex items-center justify-center shadow-lg">
-                  <CheckCircle2 className="w-6 h-6 text-white" strokeWidth={3} />
-                </div>
-              </motion.div>
+              {/* Green Checkmark at top-right - only shown when robot paints it */}
+              <AnimatePresence>
+                {checkedBoxes[index] && (
+                  <motion.div
+                    className="absolute top-2 right-2 w-10 h-10 bg-[#86BC25] rounded-full flex items-center justify-center shadow-lg z-10"
+                    initial={{ scale: 0, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: 'spring', stiffness: 200 }}
+                  >
+                    <Check className="w-6 h-6 text-white" strokeWidth={3} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           );
         })}
       </div>
 
-      {/* Career Progression & Closing */}
-      <motion.div 
-        className="bg-white rounded-xl p-8 shadow-lg border border-gray-200"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.8 }}
-      >
-        <h3 className="text-2xl font-bold text-black text-center mb-8">Career Progression</h3>
-        <div className="flex justify-center items-center gap-6 mb-8">
-          <div className="bg-gray-200 text-gray-700 rounded-lg px-6 py-4 text-center font-bold text-lg">
-            Consultant
-          </div>
-          <ArrowRight className="text-gray-400 w-8 h-8" />
-          <div className="bg-gray-300 text-gray-700 rounded-lg px-6 py-4 text-center font-bold text-lg">
-            Senior Consultant
-          </div>
-          <ArrowRight className="text-gray-400 w-8 h-8" />
-          <div className="bg-[#86BC25] text-white rounded-lg px-6 py-4 text-center font-bold text-lg relative">
-            Acting Manager
-            <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full animate-pulse"></div>
-          </div>
-          <ArrowRight className="text-[#86BC25] w-8 h-8" />
-          <div className="bg-[#003b6e] text-white rounded-lg px-6 py-4 text-center font-bold text-lg relative">
-            Manager
-            <motion.div 
-              className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-lg -z-10"
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            />
-          </div>
-        </div>
-
-        {/* Closing Statement */}
-        <div className="bg-gradient-to-r from-[#046A38] to-[#1B8F5C] rounded-xl p-8 text-center shadow-lg">
-          <h4 className="text-2xl font-bold mb-4 text-white">Ready for the Next Step</h4>
-          <p className="text-xl font-semibold text-white leading-relaxed">
-            I connect business logic, data, and technology – and turn them into fast, scalable impact for Deloitte and our clients.<br/>
-            <strong className="text-[#86BC25]">I am ready to take responsibility as Manager at Deloitte.</strong>
-          </p>
-        </div>
-      </motion.div>
+      {/* Robot Painter */}
+      {showRobot && (
+        <RobotPainter position={robotPosition} isPainting={isPainting} />
+      )}
     </section>
   );
 }
