@@ -119,10 +119,15 @@ export default function ChallengeSection() {
           <div className="grid grid-cols-4 gap-4 mb-4">
             {pillars.map((pillar, index) => {
               const Icon = pillar.icon;
+              const isActive = hoveredPillar === pillar.highlightType;
               return (
                 <motion.div
                   key={index}
-                  className="bg-gray-50 rounded-lg p-4 shadow-md border border-gray-200 flex flex-col items-start cursor-pointer group transition-all duration-300 hover:bg-[#046A38] hover:border-[#046A38] hover:shadow-xl hover:scale-105"
+                  className={`rounded-lg p-4 shadow-md border flex flex-col items-start cursor-pointer group transition-all duration-300 ${
+                    isActive
+                      ? 'bg-[#046A38] border-[#046A38] shadow-xl scale-105'
+                      : 'bg-gray-50 border-gray-200'
+                  }`}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -130,13 +135,21 @@ export default function ChallengeSection() {
                   onMouseEnter={() => handleMouseEnter(pillar.highlightType)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm group-hover:bg-[#86BC25] transition-colors duration-300">
-                    <Icon className="w-5 h-5 text-gray-700 group-hover:text-white transition-colors duration-300" strokeWidth={2} />
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 shadow-sm transition-colors duration-300 ${
+                    isActive ? 'bg-[#86BC25]' : 'bg-white'
+                  }`}>
+                    <Icon className={`w-5 h-5 transition-colors duration-300 ${
+                      isActive ? 'text-white' : 'text-gray-700'
+                    }`} strokeWidth={2} />
                   </div>
-                  <h3 className="text-gray-900 mb-2 text-xl font-semibold group-hover:text-white transition-colors duration-300">
+                  <h3 className={`mb-2 text-xl font-semibold transition-colors duration-300 ${
+                    isActive ? 'text-white' : 'text-gray-900'
+                  }`}>
                     {pillar.title}
                   </h3>
-                  <p className="text-2xl leading-relaxed group-hover:text-white transition-colors duration-300">
+                  <p className={`text-2xl leading-relaxed transition-colors duration-300 ${
+                    isActive ? 'text-white' : 'text-gray-700'
+                  }`}>
                     {pillar.description}
                   </p>
                 </motion.div>
