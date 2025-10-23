@@ -1,15 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export default function RobotPainter({ position, isPainting }) {
+export default function RobotPainter({ position, isPainting, armAngle = 0 }) {
   return (
     <motion.div
       className="absolute z-50 pointer-events-none"
       style={{
         left: position.x,
         top: position.y,
-        width: '80px',
-        height: '80px'
+        width: '400px',
+        height: '400px',
+        transform: 'translate(-50%, -50%)' // Center the robot on the position
       }}
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
@@ -58,35 +59,55 @@ export default function RobotPainter({ position, isPainting }) {
         {/* Green Deloitte Dot on T-Shirt */}
         <circle cx="50" cy="62" r="6" fill="#86BC25"/>
 
-        {/* Arms */}
+        {/* Left Arm */}
         <motion.rect
           x="20" y="50" width="12" height="4" rx="2"
           fill="#E0E0E0" stroke="#666" strokeWidth="1"
-          animate={{ rotate: isPainting ? [-10, 10, -10] : 0 }}
-          transition={{ duration: 0.3, repeat: isPainting ? Infinity : 0 }}
           style={{ originX: '100%', originY: '50%' }}
         />
-        <motion.rect
-          x="68" y="50" width="12" height="4" rx="2"
-          fill="#E0E0E0" stroke="#666" strokeWidth="1"
-          animate={{ rotate: isPainting ? [10, -10, 10] : 0 }}
-          transition={{ duration: 0.3, repeat: isPainting ? Infinity : 0 }}
-          style={{ originX: '0%', originY: '50%' }}
-        />
 
-        {/* Paintbrush in right hand */}
-        {isPainting && (
-          <motion.g
-            animate={{ rotate: [0, 20, 0] }}
-            transition={{ duration: 0.3, repeat: Infinity }}
-            style={{ originX: '82px', originY: '52px' }}
-          >
-            {/* Brush handle */}
-            <rect x="82" y="48" width="15" height="2" fill="#8B4513"/>
-            {/* Brush bristles */}
-            <polygon points="97,47 97,51 102,50 102,48" fill="#86BC25"/>
-          </motion.g>
-        )}
+        {/* Right Arm with extending animation */}
+        <motion.g>
+          <motion.rect
+            x="68" y="50" width="12" height="4" rx="2"
+            fill="#E0E0E0" stroke="#666" strokeWidth="1"
+            style={{ originX: '0%', originY: '50%' }}
+          />
+
+          {/* Extended arm segment when painting */}
+          {isPainting && (
+            <motion.g
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              {/* Extended arm part */}
+              <motion.line
+                x1="80" y1="52" x2="120" y2="52"
+                stroke="#E0E0E0"
+                strokeWidth="3"
+                strokeLinecap="round"
+                animate={{
+                  x2: [80, 120, 80],
+                }}
+                transition={{ duration: 0.5, repeat: Infinity }}
+              />
+
+              {/* Paintbrush at the end of extended arm */}
+              <motion.g
+                animate={{
+                  x: [0, 40, 0],
+                }}
+                transition={{ duration: 0.5, repeat: Infinity }}
+              >
+                {/* Brush handle */}
+                <rect x="120" y="48" width="15" height="2" fill="#8B4513"/>
+                {/* Brush bristles */}
+                <polygon points="135,47 135,51 140,50 140,48" fill="#86BC25"/>
+              </motion.g>
+            </motion.g>
+          )}
+        </motion.g>
 
         {/* Legs */}
         <rect x="38" y="80" width="8" height="20" rx="2" fill="#666"/>
