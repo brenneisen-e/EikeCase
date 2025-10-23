@@ -1,15 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-export default function RobotPainter({ position, isPainting, armAngle = 0 }) {
+export default function RobotPainter({ position, isPainting, armAngle = 0, large = false }) {
+  const size = large ? '600px' : '400px';
+
   return (
     <motion.div
       className="absolute z-50 pointer-events-none"
       style={{
         left: position.x,
         top: position.y,
-        width: '400px',
-        height: '400px',
+        width: size,
+        height: size,
         transform: 'translate(-50%, -50%)' // Center the robot on the position
       }}
       initial={{ scale: 0 }}

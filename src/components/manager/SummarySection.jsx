@@ -4,12 +4,27 @@ import { Target, Users, TrendingUp, Award, CheckCircle2, ArrowRight, Compass, Co
 import RobotPainter from './RobotPainter';
 
 export default function SummarySection() {
+  // Chat states
+  const [showChat, setShowChat] = useState(true);
+  const [inputValue, setInputValue] = useState('');
+  const [showSuggestion, setShowSuggestion] = useState(false);
+  const [chatSubmitted, setChatSubmitted] = useState(false);
+
   // Robot animation states
   const [robotPosition, setRobotPosition] = useState({ x: -100, y: -100 });
   const [isPainting, setIsPainting] = useState(false);
   const [checkedBoxes, setCheckedBoxes] = useState([false, false, false, false]);
   const [showRobot, setShowRobot] = useState(false);
   const [hasStartedAnimation, setHasStartedAnimation] = useState(false);
+  const [currentSpeechBubble, setCurrentSpeechBubble] = useState(-1);
+  const [showCompetencies, setShowCompetencies] = useState(false);
+
+  const speechBubbles = [
+    "Domain Expertise: You know how to apply it.",
+    "Technology Mastery: You know how to build it.",
+    "Sales & Proof of Concept: You know how to sell it.",
+    "Business Impact & Scaling: You know how to monetise it."
+  ];
 
   const coreCompetencies = [
     {
@@ -45,6 +60,60 @@ export default function SummarySection() {
       color: '#FFA500'
     }
   ];
+
+  // Handle input change with autocomplete
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    // Show suggestion when user types "Fas"
+    if (value.toLowerCase().startsWith('fas') && value.length >= 3) {
+      setShowSuggestion(true);
+    } else {
+      setShowSuggestion(false);
+    }
+  };
+
+  // Accept suggestion
+  const acceptSuggestion = () => {
+    setInputValue('Fasse den Managercase zusammen');
+    setShowSuggestion(false);
+  };
+
+  // Handle chat submission
+  const handleSubmit = async () => {
+    if (!inputValue.trim()) return;
+
+    setChatSubmitted(true);
+    setShowChat(false);
+
+    // Wait a bit, then show robot and speech bubbles
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Calculate center position and show robot
+    const section = document.querySelector('#summary');
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      setRobotPosition({
+        x: rect.width / 2,
+        y: rect.height / 2
+      });
+      setShowRobot(true);
+
+      // Show speech bubbles one by one
+      for (let i = 0; i < speechBubbles.length; i++) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setCurrentSpeechBubble(i);
+        await new Promise(resolve => setTimeout(resolve, 2500));
+      }
+
+      // After speech bubbles, show competency grid
+      setCurrentSpeechBubble(-1);
+      await new Promise(resolve => setTimeout(resolve, 500));
+      setShowCompetencies(true);
+      setHasStartedAnimation(true);
+    }
+  };
 
   // Robot animation sequence - only runs when section comes into view
   useEffect(() => {
@@ -106,31 +175,131 @@ export default function SummarySection() {
   };
 
   return (
-    <section id="summary" className="h-screen w-full bg-gradient-to-br from-white to-gray-100 flex flex-col px-20 py-12 overflow-hidden">
-      {/* Title Section */}
-      <motion.h1
-        className="text-4xl font-normal text-black text-left mb-2"
-        style={{ fontFamily: 'Aptos, Open Sans, Segoe UI, sans-serif' }}
-        initial={{ opacity: 0, y: -30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        onViewportEnter={handleViewportEnter}
-      >
-        Breaking complexity starts with me
-      </motion.h1>
+    <section id="summary" className="h-screen w-full bg-gradient-to-br from-white to-gray-100 flex flex-col px-20 py-12 overflow-hidden relative">
+      {/* Chat Interface - shows first */}
+      <AnimatePresence>
+        {showChat && (
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center z-50 bg-gradient-to-br from-white to-gray-100"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="w-full max-w-3xl px-8">
+              {/* Greeting */}
+              <motion.h1
+                className="text-6xl font-bold text-[#046A38] text-center mb-12"
+                style={{ fontFamily: 'Aptos, Open Sans, Segoe UI, sans-serif' }}
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                Hallo Eike, was kann ich für dich tun?
+              </motion.h1>
 
-      <motion.h2
-        className="text-2xl text-gray-600 text-left mb-8"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2 }}
-      >
-        From PowerPoint to AI-driven prototypes that turn ideas into impact.
-      </motion.h2>
+              {/* Suggestion Buttons */}
+              <motion.div
+                className="grid grid-cols-3 gap-4 mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <button
+                  className="bg-white border-2 border-[#86BC25] text-[#046A38] rounded-xl p-4 hover:bg-[#86BC25] hover:text-white transition-all duration-300 shadow-lg font-medium"
+                  onClick={() => setInputValue('Wie ist das Wetter in Köln')}
+                >
+                  Wie ist das Wetter in Köln
+                </button>
+                <button
+                  className="bg-white border-2 border-[#86BC25] text-[#046A38] rounded-xl p-4 hover:bg-[#86BC25] hover:text-white transition-all duration-300 shadow-lg font-medium"
+                  onClick={() => setInputValue('Exotische Reiseziele in Afrika')}
+                >
+                  Exotische Reiseziele in Afrika
+                </button>
+                <button
+                  className="bg-white border-2 border-[#86BC25] text-[#046A38] rounded-xl p-4 hover:bg-[#86BC25] hover:text-white transition-all duration-300 shadow-lg font-medium"
+                  onClick={() => setInputValue('Nächster Deloitte Derby Termin')}
+                >
+                  Nächster Deloitte Derby Termin
+                </button>
+              </motion.div>
 
-      {/* 4 Competency Pillars in 2x2 Grid */}
-      <div className="grid grid-cols-2 gap-6 mb-8 flex-grow relative">
+              {/* Input Field */}
+              <motion.div
+                className="relative"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <div className="flex gap-3">
+                  <div className="flex-1 relative">
+                    <input
+                      type="text"
+                      value={inputValue}
+                      onChange={handleInputChange}
+                      onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
+                      placeholder="Gib deine Frage ein..."
+                      className="w-full border-2 border-gray-300 rounded-xl px-6 py-4 text-lg focus:outline-none focus:border-[#86BC25] focus:ring-2 focus:ring-[#86BC25]/20 transition-all"
+                    />
+
+                    {/* Autocomplete Suggestion */}
+                    <AnimatePresence>
+                      {showSuggestion && (
+                        <motion.div
+                          className="absolute top-full left-0 right-0 mt-2 bg-white border-2 border-[#86BC25] rounded-xl p-3 shadow-xl cursor-pointer z-10"
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          onClick={acceptSuggestion}
+                        >
+                          <div className="text-gray-600 text-sm mb-1">Vorschlag:</div>
+                          <div className="text-[#046A38] font-semibold">Fasse den Managercase zusammen</div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <button
+                    onClick={handleSubmit}
+                    disabled={!inputValue.trim()}
+                    className="bg-[#046A38] text-white rounded-xl px-8 py-4 font-semibold hover:bg-[#035530] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  >
+                    OK
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Title Section - shows after chat */}
+      <AnimatePresence>
+        {showCompetencies && (
+          <>
+            <motion.h1
+              className="text-4xl font-normal text-black text-left mb-2"
+              style={{ fontFamily: 'Aptos, Open Sans, Segoe UI, sans-serif' }}
+              initial={{ opacity: 0, y: -30 }}
+              animate={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              onViewportEnter={handleViewportEnter}
+            >
+              Breaking complexity starts with me
+            </motion.h1>
+
+            <motion.h2
+              className="text-2xl text-gray-600 text-left mb-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              From PowerPoint to AI-driven prototypes that turn ideas into impact.
+            </motion.h2>
+
+            {/* 4 Competency Pillars in 2x2 Grid */}
+            <div className="grid grid-cols-2 gap-6 mb-8 flex-grow relative">
         {/* Circle Window in the Center */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-white border-8 border-gray-200 shadow-2xl z-40 flex items-center justify-center"
           style={{
@@ -190,9 +359,59 @@ export default function SummarySection() {
         })}
       </div>
 
-      {/* Robot Painter */}
-      {showRobot && (
-        <RobotPainter position={robotPosition} isPainting={isPainting} />
+            {/* Robot Painter with Speech Bubbles */}
+            {showRobot && (
+              <RobotPainter position={robotPosition} isPainting={isPainting} />
+            )}
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Robot with Speech Bubbles - before competencies */}
+      {showRobot && currentSpeechBubble >= 0 && (
+        <>
+          <RobotPainter
+            position={robotPosition}
+            isPainting={false}
+            large={true}
+          />
+
+          {/* Speech Bubble */}
+          <motion.div
+            className="absolute z-60 bg-white rounded-2xl p-6 shadow-2xl border-4 border-[#86BC25]"
+            style={{
+              left: robotPosition.x + 250,
+              top: robotPosition.y - 100,
+              maxWidth: '400px'
+            }}
+            initial={{ opacity: 0, scale: 0.5, x: -50 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            transition={{ type: 'spring', stiffness: 200 }}
+          >
+            <div className="text-xl font-semibold text-[#046A38]">
+              {speechBubbles[currentSpeechBubble]}
+            </div>
+            {/* Speech bubble pointer */}
+            <div
+              className="absolute left-0 top-1/2 -translate-x-full -translate-y-1/2 w-0 h-0"
+              style={{
+                borderTop: '20px solid transparent',
+                borderBottom: '20px solid transparent',
+                borderRight: '30px solid #86BC25'
+              }}
+            />
+            <div
+              className="absolute left-0 top-1/2 -translate-y-1/2 w-0 h-0"
+              style={{
+                borderTop: '15px solid transparent',
+                borderBottom: '15px solid transparent',
+                borderRight: '25px solid white',
+                marginLeft: '5px'
+              }}
+            />
+          </motion.div>
+        </>
       )}
     </section>
   );
