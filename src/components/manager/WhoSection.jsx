@@ -178,7 +178,7 @@ export default function WhoSection() {
                   <div className="flex-1 flex flex-col">
                     <p className="text-xs font-semibold text-gray-600 mb-1">Private</p>
                     <div className="flex-1 flex flex-col gap-2">
-                      <div className="h-32 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all">
+                      <div className="h-64 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-400 transition-all">
                         <img
                           src="/EikeCase/images/sports/private.jpg"
                           alt="Private Tech"
@@ -195,7 +195,7 @@ export default function WhoSection() {
                     <p className="text-xs font-semibold text-gray-600 mb-1">Business</p>
                     <div className="flex-1 flex flex-col gap-2">
                       <div
-                        className="h-32 bg-gradient-to-br from-green-50 to-green-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all"
+                        className="h-64 bg-gradient-to-br from-green-50 to-green-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-green-400 transition-all"
                         onMouseEnter={handleVideoHoverEnter}
                         onMouseLeave={handleVideoHoverLeave}
                       >
