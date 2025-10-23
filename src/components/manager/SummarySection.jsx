@@ -202,7 +202,7 @@ export default function SummarySection() {
       <div className="flex-1 flex items-center justify-center relative z-10">
         <div className="w-full max-w-4xl">
           {/* Chat Container */}
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden" style={{ maxHeight: '90vh' }}>
+          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden" style={{ maxHeight: 'calc(100vh - 100px)' }}>
             {/* Chat Header */}
             <div
               className="p-6 text-white"

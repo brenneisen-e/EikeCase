@@ -14,7 +14,8 @@ const milestones = [
   ],
   hashtag: '#learning',
   icon: GraduationCap,
-  color: 'bg-green-50 border-green-200',
+  color: 'bg-white',
+  borderGradient: 'linear-gradient(to right, #dcfce7, #bbf7d0)',
   textColor: 'text-green-700',
   hashtagColor: 'text-green-500'
 },
@@ -29,7 +30,8 @@ const milestones = [
   ],
   hashtag: '#adapting',
   icon: Briefcase,
-  color: 'bg-green-100 border-green-300',
+  color: 'bg-white',
+  borderGradient: 'linear-gradient(to right, #bbf7d0, #86efac)',
   textColor: 'text-green-800',
   hashtagColor: 'text-green-600'
 },
@@ -47,7 +49,8 @@ const milestones = [
   ],
   hashtag: '#building',
   icon: Building,
-  color: 'bg-green-200 border-green-400',
+  color: 'bg-white',
+  borderGradient: 'linear-gradient(to right, #86efac, #4ade80)',
   textColor: 'text-green-900',
   hashtagColor: 'text-green-700'
 },
@@ -59,11 +62,12 @@ const milestones = [
   description: 'PMO Lead for Performance Management - sharpened simulation results and reported derivations to the board. Go-Live management of entire ZAV program. Later acting manager.',
   bulletPoints: [
     'Transitioned into strategic PMO role with team leadership responsibilities',
-    'Steuerung von mehreren Go-Lives und Migrationen mit Top C Level Exposure'
+    'Managing multiple go-lives and migrations with top C-level exposure'
   ],
   hashtag: '#growing',
   icon: Users,
-  color: 'bg-green-300 border-green-500',
+  color: 'bg-white',
+  borderGradient: 'linear-gradient(to right, #4ade80, #22c55e)',
   textColor: 'text-green-900',
   hashtagColor: 'text-green-800',
   team: '4 Persons',
@@ -73,7 +77,7 @@ const milestones = [
   title: 'Senior Consultant',
   years: '2025 – Present',
   logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/60d27e529_Barmenia-removebg-preview.png',
-  logoSize: 'h-14',
+  logoSize: 'h-28',
   description: 'Project Lead Simulation, Calibration and Contract. Leading Deloitte delivery role for Compensation logic harmonization in major insurance merger.',
   bulletPoints: [
     'Sub-project lead for compensation logic harmonization in major insurance merger',
@@ -81,7 +85,8 @@ const milestones = [
   ],
   hashtag: '#leading',
   icon: Star,
-  color: 'bg-green-400 border-green-600',
+  color: 'bg-white',
+  borderGradient: 'linear-gradient(to right, #22c55e, #16a34a)',
   textColor: 'text-green-950',
   hashtagColor: 'text-green-900',
   team: '3 Persons',
@@ -98,10 +103,12 @@ export default function DetailedTimeline() {
           return (
             <motion.div
               key={index}
-              className={`flex-1 rounded-xl border-4 ${milestone.color} p-6 flex flex-col relative`}
+              className="flex-1 rounded-xl p-1 flex flex-col relative"
+              style={{ background: milestone.borderGradient }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}>
+              <div className={`${milestone.color} rounded-lg p-6 flex flex-col h-full`}>
 
               {/* Header */}
               <div className="flex items-start justify-between mb-4">
@@ -170,6 +177,7 @@ export default function DetailedTimeline() {
                 <div className={`text-lg font-semibold ${milestone.hashtagColor}`}>
                   {milestone.hashtag}
                 </div>
+              </div>
               </div>
             </motion.div>);
 
