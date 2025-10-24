@@ -2,9 +2,9 @@ import React from 'react';
 
 export const DeloitteGPTAvatar = ({ size = 'md', className = '' }) => {
   const sizes = {
-    sm: { container: 'w-10 h-10', text: 'text-xs' },
-    md: { container: 'w-12 h-12', text: 'text-sm' },
-    lg: { container: 'w-14 h-14', text: 'text-base' }
+    sm: { container: 'w-8 h-8', text: 'text-xs' },
+    md: { container: 'w-9 h-9', text: 'text-sm' },
+    lg: { container: 'w-11 h-11', text: 'text-base' }
   };
 
   const sizeConfig = sizes[size] || sizes.md;

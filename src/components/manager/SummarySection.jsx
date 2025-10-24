@@ -10,6 +10,7 @@ export default function SummarySection() {
   const [showSuggestion, setShowSuggestion] = useState(false);
   const [messages, setMessages] = useState([]);
   const [isThinking, setIsThinking] = useState(false);
+  const [thinkingMessage, setThinkingMessage] = useState('Thinking...');
   const [visibleTiles, setVisibleTiles] = useState([false, false, false, false]);
 
   const sampleQuestions = [
@@ -78,6 +79,7 @@ export default function SummarySection() {
 
     // Start thinking
     setIsThinking(true);
+    setThinkingMessage('Thinking...');
     await new Promise(resolve => setTimeout(resolve, 1000));
     setIsThinking(false);
 
@@ -119,7 +121,15 @@ export default function SummarySection() {
     ];
 
     for (const response of responses) {
+      // Show "Summarizing..." indicator for delays >= 5 seconds
+      if (response.delay >= 5000) {
+        setIsThinking(true);
+        setThinkingMessage('Summarizing...');
+      }
+
       await new Promise(resolve => setTimeout(resolve, response.delay));
+
+      setIsThinking(false);
 
       setMessages(prev => [...prev, {
         role: 'assistant',
@@ -208,9 +218,9 @@ export default function SummarySection() {
         ))}
       </div>
 
-      {/* Chat Interface - Fixed Bottom Right */}
+      {/* Chat Interface - Absolute Bottom Right (only visible on Summary section) */}
       <motion.div
-        className="fixed bottom-8 right-8 bg-white rounded-3xl shadow-2xl flex flex-col z-50"
+        className="absolute bottom-8 right-8 bg-white rounded-3xl shadow-2xl flex flex-col z-50"
         style={{ width: '450px', maxHeight: 'calc(100vh - 150px)' }}
         initial={{ opacity: 0, y: 50, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -291,7 +301,7 @@ export default function SummarySection() {
                       <DeloitteGPTAvatar size="sm" />
                       <div className="bg-gray-100 p-4 rounded-2xl flex items-center gap-2">
                         <Loader2 className="w-5 h-5 animate-spin text-[#046A38]" />
-                        <span className="text-gray-600">(Thinking....)</span>
+                        <span className="text-gray-600">{thinkingMessage}</span>
                       </div>
                     </motion.div>
                   )}
