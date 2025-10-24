@@ -33,7 +33,7 @@ export default function SummarySection() {
     if (visibleTiles[1]) {
       // Wait for DOM to render
       setTimeout(() => {
-        positionIframeOver('summary-vsteike-container', 'summary-section', 50);
+        positionIframeOver('summary-vsteike-container', 'summary-section', 50, 0.5);
       }, 200);
     } else {
       // Hide only if SummarySection was the requester
@@ -217,7 +217,7 @@ export default function SummarySection() {
       }
     : {
         className: 'bg-white rounded-3xl shadow-2xl flex flex-col',
-        style: { width: '450px', maxHeight: 'calc(100vh - 150px)' }
+        style: { width: '520px', maxHeight: 'calc(100vh - 150px)' }
       };
 
   return (
@@ -351,6 +351,7 @@ export default function SummarySection() {
                   <div className="chat-messages mb-4 max-h-96 overflow-y-auto space-y-4">
                     {messages.map((msg, idx) => {
                       const isCurrentMessage = idx === currentMessageIndex && msg.role === 'assistant';
+                      const isFinalBoldMessage = msg.bold && idx === messages.length - 1;
 
                       return (
                         <motion.div
@@ -368,12 +369,12 @@ export default function SummarySection() {
                               className={`p-4 rounded-2xl ${
                                 msg.role === 'user'
                                   ? 'bg-gradient-to-r from-[#046A38] to-[#86BC25] text-white ml-auto'
-                                  : isCurrentMessage
+                                  : (isCurrentMessage || isFinalBoldMessage)
                                     ? 'text-gray-800'
                                     : 'bg-gray-100 text-gray-800'
                               }`}
                               style={
-                                isCurrentMessage
+                                (isCurrentMessage || isFinalBoldMessage)
                                   ? {
                                       backgroundColor: '#E6F4EA',
                                       boxShadow: '0 0 20px 5px rgba(134, 188, 37, 0.6)',
@@ -382,7 +383,7 @@ export default function SummarySection() {
                                   : {}
                               }
                             >
-                              <p className={`whitespace-pre-wrap ${msg.bold ? 'font-bold text-lg' : ''}`}>
+                              <p className={`whitespace-pre-wrap text-lg ${msg.bold ? 'font-bold text-xl' : ''}`}>
                                 {msg.content}
                               </p>
                             </div>

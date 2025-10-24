@@ -7,9 +7,10 @@ export const IframeProvider = ({ children }) => {
   const [activeTarget, setActiveTarget] = useState(null);
   const [requester, setRequester] = useState(null); // Track who requested the iframe
   const [currentZIndex, setCurrentZIndex] = useState(50); // Track current z-index
+  const [currentScale, setCurrentScale] = useState(1); // Track current scale
 
   // Function to position iframe over a target element
-  const positionIframeOver = useCallback((targetId, requesterId = 'default', zIndex = 50) => {
+  const positionIframeOver = useCallback((targetId, requesterId = 'default', zIndex = 50, scale = 1) => {
     if (!iframeContainerRef.current) return;
 
     const targetElement = document.getElementById(targetId);
@@ -29,11 +30,14 @@ export const IframeProvider = ({ children }) => {
     container.style.display = 'block';
     container.style.zIndex = String(zIndex);
     container.style.pointerEvents = 'auto';
+    container.style.transform = `scale(${scale})`;
+    container.style.transformOrigin = 'top left';
 
     setActiveTarget(targetId);
     setRequester(requesterId);
     setCurrentZIndex(zIndex);
-    console.log(`✅ VSTEike iframe positioned over ${targetId} by ${requesterId} with z-index ${zIndex}`);
+    setCurrentScale(scale);
+    console.log(`✅ VSTEike iframe positioned over ${targetId} by ${requesterId} with z-index ${zIndex} and scale ${scale}`);
   }, []);
 
   // Function to hide iframe (only if called by current requester)
@@ -51,7 +55,7 @@ export const IframeProvider = ({ children }) => {
     if (!activeTarget) return;
 
     const handleResize = () => {
-      positionIframeOver(activeTarget, requester, currentZIndex);
+      positionIframeOver(activeTarget, requester, currentZIndex, currentScale);
     };
 
     const intervalId = setInterval(() => {
@@ -66,6 +70,8 @@ export const IframeProvider = ({ children }) => {
             container.style.width = `${rect.width}px`;
             container.style.height = `${rect.height}px`;
             container.style.zIndex = String(currentZIndex);
+            container.style.transform = `scale(${currentScale})`;
+            container.style.transformOrigin = 'top left';
           }
         }
       }
@@ -77,7 +83,7 @@ export const IframeProvider = ({ children }) => {
       window.removeEventListener('resize', handleResize);
       clearInterval(intervalId);
     };
-  }, [activeTarget, requester, currentZIndex, positionIframeOver]);
+  }, [activeTarget, requester, currentZIndex, currentScale, positionIframeOver]);
 
   return (
     <IframeContext.Provider value={{

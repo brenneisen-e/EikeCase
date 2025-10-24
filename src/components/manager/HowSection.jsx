@@ -160,12 +160,12 @@ export default function HowSection() {
     if (expandedPreview) {
       // Expanded view has highest priority with very high z-index
       setTimeout(() => {
-        positionIframeOver('how-expanded-container', 'how-section', 9999);
+        positionIframeOver('how-expanded-container', 'how-section', 9999, 1);
       }, 200);
     } else if (selectedStep === 2) {
       // Step 2 view with normal z-index
       setTimeout(() => {
-        positionIframeOver('how-step2-container', 'how-section', 50);
+        positionIframeOver('how-step2-container', 'how-section', 50, 1);
       }, 200);
     } else {
       // Hide only if HowSection was the requester
