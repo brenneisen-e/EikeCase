@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send } from 'lucide-react';
+import { Send, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { DeloitteGPTAvatar } from '@/components/DeloitteGPTAvatar';
 
@@ -8,6 +8,7 @@ export default function WelcomeScreen() {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -20,8 +21,8 @@ export default function WelcomeScreen() {
     const value = e.target.value;
     setInputValue(value);
 
-    // Show suggestion when user types "Ma"
-    if (value.toLowerCase().startsWith('ma') && value.length >= 2) {
+    // Show suggestion when user types "Ge"
+    if (value.toLowerCase().startsWith('ge') && value.length >= 2) {
       setShowSuggestion(true);
     } else {
       setShowSuggestion(false);
@@ -30,13 +31,25 @@ export default function WelcomeScreen() {
 
   // Accept suggestion
   const acceptSuggestion = () => {
-    setInputValue('Present Managercase');
+    setInputValue('Generate Manager Case');
     setShowSuggestion(false);
   };
 
   // Handle chat submission
-  const handleSubmit = () => {
-    if (!inputValue.trim()) return;
+  const handleSubmit = async () => {
+    if (!inputValue.trim() || isThinking) return;
+
+    const userMessage = inputValue.trim();
+    setInputValue('');
+    setShowSuggestion(false);
+
+    // Add user message
+    setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+
+    // Show "Thinking..." for 2 seconds
+    setIsThinking(true);
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    setIsThinking(false);
 
     // Navigate to Landing Page (Home)
     navigate('/Home');
@@ -81,12 +94,33 @@ export default function WelcomeScreen() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: idx * 0.2 }}
                 >
-                  <DeloitteGPTAvatar size="md" />
-                  <div className="bg-gray-100 p-5 rounded-2xl flex-1">
-                    <p className="text-gray-800 text-lg">{msg.content}</p>
+                  {msg.role === 'assistant' && <DeloitteGPTAvatar size="md" />}
+                  <div className={`p-5 rounded-2xl flex-1 ${
+                    msg.role === 'user'
+                      ? 'bg-gradient-to-r from-[#046A38] to-[#86BC25] text-white ml-auto max-w-[70%]'
+                      : 'bg-gray-100'
+                  }`}>
+                    <p className={`text-lg ${msg.role === 'user' ? 'text-white' : 'text-gray-800'}`}>
+                      {msg.content}
+                    </p>
                   </div>
                 </motion.div>
               ))}
+
+              {/* Thinking indicator */}
+              {isThinking && (
+                <motion.div
+                  className="flex gap-3"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <DeloitteGPTAvatar size="md" />
+                  <div className="bg-gray-100 p-5 rounded-2xl flex items-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin text-[#046A38]" />
+                    <span className="text-gray-600">Thinking...</span>
+                  </div>
+                </motion.div>
+              )}
             </div>
 
             {/* Chat Input Container */}
@@ -121,7 +155,7 @@ export default function WelcomeScreen() {
                       >
                         <div className="text-gray-800">
                           <span className="text-gray-600 text-sm">Suggestion:</span>{' '}
-                          <span className="text-[#046A38] font-semibold">Present Managercase</span>
+                          <span className="text-[#046A38] font-semibold">Generate Manager Case</span>
                         </div>
                       </motion.div>
                     )}
@@ -130,10 +164,10 @@ export default function WelcomeScreen() {
 
                 <button
                   onClick={handleSubmit}
-                  disabled={!inputValue.trim()}
+                  disabled={!inputValue.trim() || isThinking}
                   className="w-14 h-14 rounded-xl text-white font-semibold transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
-                    background: inputValue.trim() ? 'linear-gradient(135deg, #046A38 0%, #86BC25 100%)' : '#cbd5e0'
+                    background: (inputValue.trim() && !isThinking) ? 'linear-gradient(135deg, #046A38 0%, #86BC25 100%)' : '#cbd5e0'
                   }}
                 >
                   <Send className="w-6 h-6" />
