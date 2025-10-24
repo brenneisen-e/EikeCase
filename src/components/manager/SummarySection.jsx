@@ -180,7 +180,7 @@ export default function SummarySection() {
   // Determine chat container styles based on position
   const chatContainerClass = chatPosition === 'centered'
     ? 'flex items-center justify-center'
-    : 'flex items-start justify-end pr-8';
+    : 'flex items-end justify-end pr-8 pb-8';
 
   const chatMotionProps = chatPosition === 'centered'
     ? {
@@ -224,50 +224,42 @@ export default function SummarySection() {
       {/* Tiles Grid in Background */}
       <div className="absolute inset-0 grid grid-cols-2 gap-6 p-20 pt-40">
         {tiles.map((tile, index) => (
-          <AnimatePresence key={index}>
-            {visibleTiles[index] ? (
-              <motion.div
-                className="bg-white rounded-xl shadow-lg overflow-hidden"
-                style={{
-                  borderTop: `6px solid ${tile.color}`,
-                  opacity: latestTileIndex !== -1 && latestTileIndex !== index ? 0.5 : 1
-                }}
-                initial={{ opacity: 0, scale: 1 }}
-                animate={{
-                  opacity: latestTileIndex !== -1 && latestTileIndex !== index ? 0.5 : 1,
-                  scale: 1
-                }}
-                transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-              >
-                <div className="w-full h-full p-[15%]">
-                  {tile.content === 'component' ? (
-                    <tile.component />
-                  ) : tile.content === 'image' ? (
-                    <img
-                      src={tile.imageSrc}
-                      alt={tile.alt}
-                      className="w-full h-full object-contain"
-                    />
-                  ) : (
-                    <iframe
-                      src={tile.iframeSrc}
-                      className="w-full h-full border-0"
-                      title={tile.alt}
-                    />
-                  )}
-                </div>
-              </motion.div>
-            ) : (
-              // Invisible placeholder tiles for height consistency
-              (index === 2 || index === 3) && (
-                <motion.div
-                  className="bg-transparent"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 0 }}
+          <motion.div
+            key={index}
+            className="bg-white rounded-xl shadow-lg overflow-hidden"
+            style={{
+              borderTop: `6px solid ${tile.color}`,
+              opacity: visibleTiles[index]
+                ? (latestTileIndex !== -1 && latestTileIndex !== index ? 0.5 : 1)
+                : 0
+            }}
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{
+              opacity: visibleTiles[index]
+                ? (latestTileIndex !== -1 && latestTileIndex !== index ? 0.5 : 1)
+                : 0,
+              scale: 1
+            }}
+            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+          >
+            <div className="w-full h-full p-[10px]">
+              {tile.content === 'component' ? (
+                <tile.component />
+              ) : tile.content === 'image' ? (
+                <img
+                  src={tile.imageSrc}
+                  alt={tile.alt}
+                  className="w-full h-full object-contain"
                 />
-              )
-            )}
-          </AnimatePresence>
+              ) : (
+                <iframe
+                  src={tile.iframeSrc}
+                  className="w-full h-full border-0"
+                  title={tile.alt}
+                />
+              )}
+            </div>
+          </motion.div>
         ))}
       </div>
 
@@ -324,7 +316,7 @@ export default function SummarySection() {
                 {messages.length > 0 && (
                   <div className="chat-messages mb-4 max-h-96 overflow-y-auto space-y-4">
                     {messages.map((msg, idx) => {
-                      const isCurrentMessage = idx === currentMessageIndex;
+                      const isCurrentMessage = idx === currentMessageIndex && msg.role === 'assistant';
 
                       return (
                         <motion.div
@@ -342,7 +334,9 @@ export default function SummarySection() {
                               className={`p-4 rounded-2xl ${
                                 msg.role === 'user'
                                   ? 'bg-gradient-to-r from-[#046A38] to-[#86BC25] text-white ml-auto'
-                                  : 'bg-gray-100 text-gray-800'
+                                  : isCurrentMessage
+                                    ? 'text-gray-800'
+                                    : 'bg-gray-100 text-gray-800'
                               }`}
                               style={
                                 isCurrentMessage
