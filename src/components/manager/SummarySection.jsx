@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Loader2 } from 'lucide-react';
 import { EditableText } from '@/components/editor/EditableText';
 import { DeloitteGPTAvatar } from '@/components/DeloitteGPTAvatar';
 import ChallengePreview from './ChallengePreview';
 import GrowthChartPreview from './GrowthChartPreview';
+import { useIframe } from '@/contexts/IframeContext';
 
 export default function SummarySection() {
+  const { mountIframe } = useIframe();
   // Chat states
   const [inputValue, setInputValue] = useState('');
   const [showSuggestion, setShowSuggestion] = useState(false);
@@ -25,6 +27,16 @@ export default function SummarySection() {
     "Next Deloitte Derby date",
     "What's your Deloitte Event App called"
   ];
+
+  // Mount shared iframe when tile 1 (VSTEike) becomes visible
+  useEffect(() => {
+    if (visibleTiles[1]) {
+      // Wait for DOM to render
+      setTimeout(() => {
+        mountIframe('summary-vsteike-container');
+      }, 100);
+    }
+  }, [visibleTiles[1], mountIframe]);
 
   const tiles = [
     {
@@ -270,10 +282,9 @@ export default function SummarySection() {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <iframe
-                  src={tile.iframeSrc}
-                  className="w-full h-full border-0"
-                  title={tile.alt}
+                <div
+                  id="summary-vsteike-container"
+                  className="w-full h-full"
                 />
               )}
             </div>
