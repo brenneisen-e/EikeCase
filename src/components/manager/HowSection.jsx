@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Cpu, Server, CheckCircle, TrendingUp, Calendar, Users, X, Maximize2, ChevronRight } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { EditableText } from '@/components/editor/EditableText';
+import { useIframe } from '@/contexts/IframeContext';
 
 const steps = [
   {
@@ -69,6 +70,7 @@ const steps = [
 ];
 
 export default function HowSection() {
+  const { mountIframe } = useIframe();
   const [selectedStep, setSelectedStep] = useState(null);
   const [expandedPreview, setExpandedPreview] = useState(false);
   const [showGantt, setShowGantt] = useState(false);
@@ -152,6 +154,24 @@ export default function HowSection() {
       setLoadingPrototype(false);
     }
   };
+
+  // Mount shared iframe when step 2 is selected
+  useEffect(() => {
+    if (selectedStep === 2) {
+      setTimeout(() => {
+        mountIframe('how-step2-container');
+      }, 100);
+    }
+  }, [selectedStep, mountIframe]);
+
+  // Mount shared iframe when expanded preview is opened
+  useEffect(() => {
+    if (expandedPreview) {
+      setTimeout(() => {
+        mountIframe('how-expanded-container');
+      }, 100);
+    }
+  }, [expandedPreview, mountIframe]);
 
   const timelinePhases = [
     { id: 1, title: 'Scope Definition / Problem Framing', duration: '2 weeks', team: '2–3', start: 0, end: 2, keyOutput: 'Use-case scope, data mapping, success criteria', part: 1 },
@@ -289,7 +309,7 @@ export default function HowSection() {
                                   <span className="text-base">Expand Fullscreen</span>
                                 </button>
                               </div>
-                              <div 
+                              <div
                                 className="border border-gray-300 rounded overflow-hidden cursor-pointer hover:border-[#86BC25] transition-colors"
                                 style={{ transform: 'scale(0.5)', transformOrigin: '0 0', width: '200%', height: '300px' }}
                                 onClick={(e) => {
@@ -297,7 +317,11 @@ export default function HowSection() {
                                   setExpandedPreview(true);
                                 }}
                               >
-                                <iframe src="https://brenneisen-e.github.io/VSTEike/" className="w-full h-full border-0" title="Prototype" style={{ height: '600px' }} />
+                                <div
+                                  id="how-step2-container"
+                                  className="w-full border-0"
+                                  style={{ height: '600px' }}
+                                />
                               </div>
                             </div>
                           ) : step.content?.type === 'text' ? (
@@ -549,14 +573,13 @@ export default function HowSection() {
             </div>
 
             {/* Fullscreen iframe and Claude AI Assistant */}
-            <div 
+            <div
               className="flex-1 flex bg-white"
               onClick={(e) => e.stopPropagation()}
             >
-              <iframe
-                src="https://brenneisen-e.github.io/VSTEike/"
+              <div
+                id="how-expanded-container"
                 className="w-full h-full border-0"
-                title="Expanded Prototype"
               />
             </div>
           </motion.div>
