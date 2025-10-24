@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Loader2 } from 'lucide-react';
 import { EditableText } from '@/components/editor/EditableText';
 import { DeloitteGPTAvatar } from '@/components/DeloitteGPTAvatar';
+import ChallengePreview from './ChallengePreview';
+import GrowthChartPreview from './GrowthChartPreview';
 
 export default function SummarySection() {
   // Chat states
@@ -23,8 +25,8 @@ export default function SummarySection() {
   const tiles = [
     {
       color: '#046A38',
-      content: 'image',
-      imageSrc: '/placeholder-complexity.png', // TODO: Replace with actual screenshot
+      content: 'component',
+      component: ChallengePreview,
       alt: 'Complexity, silos, and regulation slow down steering'
     },
     {
@@ -36,13 +38,13 @@ export default function SummarySection() {
     {
       color: '#86BC25',
       content: 'image',
-      imageSrc: '/placeholder-barmenia.png', // TODO: Replace with actual screenshot
-      alt: 'BarmeniaGotaher Product'
+      imageSrc: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68c975121a45dbb9eb30bd64/94106e3a1_Picture1.png',
+      alt: 'Barmenia Final Product'
     },
     {
       color: '#FFA500',
-      content: 'image',
-      imageSrc: '/placeholder-growth.png', // TODO: Replace with actual screenshot
+      content: 'component',
+      component: GrowthChartPreview,
       alt: '5-Year Growth Trajectory'
     }
   ];
@@ -197,14 +199,14 @@ export default function SummarySection() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ type: 'spring', stiffness: 200, damping: 20 }}
               >
-                {tile.content === 'image' ? (
-                  <div className="w-full h-full flex items-center justify-center p-8 bg-gray-50">
-                    <div className="text-center">
-                      <div className="text-6xl mb-4">📊</div>
-                      <div className="text-gray-500 text-sm">{tile.alt}</div>
-                      <div className="text-xs text-gray-400 mt-2">Placeholder Image</div>
-                    </div>
-                  </div>
+                {tile.content === 'component' ? (
+                  <tile.component />
+                ) : tile.content === 'image' ? (
+                  <img
+                    src={tile.imageSrc}
+                    alt={tile.alt}
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <iframe
                     src={tile.iframeSrc}
