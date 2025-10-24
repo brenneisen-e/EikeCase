@@ -1,65 +1,91 @@
-import React, { createContext, useContext, useRef, useState, useEffect } from 'react';
+import React, { createContext, useContext, useRef, useState, useEffect, useCallback } from 'react';
 
 const IframeContext = createContext(null);
 
 export const IframeProvider = ({ children }) => {
-  const vsteIkeIframeRef = useRef(null);
-  const [currentContainer, setCurrentContainer] = useState(null);
+  const iframeContainerRef = useRef(null);
+  const [activeTarget, setActiveTarget] = useState(null);
 
-  // Create iframe on mount
-  useEffect(() => {
-    if (!vsteIkeIframeRef.current) {
-      const iframe = document.createElement('iframe');
-      iframe.src = 'https://brenneisen-e.github.io/VSTEike/';
-      iframe.className = 'w-full h-full border-0';
-      iframe.title = 'VSTEike Prototype';
-      iframe.style.width = '100%';
-      iframe.style.height = '100%';
-      vsteIkeIframeRef.current = iframe;
-      console.log('✅ VSTEike iframe created');
+  // Function to position iframe over a target element
+  const positionIframeOver = useCallback((targetId) => {
+    if (!iframeContainerRef.current) return;
+
+    const targetElement = document.getElementById(targetId);
+    if (!targetElement) {
+      console.warn(`Target element ${targetId} not found`);
+      return;
+    }
+
+    const rect = targetElement.getBoundingClientRect();
+    const container = iframeContainerRef.current;
+
+    container.style.position = 'fixed';
+    container.style.top = `${rect.top}px`;
+    container.style.left = `${rect.left}px`;
+    container.style.width = `${rect.width}px`;
+    container.style.height = `${rect.height}px`;
+    container.style.display = 'block';
+    container.style.zIndex = '10';
+    container.style.pointerEvents = 'auto';
+
+    setActiveTarget(targetId);
+    console.log(`✅ VSTEike iframe positioned over ${targetId}`);
+  }, []);
+
+  // Function to hide iframe
+  const hideIframe = useCallback(() => {
+    if (iframeContainerRef.current) {
+      iframeContainerRef.current.style.display = 'none';
+      setActiveTarget(null);
+      console.log('✅ VSTEike iframe hidden');
     }
   }, []);
 
-  // Function to mount iframe to a container
-  const mountIframe = (containerId) => {
-    if (!vsteIkeIframeRef.current) return false;
+  // Re-position iframe when window resizes or activeTarget changes
+  useEffect(() => {
+    if (!activeTarget) return;
 
-    const container = document.getElementById(containerId);
-    if (!container) {
-      console.warn(`Container ${containerId} not found`);
-      return false;
-    }
+    const handleResize = () => {
+      positionIframeOver(activeTarget);
+    };
 
-    // Remove iframe from current location
-    if (vsteIkeIframeRef.current.parentNode) {
-      vsteIkeIframeRef.current.parentNode.removeChild(vsteIkeIframeRef.current);
-    }
+    const intervalId = setInterval(() => {
+      if (activeTarget) {
+        positionIframeOver(activeTarget);
+      }
+    }, 100); // Re-position every 100ms to handle animations
 
-    // Clear container and append iframe
-    container.innerHTML = '';
-    container.appendChild(vsteIkeIframeRef.current);
-    setCurrentContainer(containerId);
-    console.log(`✅ VSTEike iframe mounted to ${containerId}`);
-    return true;
-  };
+    window.addEventListener('resize', handleResize);
 
-  // Function to unmount iframe
-  const unmountIframe = () => {
-    if (vsteIkeIframeRef.current && vsteIkeIframeRef.current.parentNode) {
-      vsteIkeIframeRef.current.parentNode.removeChild(vsteIkeIframeRef.current);
-      setCurrentContainer(null);
-      console.log('✅ VSTEike iframe unmounted');
-    }
-  };
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearInterval(intervalId);
+    };
+  }, [activeTarget, positionIframeOver]);
 
   return (
     <IframeContext.Provider value={{
-      vsteIkeIframeRef,
-      currentContainer,
-      mountIframe,
-      unmountIframe
+      positionIframeOver,
+      hideIframe,
+      activeTarget
     }}>
       {children}
+      {/* Permanent iframe container */}
+      <div
+        ref={iframeContainerRef}
+        style={{
+          position: 'fixed',
+          display: 'none',
+          pointerEvents: 'none'
+        }}
+      >
+        <iframe
+          src="https://brenneisen-e.github.io/VSTEike/"
+          className="w-full h-full border-0"
+          title="VSTEike Prototype"
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
     </IframeContext.Provider>
   );
 };
