@@ -6,9 +6,10 @@ export const IframeProvider = ({ children }) => {
   const iframeContainerRef = useRef(null);
   const [activeTarget, setActiveTarget] = useState(null);
   const [requester, setRequester] = useState(null); // Track who requested the iframe
+  const [currentZIndex, setCurrentZIndex] = useState(50); // Track current z-index
 
   // Function to position iframe over a target element
-  const positionIframeOver = useCallback((targetId, requesterId = 'default') => {
+  const positionIframeOver = useCallback((targetId, requesterId = 'default', zIndex = 50) => {
     if (!iframeContainerRef.current) return;
 
     const targetElement = document.getElementById(targetId);
@@ -26,12 +27,13 @@ export const IframeProvider = ({ children }) => {
     container.style.width = `${rect.width}px`;
     container.style.height = `${rect.height}px`;
     container.style.display = 'block';
-    container.style.zIndex = '10';
+    container.style.zIndex = String(zIndex);
     container.style.pointerEvents = 'auto';
 
     setActiveTarget(targetId);
     setRequester(requesterId);
-    console.log(`✅ VSTEike iframe positioned over ${targetId} by ${requesterId}`);
+    setCurrentZIndex(zIndex);
+    console.log(`✅ VSTEike iframe positioned over ${targetId} by ${requesterId} with z-index ${zIndex}`);
   }, []);
 
   // Function to hide iframe (only if called by current requester)
@@ -49,7 +51,7 @@ export const IframeProvider = ({ children }) => {
     if (!activeTarget) return;
 
     const handleResize = () => {
-      positionIframeOver(activeTarget, requester);
+      positionIframeOver(activeTarget, requester, currentZIndex);
     };
 
     const intervalId = setInterval(() => {
@@ -63,6 +65,7 @@ export const IframeProvider = ({ children }) => {
             container.style.left = `${rect.left}px`;
             container.style.width = `${rect.width}px`;
             container.style.height = `${rect.height}px`;
+            container.style.zIndex = String(currentZIndex);
           }
         }
       }
@@ -74,7 +77,7 @@ export const IframeProvider = ({ children }) => {
       window.removeEventListener('resize', handleResize);
       clearInterval(intervalId);
     };
-  }, [activeTarget, requester, positionIframeOver]);
+  }, [activeTarget, requester, currentZIndex, positionIframeOver]);
 
   return (
     <IframeContext.Provider value={{

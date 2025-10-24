@@ -33,7 +33,7 @@ export default function SummarySection() {
     if (visibleTiles[1]) {
       // Wait for DOM to render
       setTimeout(() => {
-        positionIframeOver('summary-vsteike-container', 'summary-section');
+        positionIframeOver('summary-vsteike-container', 'summary-section', 50);
       }, 200);
     } else {
       // Hide only if SummarySection was the requester
