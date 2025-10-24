@@ -8,7 +8,7 @@ import GrowthChartPreview from './GrowthChartPreview';
 import { useIframe } from '@/contexts/IframeContext';
 
 export default function SummarySection() {
-  const { mountIframe } = useIframe();
+  const { positionIframeOver, hideIframe } = useIframe();
   // Chat states
   const [inputValue, setInputValue] = useState('');
   const [showSuggestion, setShowSuggestion] = useState(false);
@@ -28,15 +28,15 @@ export default function SummarySection() {
     "What's your Deloitte Event App called"
   ];
 
-  // Mount shared iframe when tile 1 (VSTEike) becomes visible
+  // Position shared iframe when tile 1 (VSTEike) becomes visible
   useEffect(() => {
     if (visibleTiles[1]) {
       // Wait for DOM to render
       setTimeout(() => {
-        mountIframe('summary-vsteike-container');
-      }, 100);
+        positionIframeOver('summary-vsteike-container');
+      }, 200);
     }
-  }, [visibleTiles[1], mountIframe]);
+  }, [visibleTiles[1], positionIframeOver]);
 
   const tiles = [
     {

@@ -70,7 +70,7 @@ const steps = [
 ];
 
 export default function HowSection() {
-  const { mountIframe } = useIframe();
+  const { positionIframeOver, hideIframe } = useIframe();
   const [selectedStep, setSelectedStep] = useState(null);
   const [expandedPreview, setExpandedPreview] = useState(false);
   const [showGantt, setShowGantt] = useState(false);
@@ -155,23 +155,28 @@ export default function HowSection() {
     }
   };
 
-  // Mount shared iframe when step 2 is selected
+  // Position shared iframe when step 2 is selected
   useEffect(() => {
     if (selectedStep === 2) {
       setTimeout(() => {
-        mountIframe('how-step2-container');
-      }, 100);
+        positionIframeOver('how-step2-container');
+      }, 200);
+    } else {
+      hideIframe();
     }
-  }, [selectedStep, mountIframe]);
+  }, [selectedStep, positionIframeOver, hideIframe]);
 
-  // Mount shared iframe when expanded preview is opened
+  // Position shared iframe when expanded preview is opened
   useEffect(() => {
     if (expandedPreview) {
       setTimeout(() => {
-        mountIframe('how-expanded-container');
-      }, 100);
+        positionIframeOver('how-expanded-container');
+      }, 200);
+    } else if (selectedStep !== 2) {
+      // Only hide if we're not showing it in step 2
+      hideIframe();
     }
-  }, [expandedPreview, mountIframe]);
+  }, [expandedPreview, selectedStep, positionIframeOver, hideIframe]);
 
   const timelinePhases = [
     { id: 1, title: 'Scope Definition / Problem Framing', duration: '2 weeks', team: '2–3', start: 0, end: 2, keyOutput: 'Use-case scope, data mapping, success criteria', part: 1 },
