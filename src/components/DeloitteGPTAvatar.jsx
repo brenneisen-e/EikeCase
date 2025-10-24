@@ -16,10 +16,7 @@ export const DeloitteGPTAvatar = ({ size = 'md', className = '' }) => {
         background: 'linear-gradient(135deg, #046A38 0%, #86BC25 100%)'
       }}
     >
-      {/* Deloitte GPT Text Only */}
-      <span className={`${sizeConfig.text} font-bold text-white leading-tight text-center px-1`}>
-        Deloitte<br/>GPT
-      </span>
+      {/* Deloitte Green Dot - Brand Icon */}
     </div>
   );
 };
