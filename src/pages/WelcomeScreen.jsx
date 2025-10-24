@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { DeloitteGPTAvatar } from '@/components/DeloitteGPTAvatar';
 
 export default function WelcomeScreen() {
   const navigate = useNavigate();
@@ -42,16 +43,15 @@ export default function WelcomeScreen() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-white to-gray-100 flex items-center justify-center px-8">
-      <div className="w-full max-w-3xl">
-        {/* Chat Container */}
-        <motion.div
-          className="bg-white rounded-3xl shadow-2xl flex flex-col"
-          style={{ maxHeight: 'calc(100vh - 120px)', height: 'auto' }}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
+    <div className="min-h-screen w-full bg-gradient-to-br from-white to-gray-100 relative">
+      {/* Chat Container - Fixed Bottom Right */}
+      <motion.div
+        className="fixed bottom-8 right-8 bg-white rounded-3xl shadow-2xl flex flex-col z-50"
+        style={{ width: '450px', maxHeight: 'calc(100vh - 150px)' }}
+        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
+      >
           {/* Chat Header */}
           <div
             className="p-6 text-white flex-shrink-0"
@@ -60,17 +60,10 @@ export default function WelcomeScreen() {
             }}
           >
             <div className="flex items-center gap-4">
-              <div
-                className="w-14 h-14 rounded-full flex items-center justify-center text-3xl flex-shrink-0"
-                style={{
-                  background: 'linear-gradient(135deg, #046A38 0%, #86BC25 100%)'
-                }}
-              >
-                🤖
-              </div>
+              <DeloitteGPTAvatar size="lg" />
               <div>
-                <div className="text-2xl font-semibold">Eike's Assistant</div>
-                <div className="text-sm opacity-90">Welcome!</div>
+                <div className="text-2xl font-semibold">Deloitte GPT</div>
+                <div className="text-sm opacity-90">Your AI Assistant</div>
               </div>
             </div>
           </div>
@@ -87,14 +80,7 @@ export default function WelcomeScreen() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: idx * 0.2 }}
                 >
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center text-2xl flex-shrink-0"
-                    style={{
-                      background: 'linear-gradient(135deg, #046A38 0%, #86BC25 100%)'
-                    }}
-                  >
-                    🤖
-                  </div>
+                  <DeloitteGPTAvatar size="md" />
                   <div className="bg-gray-100 p-5 rounded-2xl flex-1">
                     <p className="text-gray-800 text-lg">{msg.content}</p>
                   </div>
@@ -154,8 +140,7 @@ export default function WelcomeScreen() {
               </div>
             </div>
           </div>
-        </motion.div>
-      </div>
+      </motion.div>
     </div>
   );
 }

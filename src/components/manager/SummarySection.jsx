@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Loader2 } from 'lucide-react';
 import { EditableText } from '@/components/editor/EditableText';
+import { DeloitteGPTAvatar } from '@/components/DeloitteGPTAvatar';
 
 export default function SummarySection() {
   // Chat states
@@ -220,20 +221,13 @@ export default function SummarySection() {
               }}
             >
               <div className="flex items-center gap-4">
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center text-3xl flex-shrink-0"
-                  style={{
-                    background: 'linear-gradient(135deg, #046A38 0%, #86BC25 100%)'
-                  }}
-                >
-                  🤖
-                </div>
+                <DeloitteGPTAvatar size="lg" />
                 <div>
                   <EditableText id="chat-header-title" defaultSize="text-2xl" className="font-semibold">
-                    Eike's Assistant
+                    Deloitte GPT
                   </EditableText>
                   <EditableText id="chat-header-subtitle" defaultSize="text-sm" className="opacity-90">
-                    Welcome back!
+                    Your AI Assistant
                   </EditableText>
                 </div>
               </div>
@@ -244,14 +238,7 @@ export default function SummarySection() {
               {/* Welcome Message - only show if no messages yet */}
               {messages.length === 0 && (
                 <div className="flex gap-4 mb-6">
-                  <div
-                    className="w-12 h-12 rounded-full flex items-center justify-center text-2xl flex-shrink-0"
-                    style={{
-                      background: 'linear-gradient(135deg, #046A38 0%, #86BC25 100%)'
-                    }}
-                  >
-                    🤖
-                  </div>
+                  <DeloitteGPTAvatar size="md" />
                   <div className="bg-gray-100 p-5 rounded-2xl flex-1">
                     <p className="mb-3"><strong>Hello Eike! 👋</strong></p>
                     <p className="mb-3 text-gray-700">I'm your AI assistant for the manager case.</p>
@@ -272,14 +259,7 @@ export default function SummarySection() {
                       transition={{ duration: 0.3 }}
                     >
                       {msg.role === 'assistant' && (
-                        <div
-                          className="w-10 h-10 rounded-full flex items-center justify-center text-xl flex-shrink-0"
-                          style={{
-                            background: 'linear-gradient(135deg, #046A38 0%, #86BC25 100%)'
-                          }}
-                        >
-                          🤖
-                        </div>
+                        <DeloitteGPTAvatar size="sm" />
                       )}
                       <div className={`flex-1 ${msg.role === 'user' ? 'ml-auto max-w-[70%]' : ''}`}>
                         <div
@@ -304,14 +284,7 @@ export default function SummarySection() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                     >
-                      <div
-                        className="w-10 h-10 rounded-full flex items-center justify-center text-xl flex-shrink-0"
-                        style={{
-                          background: 'linear-gradient(135deg, #046A38 0%, #86BC25 100%)'
-                        }}
-                      >
-                        🤖
-                      </div>
+                      <DeloitteGPTAvatar size="sm" />
                       <div className="bg-gray-100 p-4 rounded-2xl flex items-center gap-2">
                         <Loader2 className="w-5 h-5 animate-spin text-[#046A38]" />
                         <span className="text-gray-600">(Thinking....)</span>
