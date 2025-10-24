@@ -17,6 +17,7 @@ export default function SummarySection() {
   const [chatPosition, setChatPosition] = useState('centered'); // 'centered' or 'right'
   const [currentMessageIndex, setCurrentMessageIndex] = useState(-1); // Track which message is currently active
   const [latestTileIndex, setLatestTileIndex] = useState(-1); // Track most recently shown tile
+  const [isFinalMessage, setIsFinalMessage] = useState(false); // Track if final message is shown
 
   const sampleQuestions = [
     "What's the weather in Cologne",
@@ -85,21 +86,17 @@ export default function SummarySection() {
     // Add user message
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
 
-    // Start thinking
-    setIsThinking(true);
-    setThinkingMessage('Thinking...');
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsThinking(false);
-
     // Response sequence
     const responses = [
       {
         content: 'Of course! Your case is called "Breaking Complexity\nAI driven prototypes that unlock data & steering"',
-        delay: 800
+        delay: 800,
+        needsThinking: true
       },
       {
         content: 'You have demonstrated four key competencies:',
-        delay: 1000
+        delay: 1000,
+        needsThinking: true
       },
       {
         content: '1. Domain Expertise: You know how to apply it.',
@@ -130,7 +127,18 @@ export default function SummarySection() {
 
     let messageIndex = messages.length; // Start from first assistant message
 
-    for (const response of responses) {
+    for (let i = 0; i < responses.length; i++) {
+      const response = responses[i];
+      const isLastResponse = i === responses.length - 1;
+
+      // Show "Thinking..." for first two responses
+      if (response.needsThinking) {
+        setIsThinking(true);
+        setThinkingMessage('Thinking...');
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        setIsThinking(false);
+      }
+
       // Show "Summarizing..." indicator for delays >= 5 seconds
       if (response.delay >= 5000) {
         setIsThinking(true);
@@ -161,6 +169,12 @@ export default function SummarySection() {
         });
       }
 
+      // If this is the final message, set all tiles to 50% opacity
+      if (isLastResponse) {
+        setIsFinalMessage(true);
+        setLatestTileIndex(-1); // Clear latest tile index
+      }
+
       // Auto-scroll to bottom
       setTimeout(() => {
         const messagesContainer = document.querySelector('.chat-messages');
@@ -173,7 +187,6 @@ export default function SummarySection() {
     // Clear current message highlight after sequence ends
     setTimeout(() => {
       setCurrentMessageIndex(-1);
-      setLatestTileIndex(-1);
     }, 3000);
   };
 
@@ -223,25 +236,30 @@ export default function SummarySection() {
 
       {/* Tiles Grid in Background */}
       <div className="absolute inset-0 grid grid-cols-2 gap-6 p-20 pt-40">
-        {tiles.map((tile, index) => (
-          <motion.div
-            key={index}
-            className="bg-white rounded-xl shadow-lg overflow-hidden"
-            style={{
-              borderTop: `6px solid ${tile.color}`,
-              opacity: visibleTiles[index]
-                ? (latestTileIndex !== -1 && latestTileIndex !== index ? 0.5 : 1)
-                : 0
-            }}
-            initial={{ opacity: 0, scale: 1 }}
-            animate={{
-              opacity: visibleTiles[index]
-                ? (latestTileIndex !== -1 && latestTileIndex !== index ? 0.5 : 1)
-                : 0,
-              scale: 1
-            }}
-            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-          >
+        {tiles.map((tile, index) => {
+          // Determine opacity based on states
+          const getOpacity = () => {
+            if (!visibleTiles[index]) return 0;
+            if (isFinalMessage) return 0.5;
+            if (latestTileIndex !== -1 && latestTileIndex !== index) return 0.5;
+            return 1;
+          };
+
+          return (
+            <motion.div
+              key={index}
+              className="bg-white rounded-xl shadow-lg overflow-hidden"
+              style={{
+                borderTop: `6px solid ${tile.color}`,
+                opacity: getOpacity()
+              }}
+              initial={{ opacity: 0, scale: 1 }}
+              animate={{
+                opacity: getOpacity(),
+                scale: 1
+              }}
+              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+            >
             <div className="w-full h-full p-[10px]">
               {tile.content === 'component' ? (
                 <tile.component />
@@ -249,7 +267,7 @@ export default function SummarySection() {
                 <img
                   src={tile.imageSrc}
                   alt={tile.alt}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <iframe
@@ -260,11 +278,12 @@ export default function SummarySection() {
               )}
             </div>
           </motion.div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Chat Interface - Transitions from centered to right */}
-      <div className={`absolute inset-0 z-50 pointer-events-none ${chatContainerClass}`}>
+      <div className={`absolute inset-0 z-[100] pointer-events-none ${chatContainerClass}`}>
         <motion.div
           {...chatMotionProps}
           initial={{ opacity: 0, y: 30, scale: 0.9 }}
@@ -275,7 +294,8 @@ export default function SummarySection() {
             x: chatPosition === 'right' ? 0 : 0
           }}
           transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
-          className="pointer-events-auto"
+          className="pointer-events-auto bg-white"
+          style={{ backgroundColor: 'white' }}
         >
           <div className="flex flex-col h-full overflow-hidden">
               {/* Chat Header */}
