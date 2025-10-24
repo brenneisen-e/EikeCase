@@ -43,15 +43,16 @@ export default function WelcomeScreen() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-white to-gray-100 relative">
-      {/* Chat Container - Fixed Bottom Right */}
-      <motion.div
-        className="fixed bottom-8 right-8 bg-white rounded-3xl shadow-2xl flex flex-col z-50"
-        style={{ width: '450px', maxHeight: 'calc(100vh - 150px)' }}
-        initial={{ opacity: 0, y: 50, scale: 0.9 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
-      >
+    <div className="min-h-screen w-full bg-gradient-to-br from-white to-gray-100 flex items-center justify-center px-8">
+      <div className="w-full max-w-3xl">
+        {/* Chat Container - Centered */}
+        <motion.div
+          className="bg-white rounded-3xl shadow-2xl flex flex-col"
+          style={{ maxHeight: 'calc(100vh - 120px)', height: 'auto' }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           {/* Chat Header */}
           <div
             className="p-6 text-white flex-shrink-0"
@@ -140,7 +141,8 @@ export default function WelcomeScreen() {
               </div>
             </div>
           </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 }
