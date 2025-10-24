@@ -5,9 +5,10 @@ const IframeContext = createContext(null);
 export const IframeProvider = ({ children }) => {
   const iframeContainerRef = useRef(null);
   const [activeTarget, setActiveTarget] = useState(null);
+  const [requester, setRequester] = useState(null); // Track who requested the iframe
 
   // Function to position iframe over a target element
-  const positionIframeOver = useCallback((targetId) => {
+  const positionIframeOver = useCallback((targetId, requesterId = 'default') => {
     if (!iframeContainerRef.current) return;
 
     const targetElement = document.getElementById(targetId);
@@ -29,29 +30,41 @@ export const IframeProvider = ({ children }) => {
     container.style.pointerEvents = 'auto';
 
     setActiveTarget(targetId);
-    console.log(`✅ VSTEike iframe positioned over ${targetId}`);
+    setRequester(requesterId);
+    console.log(`✅ VSTEike iframe positioned over ${targetId} by ${requesterId}`);
   }, []);
 
-  // Function to hide iframe
-  const hideIframe = useCallback(() => {
-    if (iframeContainerRef.current) {
+  // Function to hide iframe (only if called by current requester)
+  const hideIframe = useCallback((requesterId = 'default') => {
+    if (iframeContainerRef.current && (requester === requesterId || requester === null)) {
       iframeContainerRef.current.style.display = 'none';
       setActiveTarget(null);
-      console.log('✅ VSTEike iframe hidden');
+      setRequester(null);
+      console.log(`✅ VSTEike iframe hidden by ${requesterId}`);
     }
-  }, []);
+  }, [requester]);
 
   // Re-position iframe when window resizes or activeTarget changes
   useEffect(() => {
     if (!activeTarget) return;
 
     const handleResize = () => {
-      positionIframeOver(activeTarget);
+      positionIframeOver(activeTarget, requester);
     };
 
     const intervalId = setInterval(() => {
       if (activeTarget) {
-        positionIframeOver(activeTarget);
+        const targetElement = document.getElementById(activeTarget);
+        if (targetElement) {
+          const rect = targetElement.getBoundingClientRect();
+          const container = iframeContainerRef.current;
+          if (container) {
+            container.style.top = `${rect.top}px`;
+            container.style.left = `${rect.left}px`;
+            container.style.width = `${rect.width}px`;
+            container.style.height = `${rect.height}px`;
+          }
+        }
       }
     }, 100); // Re-position every 100ms to handle animations
 
@@ -61,13 +74,14 @@ export const IframeProvider = ({ children }) => {
       window.removeEventListener('resize', handleResize);
       clearInterval(intervalId);
     };
-  }, [activeTarget, positionIframeOver]);
+  }, [activeTarget, requester, positionIframeOver]);
 
   return (
     <IframeContext.Provider value={{
       positionIframeOver,
       hideIframe,
-      activeTarget
+      activeTarget,
+      requester
     }}>
       {children}
       {/* Permanent iframe container */}
