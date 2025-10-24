@@ -158,14 +158,14 @@ export default function HowSection() {
   // Position shared iframe when step 2 is selected or expanded
   useEffect(() => {
     if (expandedPreview) {
-      // Expanded view has highest priority
+      // Expanded view has highest priority with very high z-index
       setTimeout(() => {
-        positionIframeOver('how-expanded-container', 'how-section');
+        positionIframeOver('how-expanded-container', 'how-section', 9999);
       }, 200);
     } else if (selectedStep === 2) {
-      // Step 2 view
+      // Step 2 view with normal z-index
       setTimeout(() => {
-        positionIframeOver('how-step2-container', 'how-section');
+        positionIframeOver('how-step2-container', 'how-section', 50);
       }, 200);
     } else {
       // Hide only if HowSection was the requester
