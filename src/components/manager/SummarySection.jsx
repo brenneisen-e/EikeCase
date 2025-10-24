@@ -208,11 +208,15 @@ export default function SummarySection() {
         ))}
       </div>
 
-      {/* Chat Interface - VSTEike Design with Green Theme */}
-      <div className="flex-1 flex items-center justify-center relative z-10">
-        <div className="w-full max-w-4xl">
-          {/* Chat Container */}
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden" style={{ maxHeight: 'calc(100vh - 100px)' }}>
+      {/* Chat Interface - Fixed Bottom Right */}
+      <motion.div
+        className="fixed bottom-8 right-8 bg-white rounded-3xl shadow-2xl flex flex-col z-50"
+        style={{ width: '450px', maxHeight: 'calc(100vh - 150px)' }}
+        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
+      >
+        <div className="flex flex-col h-full overflow-hidden">
             {/* Chat Header */}
             <div
               className="p-6 text-white"
@@ -371,9 +375,8 @@ export default function SummarySection() {
                 </div>
               )}
             </div>
-          </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
