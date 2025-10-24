@@ -155,28 +155,23 @@ export default function HowSection() {
     }
   };
 
-  // Position shared iframe when step 2 is selected
-  useEffect(() => {
-    if (selectedStep === 2) {
-      setTimeout(() => {
-        positionIframeOver('how-step2-container');
-      }, 200);
-    } else {
-      hideIframe();
-    }
-  }, [selectedStep, positionIframeOver, hideIframe]);
-
-  // Position shared iframe when expanded preview is opened
+  // Position shared iframe when step 2 is selected or expanded
   useEffect(() => {
     if (expandedPreview) {
+      // Expanded view has highest priority
       setTimeout(() => {
-        positionIframeOver('how-expanded-container');
+        positionIframeOver('how-expanded-container', 'how-section');
       }, 200);
-    } else if (selectedStep !== 2) {
-      // Only hide if we're not showing it in step 2
-      hideIframe();
+    } else if (selectedStep === 2) {
+      // Step 2 view
+      setTimeout(() => {
+        positionIframeOver('how-step2-container', 'how-section');
+      }, 200);
+    } else {
+      // Hide only if HowSection was the requester
+      hideIframe('how-section');
     }
-  }, [expandedPreview, selectedStep, positionIframeOver, hideIframe]);
+  }, [selectedStep, expandedPreview, positionIframeOver, hideIframe]);
 
   const timelinePhases = [
     { id: 1, title: 'Scope Definition / Problem Framing', duration: '2 weeks', team: '2–3', start: 0, end: 2, keyOutput: 'Use-case scope, data mapping, success criteria', part: 1 },
